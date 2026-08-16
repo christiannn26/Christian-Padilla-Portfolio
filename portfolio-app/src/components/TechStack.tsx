@@ -8,7 +8,7 @@ export default function TechStack() {
   ];
 
   return (
-    <section className="py-24 relative z-10 bg-background rounded-t-[40px] border-t border-white/5 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
+    <section className="py-24 relative z-10 bg-transparent rounded-t-[40px] border-t border-white/5 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
       <div className="container mx-auto px-4 max-w-7xl mb-16 text-center">
         <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-accent mb-4">Tech Stack</h2>
         <h3 className="text-3xl md:text-4xl font-bold text-white font-heading">Powered by industry-leading platforms.</h3>

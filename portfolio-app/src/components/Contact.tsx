@@ -6,7 +6,7 @@ export default function Contact() {
   const btnRef = useMagnetic<HTMLButtonElement>();
 
   return (
-    <section id="contact" className="py-32 relative z-10 bg-background rounded-t-[40px] border-t border-white/5 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
+    <section id="contact" className="py-32 relative z-10 bg-transparent rounded-t-[40px] border-t border-white/5 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
       <div className="container mx-auto px-4 max-w-6xl">
         <div 
           ref={containerRef}

@@ -44,7 +44,7 @@ function App() {
   }, [isMobile]);
 
   return (
-    <div className="relative min-h-screen bg-background font-sans text-foreground selection:bg-accent/30 overflow-x-hidden">
+    <div className="relative min-h-screen font-sans text-foreground selection:bg-accent/30 overflow-x-hidden">
       
       {/* Custom Cursor */}
       {!isMobile && (
@@ -71,8 +71,32 @@ function App() {
         </>
       )}
 
-      {/* Volumetric Spotlights */}
-      <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-background">
+      {/* Volumetric Spotlights and Patterns */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-background">
+        
+        {/* Subtle Dot Pattern (Champagne Gold) */}
+        <div 
+          className="absolute inset-0 opacity-60"
+          style={{
+            backgroundImage: "radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+            maskImage: "linear-gradient(to bottom, transparent 10%, black 25%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 10%, black 25%)"
+          }}
+        />
+
+        {/* Faint Structural Grid */}
+        <div 
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)`,
+            backgroundSize: "128px 128px",
+            maskImage: "linear-gradient(to bottom, transparent 10%, black 25%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 10%, black 25%)"
+          }}
+        />
+
         <motion.div 
           className="absolute top-[5%] left-[10%] w-[60vw] h-[60vw] rounded-full mix-blend-screen pointer-events-none"
           style={{ background: "radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%)" }}
@@ -107,7 +131,7 @@ function App() {
         </div>
       </nav>
 
-      <main className="flex flex-col">
+      <main className="relative z-10 flex flex-col">
         <Hero />
         <About />
         <TechStack />
