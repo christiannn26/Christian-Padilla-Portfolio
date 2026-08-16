@@ -71,10 +71,11 @@ function App() {
         </>
       )}
 
-      {/* Dynamic Animated Ambient Light Spotlights */}
+      {/* Volumetric Spotlights */}
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-background">
         <motion.div 
-          className="absolute top-[5%] left-[10%] w-[50vw] h-[50vw] rounded-full mix-blend-screen opacity-[0.04] filter blur-[120px] bg-[#E5D3B3]"
+          className="absolute top-[5%] left-[10%] w-[60vw] h-[60vw] rounded-full mix-blend-screen pointer-events-none"
+          style={{ background: "radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%)" }}
           animate={{ 
             x: [0, 40, -40, 0],
             y: [0, -40, 40, 0],
@@ -83,7 +84,8 @@ function App() {
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         />
         <motion.div 
-          className="absolute bottom-[10%] right-[5%] w-[60vw] h-[60vw] rounded-full mix-blend-screen opacity-[0.03] filter blur-[150px] bg-[#FAF9F6]"
+          className="absolute bottom-[10%] right-[5%] w-[70vw] h-[70vw] rounded-full mix-blend-screen pointer-events-none"
+          style={{ background: "radial-gradient(circle at 50% 50%, rgba(250, 249, 246, 0.05) 0%, transparent 50%)" }}
           animate={{ 
             x: [0, -50, 50, 0],
             y: [0, 50, -50, 0],

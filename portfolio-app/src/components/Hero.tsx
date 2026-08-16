@@ -61,9 +61,12 @@ export default function Hero() {
               Elevating Operational Efficiency
             </motion.div>
             
-            <h1 ref={headlineRef} className="text-5xl lg:text-7xl font-bold tracking-tighter text-white leading-[1.1] font-heading" style={{ perspective: "1000px" }}>
-              GHL|CRM and AI <br className="hidden lg:block"/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">
+            <h1 ref={headlineRef} className="text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.1] font-heading" style={{ perspective: "1000px" }}>
+              <span className="text-white">GHL|CRM and AI</span> <br className="hidden lg:block"/>
+              <span 
+                className="text-transparent bg-clip-text" 
+                style={{ backgroundImage: "linear-gradient(135deg, #FAF9F6 0%, #D4AF37 50%, #B8860B 100%)" }}
+              >
                 Automation Specialist
               </span>
             </h1>
@@ -73,15 +76,14 @@ export default function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6">
-              <button ref={btn1Ref} className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-accent px-8 text-sm font-semibold text-accent-foreground shadow-[0_0_40px_-10px_rgba(229,211,179,0.4)] transition-all hover:bg-accent/90 hover:shadow-[0_0_60px_-15px_rgba(229,211,179,0.7)] focus:outline-none">
+              <button ref={btn1Ref} className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-5px_rgba(250,249,246,0.4)] transition-all hover:bg-primary/90 hover:shadow-[0_0_50px_-5px_rgba(250,249,246,0.6)] focus:outline-none">
                 <span className="relative z-10 flex items-center pointer-events-none">
                   Contact Now
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none"></div>
               </button>
               
-              <button ref={btn2Ref} className="group inline-flex h-14 items-center justify-center rounded-xl border border-white/20 bg-white/5 backdrop-blur-md px-8 text-sm font-medium text-white transition-all hover:bg-white/10 hover:border-white/30 focus:outline-none shadow-[inset_0_1px_0_rgba(250,249,246,0.15)]">
+              <button ref={btn2Ref} className="group inline-flex h-14 items-center justify-center rounded-xl glass-panel px-8 text-sm font-medium text-white transition-all hover:bg-white/5 focus:outline-none">
                 <span className="relative z-10 flex items-center pointer-events-none">
                   Learn More
                   <FileText className="ml-2 h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
