@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap-trial/SplitText';
 import { useMagnetic, use3DTilt } from '../hooks/useGSAP';
+import VoxelTopographyGrid from './ui/voxel-topography-grid';
 
 gsap.registerPlugin(SplitText);
 
@@ -40,9 +41,11 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section className="relative w-full h-screen bg-transparent flex items-center justify-center overflow-hidden">
       
-      <div className="container mx-auto px-4 max-w-6xl z-10">
+      <VoxelTopographyGrid primaryColor="#1a1a1a" tileSize={56} wireColor="rgba(253, 251, 247, 0.15)"/>
+      
+      <div className="container mx-auto px-4 max-w-6xl relative z-10 pointer-events-none pt-20">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
           <motion.div 
@@ -52,7 +55,7 @@ export default function Hero() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
             <motion.div 
-              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(250,249,246,0.1)]"
+              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(250,249,246,0.1)] pointer-events-auto"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
@@ -75,7 +78,7 @@ export default function Hero() {
               I build sophisticated, scalable automated systems that empower modern businesses to operate flawlessly. Stop doing manual work.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6 pointer-events-auto">
               <button ref={btn1Ref} className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-5px_rgba(250,249,246,0.4)] transition-all hover:bg-primary/90 hover:shadow-[0_0_50px_-5px_rgba(250,249,246,0.6)] focus:outline-none">
                 <span className="relative z-10 flex items-center pointer-events-none">
                   Contact Now
@@ -93,14 +96,14 @@ export default function Hero() {
           </motion.div>
 
           <motion.div 
-            className="flex-1 w-full max-w-md lg:max-w-none relative"
+            className="flex-1 w-full max-w-md lg:max-w-none relative pointer-events-auto"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <div 
               ref={cardRef}
-              className="glass-panel aspect-[4/5] lg:aspect-square rounded-3xl overflow-hidden relative group p-2"
+              className="glass-panel aspect-[4/5] lg:aspect-square rounded-3xl overflow-hidden relative group p-2 cursor-pointer"
               style={{ transformStyle: "preserve-3d" }}
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
@@ -111,14 +114,14 @@ export default function Hero() {
                 <img 
                   src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800&h=800" 
                   alt="Profile" 
-                  className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-80 group-hover:mix-blend-normal transition-all duration-700"
+                  className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-80 group-hover:mix-blend-normal transition-all duration-700 pointer-events-none"
                 />
               </div>
             </div>
             
             {/* Decorative floating glass elements */}
             <motion.div 
-              className="absolute -bottom-8 -left-8 glass-panel rounded-2xl p-5 flex items-center gap-5"
+              className="absolute -bottom-8 -left-8 glass-panel rounded-2xl p-5 flex items-center gap-5 cursor-default"
               animate={{ y: [0, -15, 0] }}
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
               style={{ transform: "translateZ(50px)" }}
