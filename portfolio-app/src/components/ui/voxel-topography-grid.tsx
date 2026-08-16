@@ -69,7 +69,7 @@ export function VoxelTopographyGrid({
     }
 
     const handleResize = () => {
-      const dpr = 1;
+      const dpr = 0.5;
       width = container.clientWidth;
       height = container.clientHeight;
 
@@ -114,8 +114,8 @@ export function VoxelTopographyGrid({
       time += speed;
 
       // Responsive, smooth lerping cursor tracking
-      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.32;
-      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.32;
+      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.15;
+      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.15;
 
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
@@ -236,7 +236,7 @@ export function VoxelTopographyGrid({
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full z-0 overflow-hidden opacity-30 cursor-pointer touch-none"
+      className="absolute inset-0 w-full h-full z-0 overflow-hidden opacity-60 cursor-pointer touch-none"
     >
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
