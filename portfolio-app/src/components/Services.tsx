@@ -17,7 +17,7 @@ function ServiceCard({ service, variants }: { service: any, variants: any }) {
       {/* Soft ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent/20 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       
-      <div className="h-14 w-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 group-hover:border-accent/40 transition-all duration-300 shadow-[0_0_15px_-3px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_20px_-3px_rgba(161,98,7,0.5)]" style={{ transform: "translateZ(20px)" }}>
+      <div className="h-14 w-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 group-hover:border-accent/40 transition-all duration-300 shadow-[0_0_15px_-3px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_20px_-3px_rgba(229,211,179,0.4)]" style={{ transform: "translateZ(20px)" }}>
         <service.icon className="h-6 w-6 text-white/80 group-hover:text-accent transition-colors" />
       </div>
       
@@ -80,7 +80,7 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="py-32 relative z-10">
+    <section id="services" className="py-32 relative z-10 bg-background rounded-t-[40px] border-t border-white/5 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-20">
           <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-accent mb-4">Services</h2>

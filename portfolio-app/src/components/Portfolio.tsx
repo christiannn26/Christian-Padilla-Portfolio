@@ -39,7 +39,7 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300" />
           
           {/* Floating button */}
-          <div className="absolute top-4 right-4 h-12 w-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)]">
+          <div className="absolute top-4 right-4 h-12 w-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(250,249,246,0.2)]">
             <ArrowUpRight className="h-5 w-5 text-white" />
           </div>
         </div>
@@ -74,14 +74,14 @@ export default function Portfolio() {
   ];
 
   return (
-    <section id="portfolio" className="py-32 relative z-10 bg-black/40 backdrop-blur-3xl border-y border-white/5">
+    <section id="portfolio" className="py-32 relative z-10 bg-background rounded-t-[40px] border-t border-white/5 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-accent mb-4">Portfolio</h2>
             <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight font-heading">Featured Projects</h3>
           </div>
-          <button ref={btnRef} className="group relative inline-flex h-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 px-6 text-sm font-semibold text-white transition-all hover:bg-white/10 focus:outline-none backdrop-blur-md">
+          <button ref={btnRef} className="group relative inline-flex h-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 px-6 text-sm font-semibold text-white transition-all hover:bg-white/10 focus:outline-none backdrop-blur-md shadow-[inset_0_1px_0_rgba(250,249,246,0.1)]">
             <span className="relative z-10 flex items-center pointer-events-none">
               View All Projects
               <ArrowUpRight className="ml-2 h-4 w-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform text-accent" />

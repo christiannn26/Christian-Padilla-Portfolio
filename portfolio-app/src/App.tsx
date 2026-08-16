@@ -50,7 +50,7 @@ function App() {
       {!isMobile && (
         <>
           <motion.div 
-            className="fixed top-0 left-0 w-3 h-3 bg-accent rounded-full pointer-events-none z-[100] mix-blend-screen shadow-[0_0_10px_rgba(161,98,7,0.8)]"
+            className="fixed top-0 left-0 w-3 h-3 bg-accent rounded-full pointer-events-none z-[100] mix-blend-screen shadow-[0_0_15px_rgba(229,211,179,0.8)]"
             animate={{ 
               x: cursorPos.x - 6, 
               y: cursorPos.y - 6,
@@ -64,30 +64,30 @@ function App() {
               x: cursorPos.x - 20, 
               y: cursorPos.y - 20,
               scale: isHovering ? 1.5 : 1,
-              backgroundColor: isHovering ? "rgba(161,98,7,0.05)" : "transparent"
+              backgroundColor: isHovering ? "rgba(229,211,179,0.05)" : "transparent"
             }}
             transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
           />
         </>
       )}
 
-      {/* Dynamic Animated Ambient Light Orbs Background */}
+      {/* Dynamic Animated Ambient Light Spotlights */}
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-background">
         <motion.div 
-          className="absolute top-[10%] left-[20%] w-[40vw] h-[40vw] rounded-full mix-blend-screen opacity-[0.07] filter blur-[100px] bg-accent"
+          className="absolute top-[5%] left-[10%] w-[50vw] h-[50vw] rounded-full mix-blend-screen opacity-[0.04] filter blur-[120px] bg-[#E5D3B3]"
           animate={{ 
-            x: [0, 50, -50, 0],
-            y: [0, -50, 50, 0],
-            scale: [1, 1.1, 0.9, 1]
+            x: [0, 40, -40, 0],
+            y: [0, -40, 40, 0],
+            scale: [1, 1.05, 0.95, 1]
           }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         />
         <motion.div 
-          className="absolute bottom-[20%] right-[10%] w-[50vw] h-[50vw] rounded-full mix-blend-screen opacity-[0.03] filter blur-[120px] bg-white"
+          className="absolute bottom-[10%] right-[5%] w-[60vw] h-[60vw] rounded-full mix-blend-screen opacity-[0.03] filter blur-[150px] bg-[#FAF9F6]"
           animate={{ 
-            x: [0, -70, 70, 0],
-            y: [0, 70, -70, 0],
-            scale: [1, 0.8, 1.2, 1]
+            x: [0, -50, 50, 0],
+            y: [0, 50, -50, 0],
+            scale: [1, 0.9, 1.1, 1]
           }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         />
@@ -97,15 +97,15 @@ function App() {
         <div className="container mx-auto px-4 h-20 flex items-center justify-between max-w-6xl">
           <span className="font-heading font-bold text-2xl tracking-wide text-primary">VA<span className="text-accent">.</span></span>
           <div className="space-x-8 text-sm font-medium hidden md:block uppercase tracking-widest text-xs">
-            <a href="#about" className="text-muted-foreground hover:text-white transition-colors duration-300">About</a>
-            <a href="#services" className="text-muted-foreground hover:text-white transition-colors duration-300">Services</a>
-            <a href="#portfolio" className="text-muted-foreground hover:text-white transition-colors duration-300">Portfolio</a>
-            <a href="#contact" className="text-muted-foreground hover:text-white transition-colors duration-300">Contact</a>
+            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors duration-300">About</a>
+            <a href="#services" className="text-muted-foreground hover:text-primary transition-colors duration-300">Services</a>
+            <a href="#portfolio" className="text-muted-foreground hover:text-primary transition-colors duration-300">Portfolio</a>
+            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors duration-300">Contact</a>
           </div>
         </div>
       </nav>
 
-      <main className="flex flex-col pb-32">
+      <main className="flex flex-col">
         <Hero />
         <About />
         <TechStack />

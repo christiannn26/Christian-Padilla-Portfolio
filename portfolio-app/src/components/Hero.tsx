@@ -52,7 +52,7 @@ export default function Hero() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
             <motion.div 
-              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(250,249,246,0.1)]"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
@@ -62,8 +62,8 @@ export default function Hero() {
             </motion.div>
             
             <h1 ref={headlineRef} className="text-5xl lg:text-7xl font-bold tracking-tighter text-white leading-[1.1] font-heading" style={{ perspective: "1000px" }}>
-              GHL|CRM & AI <br className="hidden lg:block"/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-200">
+              GHL|CRM and AI <br className="hidden lg:block"/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">
                 Automation Specialist
               </span>
             </h1>
@@ -73,17 +73,17 @@ export default function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6">
-              <button ref={btn1Ref} className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-accent px-8 text-sm font-semibold text-white shadow-[0_0_40px_-10px_rgba(161,98,7,0.5)] transition-all hover:bg-accent/90 hover:shadow-[0_0_60px_-15px_rgba(161,98,7,0.8)] focus:outline-none">
+              <button ref={btn1Ref} className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-accent px-8 text-sm font-semibold text-accent-foreground shadow-[0_0_40px_-10px_rgba(229,211,179,0.4)] transition-all hover:bg-accent/90 hover:shadow-[0_0_60px_-15px_rgba(229,211,179,0.7)] focus:outline-none">
                 <span className="relative z-10 flex items-center pointer-events-none">
-                  Book a Consultation
+                  Contact Now
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400 to-accent opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none"></div>
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none"></div>
               </button>
               
-              <button ref={btn2Ref} className="group inline-flex h-14 items-center justify-center rounded-xl border border-white/20 bg-white/5 backdrop-blur-md px-8 text-sm font-medium text-white transition-all hover:bg-white/10 hover:border-white/30 focus:outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+              <button ref={btn2Ref} className="group inline-flex h-14 items-center justify-center rounded-xl border border-white/20 bg-white/5 backdrop-blur-md px-8 text-sm font-medium text-white transition-all hover:bg-white/10 hover:border-white/30 focus:outline-none shadow-[inset_0_1px_0_rgba(250,249,246,0.15)]">
                 <span className="relative z-10 flex items-center pointer-events-none">
-                  View Portfolio
+                  Learn More
                   <FileText className="ml-2 h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
                 </span>
               </button>
@@ -116,12 +116,12 @@ export default function Hero() {
             
             {/* Decorative floating glass elements */}
             <motion.div 
-              className="absolute -bottom-8 -left-8 glass-panel rounded-2xl p-5 flex items-center gap-5 border-white/10"
+              className="absolute -bottom-8 -left-8 glass-panel rounded-2xl p-5 flex items-center gap-5"
               animate={{ y: [0, -15, 0] }}
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
               style={{ transform: "translateZ(50px)" }}
             >
-              <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold font-heading text-xl shadow-[0_0_20px_-5px_rgba(161,98,7,0.4)] border border-accent/30">
+              <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold font-heading text-xl shadow-[0_0_20px_-5px_rgba(229,211,179,0.4)] border border-accent/30">
                 10+
               </div>
               <div>

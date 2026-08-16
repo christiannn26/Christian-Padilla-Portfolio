@@ -6,7 +6,7 @@ export default function Contact() {
   const btnRef = useMagnetic<HTMLButtonElement>();
 
   return (
-    <section id="contact" className="py-32 relative z-10">
+    <section id="contact" className="py-32 relative z-10 bg-background rounded-t-[40px] border-t border-white/5 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
       <div className="container mx-auto px-4 max-w-6xl">
         <div 
           ref={containerRef}
@@ -14,7 +14,7 @@ export default function Contact() {
         >
           {/* Decorative background elements */}
           <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-accent/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
-          <div className="absolute bottom-0 left-0 w-[40rem] h-[40rem] bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3" />
+          <div className="absolute bottom-0 left-0 w-[40rem] h-[40rem] bg-primary/5 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3" />
 
           <div className="flex flex-col lg:flex-row gap-16 relative z-10">
             <div className="flex-1 space-y-8">
@@ -30,7 +30,7 @@ export default function Contact() {
 
               <div className="space-y-6 pt-4">
                 <a href="mailto:hello@example.com" className="group flex items-center gap-6 p-4 -ml-4 rounded-2xl hover:bg-white/5 transition-colors w-fit">
-                  <div className="h-12 w-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-[0_0_15px_-3px_rgba(255,255,255,0.05)] group-hover:bg-accent/20 group-hover:border-accent/30 group-hover:shadow-[0_0_20px_-5px_rgba(161,98,7,0.5)] transition-all duration-300">
+                  <div className="h-12 w-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-[0_0_15px_-3px_rgba(250,249,246,0.05)] group-hover:bg-accent/20 group-hover:border-accent/30 group-hover:shadow-[0_0_20px_-5px_rgba(229,211,179,0.4)] transition-all duration-300">
                     <Mail className="h-5 w-5 text-muted-foreground group-hover:text-accent transition-colors" />
                   </div>
                   <div>
@@ -40,7 +40,7 @@ export default function Contact() {
                 </a>
                 
                 <div className="group flex items-center gap-6 p-4 -ml-4 rounded-2xl hover:bg-white/5 transition-colors w-fit cursor-pointer">
-                  <div className="h-12 w-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-[0_0_15px_-3px_rgba(255,255,255,0.05)] group-hover:bg-accent/20 group-hover:border-accent/30 group-hover:shadow-[0_0_20px_-5px_rgba(161,98,7,0.5)] transition-all duration-300">
+                  <div className="h-12 w-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-[0_0_15px_-3px_rgba(250,249,246,0.05)] group-hover:bg-accent/20 group-hover:border-accent/30 group-hover:shadow-[0_0_20px_-5px_rgba(229,211,179,0.4)] transition-all duration-300">
                     <Calendar className="h-5 w-5 text-muted-foreground group-hover:text-accent transition-colors" />
                   </div>
                   <div>
@@ -86,13 +86,13 @@ export default function Contact() {
                 <button 
                   ref={btnRef}
                   type="button" 
-                  className="group relative w-full h-14 items-center justify-center rounded-xl bg-accent text-sm font-semibold text-white shadow-[0_0_40px_-10px_rgba(161,98,7,0.5)] transition-all hover:bg-accent/90 hover:shadow-[0_0_60px_-15px_rgba(161,98,7,0.8)] focus:outline-none mt-4"
+                  className="group relative w-full h-14 items-center justify-center rounded-xl bg-accent text-sm font-semibold text-accent-foreground shadow-[0_0_40px_-10px_rgba(229,211,179,0.4)] transition-all hover:bg-accent/90 hover:shadow-[0_0_60px_-15px_rgba(229,211,179,0.7)] focus:outline-none mt-4"
                 >
                   <span className="relative z-10 flex items-center justify-center pointer-events-none">
                     Send Message
                     <MessageSquare className="ml-2 h-4 w-4" />
                   </span>
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400 to-accent opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none"></div>
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none"></div>
                 </button>
               </form>
             </div>

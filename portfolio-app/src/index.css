@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* Cinematic Dark Mode */
-  --color-primary: #FFFFFF;
-  --color-primary-foreground: #000000;
+  /* Cinematic Luxury Dark Mode */
+  --color-primary: #FAF9F6; /* Cream */
+  --color-primary-foreground: #0B0B0B;
   
-  --color-secondary: #1F1F1F;
-  --color-secondary-foreground: #FFFFFF;
+  --color-secondary: #121212;
+  --color-secondary-foreground: #FAF9F6;
   
-  --color-accent: #A16207; /* Premium Gold */
-  --color-accent-foreground: #FFFFFF;
+  --color-accent: #E5D3B3; /* Soft Gold */
+  --color-accent-foreground: #0B0B0B;
   
-  --color-background: #000000; /* Pure black base */
-  --color-foreground: #F8FAFC;
+  --color-background: #0B0B0B; /* Deep black canvas */
+  --color-foreground: #FAF9F6; /* Cream text */
   
-  --color-card: rgba(255, 255, 255, 0.04); /* Smoke glass (dark translucent) */
-  --color-card-foreground: #F8FAFC;
+  --color-card: rgba(20, 20, 20, 0.4); /* Dark translucent background */
+  --color-card-foreground: #FAF9F6;
   
-  --color-border: rgba(255, 255, 255, 0.08); /* Subtle edge */
+  --color-border: rgba(250, 249, 246, 0.1); /* Subtle cream border */
   
-  --color-muted: #0A0A0A; /* Deep matte black */
-  --color-muted-foreground: #A1A1AA;
+  --color-muted: #1A1A1A; /* Charcoal */
+  --color-muted-foreground: rgba(250, 249, 246, 0.6);
   
   --font-sans: 'Montserrat', sans-serif;
   --font-heading: 'Cormorant', serif;
@@ -43,11 +43,11 @@
     --accent: var(--color-accent);
     --accent-foreground: var(--color-accent-foreground);
     --destructive: #DC2626;
-    --destructive-foreground: #FFFFFF;
+    --destructive-foreground: #FAF9F6;
     --border: var(--color-border);
     --input: var(--color-border);
     --ring: var(--color-accent);
-    --radius: 1rem; /* More rounded for glass effect */
+    --radius: 1rem;
   }
 }
 
@@ -84,12 +84,12 @@
 /* Custom utility for glassmorphism panels to be reused */
 @layer utilities {
   .glass-panel {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(20, 20, 20, 0.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(250, 249, 246, 0.05); /* very thin low opacity cream border */
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      0 12px 40px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(250, 249, 246, 0.15); /* 1px cream/silver inner border at ~15% */
   }
 }

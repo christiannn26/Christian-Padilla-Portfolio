@@ -14,7 +14,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-32 relative z-10">
+    <section id="about" className="py-32 relative z-10 bg-background rounded-t-[40px] border-t border-white/5 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="flex flex-col lg:flex-row-reverse items-center gap-16 lg:gap-24">
           
@@ -50,7 +50,7 @@ export default function About() {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.15, duration: 0.5 }}
                   >
-                    <div className="h-8 w-8 rounded-full bg-accent/20 flex items-center justify-center shrink-0 shadow-[0_0_15px_-3px_rgba(161,98,7,0.5)] border border-accent/30">
+                    <div className="h-8 w-8 rounded-full bg-accent/20 flex items-center justify-center shrink-0 shadow-[0_0_15px_-3px_rgba(229,211,179,0.4)] border border-accent/30">
                       <CheckCircle2 className="h-4 w-4 text-accent" />
                     </div>
                     <span className="text-sm font-medium text-white/90">{prop}</span>
