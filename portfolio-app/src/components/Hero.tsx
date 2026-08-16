@@ -1,75 +1,135 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, FileText } from 'lucide-react';
+import { ArrowRight, FileText, Sparkles } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { SplitText } from 'gsap-trial/SplitText';
+import { useMagnetic, use3DTilt } from '../hooks/useGSAP';
+
+gsap.registerPlugin(SplitText);
 
 export default function Hero() {
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const btn1Ref = useMagnetic<HTMLButtonElement>();
+  const btn2Ref = useMagnetic<HTMLButtonElement>();
+  const cardRef = use3DTilt<HTMLDivElement>();
+
+  useEffect(() => {
+    if (!headlineRef.current) return;
+    
+    // Fallback for reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.set(headlineRef.current, { opacity: 1 });
+      return;
+    }
+
+    const split = new SplitText(headlineRef.current, { type: 'chars,words' });
+    
+    gsap.from(split.chars, { 
+      opacity: 0, 
+      y: 20, 
+      rotateX: -40, 
+      duration: 0.8, 
+      stagger: 0.02, 
+      ease: 'expo.out',
+      delay: 0.2
+    });
+
+    return () => {
+      split.revert();
+    };
+  }, []);
+
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-16 overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-background to-background"></div>
+    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
       
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+      <div className="container mx-auto px-4 max-w-6xl z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
           <motion.div 
             className="flex-1 space-y-8 text-center lg:text-left"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1 text-sm font-medium text-muted-foreground shadow-sm">
-              <span className="flex h-2 w-2 rounded-full bg-accent mr-2 animate-pulse"></span>
-              Available for new projects
-            </div>
+            <motion.div 
+              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <Sparkles className="mr-2 h-3 w-3 text-accent" />
+              Elevating Operational Efficiency
+            </motion.div>
             
-            <h1 className="text-5xl lg:text-7xl font-bold tracking-tighter text-primary leading-tight">
-              GHL|CRM and AI <br className="hidden lg:block"/>
-              <span className="text-accent">Automation Specialist</span>
+            <h1 ref={headlineRef} className="text-5xl lg:text-7xl font-bold tracking-tighter text-white leading-[1.1] font-heading" style={{ perspective: "1000px" }}>
+              GHL|CRM & AI <br className="hidden lg:block"/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-200">
+                Automation Specialist
+              </span>
             </h1>
             
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.
+            <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+              I build sophisticated, scalable automated systems that empower modern businesses to operate flawlessly. Stop doing manual work.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
-              <button className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-                Book a Consultation
-                <ArrowRight className="ml-2 h-4 w-4" />
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6">
+              <button ref={btn1Ref} className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-accent px-8 text-sm font-semibold text-white shadow-[0_0_40px_-10px_rgba(161,98,7,0.5)] transition-all hover:bg-accent/90 hover:shadow-[0_0_60px_-15px_rgba(161,98,7,0.8)] focus:outline-none">
+                <span className="relative z-10 flex items-center pointer-events-none">
+                  Book a Consultation
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400 to-accent opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none"></div>
               </button>
-              <button className="inline-flex h-12 items-center justify-center rounded-md border border-border bg-background px-8 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                View Portfolio
-                <FileText className="ml-2 h-4 w-4" />
+              
+              <button ref={btn2Ref} className="group inline-flex h-14 items-center justify-center rounded-xl border border-white/20 bg-white/5 backdrop-blur-md px-8 text-sm font-medium text-white transition-all hover:bg-white/10 hover:border-white/30 focus:outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                <span className="relative z-10 flex items-center pointer-events-none">
+                  View Portfolio
+                  <FileText className="ml-2 h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
+                </span>
               </button>
             </div>
           </motion.div>
 
           <motion.div 
             className="flex-1 w-full max-w-md lg:max-w-none relative"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="aspect-square rounded-2xl overflow-hidden border border-border bg-card shadow-2xl relative">
-              <div className="absolute inset-0 bg-muted flex items-center justify-center">
-                <span className="text-muted-foreground font-medium">Profile Picture Placeholder</span>
+            <div 
+              ref={cardRef}
+              className="glass-panel aspect-[4/5] lg:aspect-square rounded-3xl overflow-hidden relative group p-2"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-tr from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
+              <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-white/20 font-medium tracking-widest text-sm uppercase">Profile Placeholder</span>
+                </div>
+                <img 
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800&h=800" 
+                  alt="Profile" 
+                  className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-80 group-hover:mix-blend-normal transition-all duration-700"
+                />
               </div>
-              <img 
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800&h=800" 
-                alt="Profile Placeholder" 
-                className="w-full h-full object-cover mix-blend-overlay opacity-20"
-              />
             </div>
             
-            {/* Decorative floating elements */}
+            {/* Decorative floating glass elements */}
             <motion.div 
-              className="absolute -bottom-6 -left-6 bg-card border border-border shadow-lg rounded-xl p-4 flex items-center gap-4"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              className="absolute -bottom-8 -left-8 glass-panel rounded-2xl p-5 flex items-center gap-5 border-white/10"
+              animate={{ y: [0, -15, 0] }}
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+              style={{ transform: "translateZ(50px)" }}
             >
-              <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">10+</div>
+              <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold font-heading text-xl shadow-[0_0_20px_-5px_rgba(161,98,7,0.4)] border border-accent/30">
+                10+
+              </div>
               <div>
-                <p className="text-sm font-bold text-primary">Systems Built</p>
-                <p className="text-xs text-muted-foreground">Automated</p>
+                <p className="text-sm font-bold text-white tracking-wide">Systems Built</p>
+                <p className="text-xs text-muted-foreground">Automated perfectly</p>
               </div>
             </motion.div>
+            
           </motion.div>
           
         </div>

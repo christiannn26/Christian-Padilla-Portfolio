@@ -1,22 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #0F172A;
-  --color-primary-foreground: #FFFFFF;
-  --color-secondary: #334155;
-  --color-secondary-foreground: #FFFFFF;
-  --color-accent: #0369A1;
-  --color-accent-foreground: #FFFFFF;
-  --color-background: #F8FAFC;
-  --color-foreground: #020617;
-  --color-card: #FFFFFF;
-  --color-card-foreground: #020617;
-  --color-border: #E2E8F0;
-  --color-muted: #E8ECF1;
-  --color-muted-foreground: #475569;
+  /* Cinematic Dark Mode */
+  --color-primary: #FFFFFF;
+  --color-primary-foreground: #000000;
   
-  --font-sans: 'Space Grotesk', sans-serif;
-  --font-heading: 'Archivo', sans-serif;
+  --color-secondary: #1F1F1F;
+  --color-secondary-foreground: #FFFFFF;
+  
+  --color-accent: #A16207; /* Premium Gold */
+  --color-accent-foreground: #FFFFFF;
+  
+  --color-background: #000000; /* Pure black base */
+  --color-foreground: #F8FAFC;
+  
+  --color-card: rgba(255, 255, 255, 0.04); /* Smoke glass (dark translucent) */
+  --color-card-foreground: #F8FAFC;
+  
+  --color-border: rgba(255, 255, 255, 0.08); /* Subtle edge */
+  
+  --color-muted: #0A0A0A; /* Deep matte black */
+  --color-muted-foreground: #A1A1AA;
+  
+  --font-sans: 'Montserrat', sans-serif;
+  --font-heading: 'Cormorant', serif;
 }
 
 @layer base {
@@ -39,8 +46,8 @@
     --destructive-foreground: #FFFFFF;
     --border: var(--color-border);
     --input: var(--color-border);
-    --ring: var(--color-primary);
-    --radius: 0.5rem;
+    --ring: var(--color-accent);
+    --radius: 1rem; /* More rounded for glass effect */
   }
 }
 
@@ -49,9 +56,40 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
   }
+  
+  /* Grain texture overlay */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading tracking-tight;
+  }
+}
+
+/* Custom utility for glassmorphism panels to be reused */
+@layer utilities {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 }
