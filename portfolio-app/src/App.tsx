@@ -52,8 +52,8 @@ function App() {
   }, [isMobile]);
 
   // Elegant custom smooth scrolling
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault();
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement> | null, targetId: string) => {
+    if (e) e.preventDefault();
     
     const targetElement = document.getElementById(targetId);
     const startPosition = window.scrollY;
@@ -190,7 +190,7 @@ function App() {
       </nav>
 
       <main className="relative z-10 flex flex-col">
-        <Hero />
+        <Hero onNavigate={(id) => scrollToSection(null, id)} />
         
         <div className="relative bg-background rounded-t-[40px] border-t border-white/10 shadow-[0_-20px_50px_rgba(0,0,0,0.9),0_-5px_20px_rgba(255,255,255,0.04)] z-20 will-change-transform">
           <div className="absolute inset-0 rounded-t-[40px] overflow-hidden pointer-events-none">

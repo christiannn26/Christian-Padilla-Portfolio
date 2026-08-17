@@ -8,7 +8,7 @@ import VoxelTopographyGrid from './ui/voxel-topography-grid';
 
 gsap.registerPlugin(SplitText);
 
-export default function Hero() {
+export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void }) {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const btn1Ref = useMagnetic<HTMLButtonElement>();
   const btn2Ref = useMagnetic<HTMLButtonElement>();
@@ -23,20 +23,23 @@ export default function Hero() {
       return;
     }
 
-    const split = new SplitText(headlineRef.current, { type: 'chars,words' });
-    
-    gsap.from(split.chars, { 
-      opacity: 0, 
-      y: 20, 
-      rotateX: -40, 
-      duration: 0.8, 
-      stagger: 0.02, 
-      ease: 'expo.out',
-      delay: 0.2
-    });
+    let split: any = null;
+    if (headlineRef.current) {
+      split = new SplitText(headlineRef.current, { type: 'chars,words' });
+      
+      gsap.from(split.chars, { 
+        opacity: 0, 
+        y: 20, 
+        rotateX: -40, 
+        duration: 0.8, 
+        stagger: 0.02, 
+        ease: 'expo.out',
+        delay: 0.2
+      });
+    }
 
     return () => {
-      split.revert();
+      if (split) split.revert();
     };
   }, []);
 
@@ -65,28 +68,35 @@ export default function Hero() {
             </motion.div>
             
             <h1 ref={headlineRef} className="text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.1] font-heading" style={{ perspective: "1000px" }}>
-              <span className="text-white">GHL|CRM and AI</span> <br className="hidden lg:block"/>
+              <span className="text-white">Automating Success Through AI</span> <br />
               <span 
-                className="text-transparent bg-clip-text" 
-                style={{ backgroundImage: "linear-gradient(135deg, #FAF9F6 0%, #D4AF37 50%, #B8860B 100%)" }}
+                className="gsap-gradient-text"
               >
-                Automation Specialist
+                and Your GHL CRM.
               </span>
             </h1>
             
             <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
-              I build sophisticated, scalable automated systems that empower modern businesses to operate flawlessly. Stop doing manual work.
+              I design powerful, easy-to-use systems. By linking smart AI technology directly to your GHL CRM, I engineer automation setups that make your daily operations faster and more profitable.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6 pointer-events-auto">
-              <button ref={btn1Ref} className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-5px_rgba(250,249,246,0.4)] transition-all hover:bg-primary/90 hover:shadow-[0_0_50px_-5px_rgba(250,249,246,0.6)] focus:outline-none">
+              <button 
+                ref={btn1Ref} 
+                onClick={() => onNavigate && onNavigate('contact')}
+                className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-5px_rgba(250,249,246,0.4)] transition-all hover:bg-primary/90 hover:shadow-[0_0_50px_-5px_rgba(250,249,246,0.6)] focus:outline-none"
+              >
                 <span className="relative z-10 flex items-center pointer-events-none">
                   Contact Now
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </button>
               
-              <button ref={btn2Ref} className="group inline-flex h-14 items-center justify-center rounded-xl glass-panel px-8 text-sm font-medium text-white transition-all hover:bg-white/5 focus:outline-none">
+              <button 
+                ref={btn2Ref} 
+                onClick={() => onNavigate && onNavigate('portfolio')}
+                className="group inline-flex h-14 items-center justify-center rounded-xl glass-panel px-8 text-sm font-medium text-white transition-all hover:bg-white/5 focus:outline-none"
+              >
                 <span className="relative z-10 flex items-center pointer-events-none">
                   Learn More
                   <FileText className="ml-2 h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
@@ -108,12 +118,9 @@ export default function Hero() {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
               <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white/20 font-medium tracking-widest text-sm uppercase">Profile Placeholder</span>
-                </div>
                 <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800&h=800" 
-                  alt="Profile" 
+                  src="/img/Hero_Face.png" 
+                  alt="Christian Padilla" 
                   className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-80 group-hover:mix-blend-normal transition-all duration-700 pointer-events-none"
                 />
               </div>
