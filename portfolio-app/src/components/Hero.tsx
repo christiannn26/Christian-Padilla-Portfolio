@@ -43,7 +43,7 @@ export default function Hero() {
   return (
     <section className="relative w-full h-screen bg-transparent flex items-center justify-center overflow-hidden">
       
-      <VoxelTopographyGrid primaryColor="#1a1a1a" tileSize={80} wireColor="rgba(253, 251, 247, 0.3)"/>
+      <VoxelTopographyGrid primaryColor="#1a1a1a" tileSize={60} wireColor="rgba(253, 251, 247, 0.3)"/>
       
       <div className="container mx-auto px-4 max-w-6xl relative z-10 pointer-events-none pt-20">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
