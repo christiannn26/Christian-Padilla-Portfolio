@@ -1,5 +1,5 @@
 import React from 'react';
-import { Maximize2, ExternalLink, Grid, MonitorPlay } from "lucide-react";
+import { Maximize2, Grid, MonitorPlay } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { CoverflowCarousel } from "./ui/coverflow-carousel";
 import type { CoverflowSlide } from "./ui/coverflow-carousel";
@@ -61,26 +61,27 @@ export default function Portfolio() {
       )
     },
     {
-      src: UNSPLASH("1523050854058-8df90110c9f1"),
-      alt: "Computer Science",
-      title: "B.S. Computer Science",
-      subtitle: "University of Technology",
+      src: "/img/certs/11.png",
+      alt: "Certifications & Advanced Training",
+      title: "Certifications & Advanced Training",
+      subtitle: "Professional Credentials",
+      imagePosition: "object-center",
       meta: [
-        { label: "Type", value: "Education" },
-        { label: "Timeline", value: "2017 - 2021" },
+        { label: "Type", value: "Certification" },
+        { label: "Timeline", value: "Ongoing" },
       ],
       gallery: [
-        UNSPLASH("1522071820081-009f0129c71c"),
-        UNSPLASH("1517245386807-bb43f82c33c4")
+        "/img/certs/12.png"
       ],
       content: (
         <>
-          <p>Graduated with honors, focusing on software engineering, database management, and human-computer interaction. My final year thesis involved building a predictive data model for local retail businesses.</p>
-          <ul className="list-disc pl-5 mt-4 space-y-2 text-sm marker:text-accent/50">
-            <li>Dean's List 2019-2021</li>
-            <li>Lead Developer for the University Robotics Club</li>
-            <li>Published research on scalable web architectures</li>
+          <p>Committed to continuous technical and operational excellence, I have strategically expanded my freelance toolkit through specialized, industry-focused workshops. Earning these credentials has significantly amplified my ability to architect comprehensive, end-to-end business solutions:</p>
+          <ul className="list-disc pl-6 mt-4 space-y-3 text-white/80 marker:text-accent">
+            <li className="pl-2"><strong>AI Automation & Smart CRM Integration:</strong> Mastered the deployment of intelligent workflows and AI-driven CRM systems to optimize pipeline efficiency and scale business operations.</li>
+            <li className="pl-2"><strong>Data-Driven Performance Marketing:</strong> Certified in advanced Facebook Ads strategies, enabling precise audience targeting, campaign optimization, and high-converting client acquisition.</li>
+            <li className="pl-2"><strong>Strategic Executive Operations:</strong> Completed specialized Executive Assistant training, equipping me to provide seamless, high-level organizational support and streamline complex administrative workflows.</li>
           </ul>
+          <p className="mt-4">These intensive trainings have directly translated into my freelance practice, allowing me to bridge the gap between high-level technical automation and everyday business operations.</p>
         </>
       )
     },
@@ -123,38 +124,50 @@ export default function Portfolio() {
       )
     },
     {
-      src: UNSPLASH("1522071820081-009f0129c71c"),
-      alt: "Internship",
-      title: "Frontend Intern",
-      subtitle: "Tech Startup Inc",
+      src: "/img/GHLEvent/IMG_2033.JPG",
+      alt: "HighLevel Manila 2026",
+      title: "HighLevel Manila 2026",
+      subtitle: "GoHighLevel Event",
+      imagePosition: "object-center",
       meta: [
-        { label: "Type", value: "Experience" },
-        { label: "Timeline", value: "2018" },
+        { label: "Type", value: "Event/Certification" },
+        { label: "Timeline", value: "July 2026" },
       ],
       gallery: [
-        UNSPLASH("1517245386807-bb43f82c33c4")
+        "/img/GHLEvent/IMG_2034.JPG",
+        "/img/GHLEvent/IMG_2035.JPG",
+        "/img/GHLEvent/IMG_2036.JPG",
+        "/img/GHLEvent/IMG_2037.JPG"
       ],
       content: (
         <>
-          <p>Assisted the core engineering team in migrating a legacy Angular application to React.</p>
+          <p>Attended the premier GoHighLevel event in Manila, an exclusive gathering of top-tier agency owners, industry innovators, and the platform’s visionary founders. This prestigious summit provided unparalleled insights into cutting-edge features and advanced platform capabilities directly from the creators. Beyond high-level networking with leading GHL professionals, this experience served as a powerful catalyst for my technical growth—significantly elevating my expertise in AI-driven automation, robust CRM architecture, and comprehensive GoHighLevel specialization.</p>
+          <ul className="list-disc pl-6 mt-4 space-y-3 text-white/80 marker:text-accent">
+            <li className="pl-2"><strong>HighLevel medallion</strong></li>
+          </ul>
         </>
       )
     },
     {
-      src: UNSPLASH("1551288049-bebda4e38f71"),
-      alt: "Design Bootcamp",
-      title: "UI/UX Bootcamp",
-      subtitle: "Design Institute",
+      src: "/img/bachelors/IMG_1576.JPG",
+      alt: "B.S. Computer Engineering",
+      title: "B.S. Computer Engineering",
+      subtitle: "Colegio de Muntinlupa",
       meta: [
         { label: "Type", value: "Education" },
-        { label: "Timeline", value: "2017" },
+        { label: "Timeline", value: "2022 - 2026" },
       ],
       gallery: [
-        UNSPLASH("1504868584819-f8e8b4b6d7e3")
+        "/img/bachelors/IMG_1584.JPG",
+        "/img/bachelors/IMG_2076.JPG"
       ],
       content: (
         <>
-          <p>Completed an intensive 12-week design bootcamp focused on user research, wireframing, and interactive prototyping.</p>
+          <p>Developed a comprehensive foundation in software development and the seamless integration of Artificial Intelligence across both software and hardware platforms. This rigorous academic environment is exactly where my strong background in modern technologies and AI originates, equipping me with the analytical mindset and technical adaptability to learn any new technology fast.</p>
+          <ul className="list-disc pl-6 mt-4 space-y-3 text-white/80 marker:text-accent">
+            <li className="pl-2"><strong>AI Hardware & Software Integration:</strong> Co-developer of Project AeroVit, an innovative AI-powered smartwatch device. Focused on bridging complex embedded systems (such as ESP32 and Arduino) with intelligent software applications to deliver functional, real-world solutions.</li>
+            <li className="pl-2"><strong>Award-Winning Technical Communication:</strong> Awarded "Best Presenter" at the 2026 DOST-MIRDC International Metals and Engineering Conference for the comprehensive demonstration and pitching of our AI-integrated hardware project.</li>
+          </ul>
         </>
       )
     }
@@ -378,7 +391,7 @@ export default function Portfolio() {
                     onClick={() => setExpandedSlide(slide)}
                     className="group relative aspect-square rounded-3xl overflow-hidden cursor-pointer bg-slate-900 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:border-accent/40 hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] transition-all duration-500 will-change-transform hover:-translate-y-2"
                   >
-                    <img src={slide.src} alt={slide.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" />
+                    <img src={slide.src} alt={slide.alt} className={cn("w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100", slide.imagePosition || "object-top")} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                     <div className="absolute inset-0 p-6 flex flex-col justify-end">
                       <h4 className="text-2xl font-heading font-bold text-white mb-1 drop-shadow-md">{slide.title}</h4>
@@ -417,7 +430,7 @@ export default function Portfolio() {
                     onClick={() => setExpandedSlide(slide)}
                     className="group relative aspect-square rounded-3xl overflow-hidden cursor-pointer bg-slate-900 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:border-accent/40 hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] transition-all duration-500 will-change-transform hover:-translate-y-2"
                   >
-                    <img src={slide.src} alt={slide.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" />
+                    <img src={slide.src} alt={slide.alt} className={cn("w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100", slide.imagePosition || "object-top")} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                     <div className="absolute inset-0 p-6 flex flex-col justify-end">
                       <h4 className="text-2xl font-heading font-bold text-white mb-1 drop-shadow-md">{slide.title}</h4>

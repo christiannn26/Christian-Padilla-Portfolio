@@ -17,6 +17,7 @@ export interface CoverflowSlide {
   content?: React.ReactNode;
   link?: string;
   gallery?: string[];
+  imagePosition?: string;
 }
 
 export interface CoverflowCarouselProps {
@@ -337,7 +338,7 @@ export function CoverflowCarousel({
                   src={slide.src}
                   alt={slide.alt}
                   draggable={false}
-                  className="h-full w-full select-none object-cover"
+                  className={cn("h-full w-full select-none object-cover", slide.imagePosition || "object-top")}
                 />
                 
                 <div className="absolute inset-0 bg-black/40 mix-blend-overlay pointer-events-none" />

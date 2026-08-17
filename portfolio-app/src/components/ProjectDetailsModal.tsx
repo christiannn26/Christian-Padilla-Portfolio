@@ -1,6 +1,6 @@
 import React from "react";
-import { Dialog, DialogContent, DialogTitle, DialogClose } from "./ui/dialog";
-import { Maximize2, ExternalLink } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { ExternalLink } from "lucide-react";
 import type { CoverflowSlide } from "./ui/coverflow-carousel";
 
 function GalleryScrollColumn({ slide }: { slide: CoverflowSlide }) {
