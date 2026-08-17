@@ -1,17 +1,12 @@
 import { motion } from 'framer-motion';
 import { Zap, Database, Code, Filter, Server, Briefcase } from 'lucide-react';
-import { use3DTilt } from '../hooks/useGSAP';
 
 function ServiceCard({ service, variants }: { service: any, variants: any }) {
-  const cardRef = use3DTilt<HTMLDivElement>();
-  
   return (
     <motion.div 
-      ref={cardRef}
       variants={variants}
-      style={{ transformStyle: "preserve-3d" }}
+      className="group relative p-8 h-full rounded-3xl glass-panel transition-all duration-300 overflow-hidden hover:-translate-y-2"
     >
-      <div className="group relative p-8 h-full rounded-3xl glass-panel transition-all duration-300 overflow-hidden" style={{ transformStyle: "preserve-3d" }}>
       <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
       {/* Soft ambient glow */}
@@ -38,7 +33,6 @@ function ServiceCard({ service, variants }: { service: any, variants: any }) {
           </div>
         </div>
       )}
-      </div>
     </motion.div>
   );
 }
