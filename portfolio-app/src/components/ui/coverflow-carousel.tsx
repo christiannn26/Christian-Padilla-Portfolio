@@ -44,6 +44,7 @@ export interface CoverflowCarouselProps {
   label?: string;
   className?: string;
   cardClassName?: string;
+  initialSlide?: number;
   onSlideClick?: (slide: CoverflowSlide) => void;
 }
 
@@ -63,6 +64,7 @@ export function CoverflowCarousel({
   label = "Cover carousel",
   className,
   cardClassName,
+  initialSlide = 0,
   onSlideClick,
 }: CoverflowCarouselProps) {
   const count = slides.length;
@@ -70,10 +72,10 @@ export function CoverflowCarousel({
   const frameRef = React.useRef<HTMLDivElement>(null);
   const cardRefs = React.useRef<(HTMLDivElement | null)[]>([]);
   /** Fractional card index at the centre. The single source of truth. */
-  const posRef = React.useRef(0);
+  const posRef = React.useRef(initialSlide);
   /** Where the current settle is headed. Stepping off `pos` instead would
       swallow a keypress that lands mid-flight, before the round-off moves. */
-  const targetRef = React.useRef(0);
+  const targetRef = React.useRef(initialSlide);
   const widthRef = React.useRef(0);
   const rafRef = React.useRef<number | null>(null);
   const dragRef = React.useRef<{
@@ -87,7 +89,7 @@ export function CoverflowCarousel({
     targetIndex: number | null;
   } | null>(null);
 
-  const [selected, setSelected] = React.useState(0);
+  const [selected, setSelected] = React.useState(initialSlide);
 
   /** Nearest whole card, folded back into 0..count-1. */
   const indexAt = React.useCallback(

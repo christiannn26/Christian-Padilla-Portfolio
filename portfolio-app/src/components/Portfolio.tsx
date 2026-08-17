@@ -13,54 +13,6 @@ export default function Portfolio() {
 
   const backgroundSlides = [
     {
-      src: UNSPLASH("1550751827-4bd374c3f58b"),
-      alt: "Senior Automation Architect",
-      title: "Senior Automation Architect",
-      subtitle: "TechFlow Solutions",
-      meta: [
-        { label: "Type", value: "Experience" },
-        { label: "Timeline", value: "2023 - Present" },
-      ],
-      gallery: [
-        UNSPLASH("1551288049-bebda4e38f71"),
-        UNSPLASH("1573164713619-24bf7efbf4ce")
-      ],
-      content: (
-        <>
-          <p>Leading the development of complex API workflows and GoHighLevel CRM architectures for enterprise clients. I specialize in identifying operational bottlenecks and deploying custom AI agents to resolve them.</p>
-          <ul className="list-disc pl-5 mt-4 space-y-2 text-sm marker:text-accent/50">
-            <li>Architected over 50+ custom Make.com and Zapier integrations.</li>
-            <li>Reduced client data entry time by an average of 40% across all managed accounts.</li>
-            <li>Developed custom React frontend dashboards pulling directly from GHL webhooks.</li>
-          </ul>
-        </>
-      )
-    },
-    {
-      src: UNSPLASH("1498050108023-c5249f4df085"),
-      alt: "Full-Stack Developer",
-      title: "Full-Stack Developer",
-      subtitle: "Creative Web Agency",
-      meta: [
-        { label: "Type", value: "Experience" },
-        { label: "Timeline", value: "2021 - 2023" },
-      ],
-      gallery: [
-        UNSPLASH("1460925895917-afdab827c52f"),
-        UNSPLASH("1504868584819-f8e8b4b6d7e3")
-      ],
-      content: (
-        <>
-          <p>Developed and maintained custom React and Next.js applications for various e-commerce and local business clients. Handled everything from database schema design to frontend UI/UX implementation.</p>
-          <ul className="list-disc pl-5 mt-4 space-y-2 text-sm marker:text-accent/50">
-            <li>Built dynamic sales funnels that increased conversion rates by 22%.</li>
-            <li>Managed database migrations and ensured zero-downtime deployments.</li>
-            <li>Integrated third-party APIs including Stripe, Twilio, and SendGrid.</li>
-          </ul>
-        </>
-      )
-    },
-    {
       src: "/img/certs/11.png",
       alt: "Certifications & Advanced Training",
       title: "Certifications & Advanced Training",
@@ -82,44 +34,6 @@ export default function Portfolio() {
             <li className="pl-2"><strong>Strategic Executive Operations:</strong> Completed specialized Executive Assistant training, equipping me to provide seamless, high-level organizational support and streamline complex administrative workflows.</li>
           </ul>
           <p className="mt-4">These intensive trainings have directly translated into my freelance practice, allowing me to bridge the gap between high-level technical automation and everyday business operations.</p>
-        </>
-      )
-    },
-    {
-      src: UNSPLASH("1521737604893-d14cc237f11d"),
-      alt: "UX/UI Designer",
-      title: "Senior UX Designer",
-      subtitle: "Creative Web Agency",
-      meta: [
-        { label: "Type", value: "Experience" },
-        { label: "Timeline", value: "2019 - 2021" },
-      ],
-      gallery: [
-        UNSPLASH("1551288049-bebda4e38f71"),
-        UNSPLASH("1504868584819-f8e8b4b6d7e3")
-      ],
-      content: (
-        <>
-          <p>Lead the frontend design team, building cohesive design systems and translating brand requirements into functional React components.</p>
-        </>
-      )
-    },
-    {
-      src: UNSPLASH("1551288049-bebda4e38f71"),
-      alt: "Freelance Engineer",
-      title: "Freelance Software Engineer",
-      subtitle: "Self-Employed",
-      meta: [
-        { label: "Type", value: "Experience" },
-        { label: "Timeline", value: "2018 - 2019" },
-      ],
-      gallery: [
-        UNSPLASH("1522071820081-009f0129c71c"),
-        UNSPLASH("1517245386807-bb43f82c33c4")
-      ],
-      content: (
-        <>
-          <p>Delivered custom web applications and e-commerce solutions for over 20 small businesses during my final years of university.</p>
         </>
       )
     },
@@ -374,6 +288,7 @@ export default function Portfolio() {
             {viewMode === 'carousel' ? (
               <CoverflowCarousel 
                 slides={backgroundSlides} 
+                initialSlide={1}
                 showCaption 
                 showNavigation
                 showPagination
