@@ -1,14 +1,21 @@
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import Hero from './components/Hero';
 import About from './components/About';
 import TechStack from './components/TechStack';
 import Services from './components/Services';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
+import GalaxyBackground from './components/ui/GalaxyBackground';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
+  const springConfig = { damping: 20, stiffness: 400, mass: 0.2 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
   const [isHovering, setIsHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -17,7 +24,8 @@ function App() {
     setIsMobile(window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches);
 
     const updateCursor = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -51,18 +59,26 @@ function App() {
         <>
           <motion.div 
             className="fixed top-0 left-0 w-3 h-3 bg-accent rounded-full pointer-events-none z-[100] mix-blend-screen shadow-[0_0_15px_rgba(229,211,179,0.8)]"
-            animate={{ 
-              x: cursorPos.x - 6, 
-              y: cursorPos.y - 6,
+            style={{ 
+              x: cursorX, 
+              y: cursorY,
+              translateX: "-50%",
+              translateY: "-50%"
+            }}
+            animate={{
               scale: isHovering ? 0 : 1
             }}
             transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
           />
           <motion.div 
             className="fixed top-0 left-0 w-10 h-10 border border-accent/40 rounded-full pointer-events-none z-[99]"
-            animate={{ 
-              x: cursorPos.x - 20, 
-              y: cursorPos.y - 20,
+            style={{ 
+              x: cursorXSpring, 
+              y: cursorYSpring,
+              translateX: "-50%",
+              translateY: "-50%"
+            }}
+            animate={{
               scale: isHovering ? 1.5 : 1,
               backgroundColor: isHovering ? "rgba(229,211,179,0.05)" : "transparent"
             }}
@@ -133,11 +149,19 @@ function App() {
 
       <main className="relative z-10 flex flex-col">
         <Hero />
-        <About />
-        <TechStack />
-        <Services />
-        <Portfolio />
-        <Contact />
+        
+        <div className="relative bg-background rounded-t-[40px] border-t border-white/10 shadow-[0_-20px_50px_rgba(0,0,0,0.9),0_-5px_20px_rgba(255,255,255,0.04)] z-20">
+          <div className="absolute inset-0 rounded-t-[40px] overflow-hidden pointer-events-none">
+            <GalaxyBackground />
+          </div>
+          <div className="relative z-10">
+            <About />
+            <TechStack />
+            <Services />
+            <Portfolio />
+            <Contact />
+          </div>
+        </div>
       </main>
     </div>
   );
