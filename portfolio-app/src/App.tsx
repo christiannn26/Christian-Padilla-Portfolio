@@ -51,6 +51,42 @@ function App() {
     };
   }, [isMobile]);
 
+  // Elegant custom smooth scrolling
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    
+    const targetElement = document.getElementById(targetId);
+    const startPosition = window.scrollY;
+    const targetPosition = targetId === 'top' ? 0 : (targetElement ? targetElement.getBoundingClientRect().top + startPosition : 0);
+    const distance = targetPosition - startPosition;
+    const duration = 800; // 0.8s for a very snappy, elegant glide
+    let start: number | null = null;
+
+    // Easing function: easeInOutCubic (softer acceleration/deceleration)
+    const easeInOutCubic = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    // Disable pointer events to prevent expensive hover recalculations while scrolling
+    document.body.style.pointerEvents = 'none';
+    window.dispatchEvent(new Event('scroll-start'));
+
+    const animation = (currentTime: number) => {
+      if (start === null) start = currentTime;
+      const timeElapsed = currentTime - start;
+      const progress = Math.min(timeElapsed / duration, 1);
+      
+      window.scrollTo(0, startPosition + distance * easeInOutCubic(progress));
+      
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      } else {
+        document.body.style.pointerEvents = '';
+        window.dispatchEvent(new Event('scroll-end'));
+      }
+    };
+
+    requestAnimationFrame(animation);
+  };
+
   return (
     <div className="relative min-h-screen font-sans text-foreground selection:bg-accent/30 overflow-x-hidden">
       
@@ -58,7 +94,7 @@ function App() {
       {!isMobile && (
         <>
           <motion.div 
-            className="fixed top-0 left-0 w-3 h-3 bg-accent rounded-full pointer-events-none z-[100] mix-blend-screen shadow-[0_0_15px_rgba(229,211,179,0.8)]"
+            className="fixed top-0 left-0 w-3 h-3 bg-accent rounded-full pointer-events-none z-[100] shadow-[0_0_15px_rgba(229,211,179,0.8)]"
             style={{ 
               x: cursorX, 
               y: cursorY,
@@ -114,7 +150,7 @@ function App() {
         />
 
         <motion.div 
-          className="absolute top-[5%] left-[10%] w-[60vw] h-[60vw] rounded-full mix-blend-screen pointer-events-none"
+          className="absolute top-[5%] left-[10%] w-[60vw] h-[60vw] rounded-full pointer-events-none will-change-transform opacity-60"
           style={{ background: "radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%)" }}
           animate={{ 
             x: [0, 40, -40, 0],
@@ -124,7 +160,7 @@ function App() {
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         />
         <motion.div 
-          className="absolute bottom-[10%] right-[5%] w-[70vw] h-[70vw] rounded-full mix-blend-screen pointer-events-none"
+          className="absolute bottom-[10%] right-[5%] w-[70vw] h-[70vw] rounded-full pointer-events-none will-change-transform opacity-60"
           style={{ background: "radial-gradient(circle at 50% 50%, rgba(250, 249, 246, 0.05) 0%, transparent 50%)" }}
           animate={{ 
             x: [0, -50, 50, 0],
@@ -136,13 +172,19 @@ function App() {
       </div>
 
       <nav className="fixed top-0 z-50 w-full glass-panel border-b-0 border-white/5 shadow-none transition-all duration-300">
-        <div className="container mx-auto px-4 h-20 flex items-center justify-between max-w-6xl">
-          <span className="font-heading font-bold text-2xl tracking-wide text-primary">VA<span className="text-accent">.</span></span>
+        <div className="w-full px-8 md:px-16 h-20 flex items-center justify-between">
+          <a 
+            href="#top"
+            onClick={(e) => scrollToSection(e, 'top')}
+            className="font-heading font-bold text-2xl tracking-wide text-primary hover:text-accent transition-colors duration-300 cursor-pointer"
+          >
+            Christian Padilla<span className="text-accent">.</span>
+          </a>
           <div className="space-x-8 text-sm font-medium hidden md:block uppercase tracking-widest text-xs">
-            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors duration-300">About</a>
-            <a href="#services" className="text-muted-foreground hover:text-primary transition-colors duration-300">Services</a>
-            <a href="#portfolio" className="text-muted-foreground hover:text-primary transition-colors duration-300">Portfolio</a>
-            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors duration-300">Contact</a>
+            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-muted-foreground hover:text-primary transition-colors duration-300">About</a>
+            <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Services</a>
+            <a href="#portfolio" onClick={(e) => scrollToSection(e, 'portfolio')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Portfolio</a>
+            <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Contact</a>
           </div>
         </div>
       </nav>
@@ -150,7 +192,7 @@ function App() {
       <main className="relative z-10 flex flex-col">
         <Hero />
         
-        <div className="relative bg-background rounded-t-[40px] border-t border-white/10 shadow-[0_-20px_50px_rgba(0,0,0,0.9),0_-5px_20px_rgba(255,255,255,0.04)] z-20">
+        <div className="relative bg-background rounded-t-[40px] border-t border-white/10 shadow-[0_-20px_50px_rgba(0,0,0,0.9),0_-5px_20px_rgba(255,255,255,0.04)] z-20 will-change-transform">
           <div className="absolute inset-0 rounded-t-[40px] overflow-hidden pointer-events-none">
             <GalaxyBackground />
           </div>

@@ -1,13 +1,15 @@
 export default function GalaxyBackground() {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none bg-background">
-      {/* High-quality subtle galaxy image from Unsplash */}
+      {/* High-quality subtle galaxy image, tiled to allow natural flawless scrolling */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat mix-blend-screen"
+        className="absolute inset-0 bg-repeat"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&q=80&w=2000')`,
-          backgroundAttachment: 'fixed',
-          opacity: 0.5
+          backgroundSize: '1200px auto',
+          opacity: 0.5,
+          transform: 'translateZ(0)',
+          willChange: 'transform'
         }}
       />
       {/* Uniform dark overlay to ensure it doesn't overshine elements, while staying visible on all pages */}

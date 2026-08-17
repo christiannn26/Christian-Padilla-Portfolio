@@ -92,8 +92,15 @@ export function VoxelTopographyGrid({
       mouseRef.current.targetY = clientY - rect.top;
     };
 
+    let ticking = false;
     const handlePointerMove = (e: PointerEvent) => {
-      updatePointerPos(e.clientX, e.clientY);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updatePointerPos(e.clientX, e.clientY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     const handlePointerLeave = () => {
@@ -110,7 +117,17 @@ export function VoxelTopographyGrid({
     const maxRadiusSq = 220 * 220;
     const invMaxHeight = 1 / (maxHeight + 55);
 
+    let isVisible = false;
+    let isDrawing = false;
+    let isScrolling = false;
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+
     const draw = () => {
+      if (!isVisible || isScrolling) {
+        isDrawing = false;
+        return;
+      }
+      
       time += speed;
 
       // Responsive, smooth lerping cursor tracking
@@ -223,10 +240,44 @@ export function VoxelTopographyGrid({
       animationFrameId = requestAnimationFrame(draw);
     };
 
-    draw();
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible && !isDrawing && !isScrolling) {
+        isDrawing = true;
+        draw();
+      }
+    });
+    intersectionObserver.observe(container);
+
+    // Global Scroll Suspension Logic
+    const handleScrollStart = () => {
+      isScrolling = true;
+    };
+
+    const handleScrollEnd = () => {
+      isScrolling = false;
+      if (isVisible && !isDrawing) {
+        isDrawing = true;
+        draw();
+      }
+    };
+
+    const handleNativeScroll = () => {
+      if (!isScrolling) handleScrollStart();
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(handleScrollEnd, 150);
+    };
+
+    window.addEventListener('scroll-start', handleScrollStart);
+    window.addEventListener('scroll-end', handleScrollEnd);
+    window.addEventListener('scroll', handleNativeScroll, { passive: true });
 
     return () => {
       resizeObserver.disconnect();
+      window.removeEventListener('scroll-start', handleScrollStart);
+      window.removeEventListener('scroll-end', handleScrollEnd);
+      window.removeEventListener('scroll', handleNativeScroll);
+      intersectionObserver.disconnect();
       window.removeEventListener('pointermove', handlePointerMove);
       container.removeEventListener('pointerleave', handlePointerLeave);
       cancelAnimationFrame(animationFrameId);
@@ -236,7 +287,8 @@ export function VoxelTopographyGrid({
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full z-0 overflow-hidden opacity-60 cursor-pointer touch-none"
+      className="absolute inset-0 w-full h-full z-0 overflow-hidden opacity-60 cursor-pointer touch-none will-change-transform"
+      style={{ transform: 'translateZ(0)' }}
     >
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
