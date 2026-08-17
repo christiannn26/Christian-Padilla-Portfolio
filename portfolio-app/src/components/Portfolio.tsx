@@ -89,46 +89,94 @@ export default function Portfolio() {
 
   const projectSlides = [
     {
-      src: UNSPLASH("1560518883-ce09059eeffa"),
-      alt: "Real Estate CRM",
-      title: "Real Estate CRM Migration",
-      subtitle: "GoHighLevel Build",
+      src: "/img/LC_EA/4.png",
+      alt: "LifeCrafting - Executive Assistant",
+      title: "LifeCrafting - California, USA",
+      subtitle: "Executive Assistant | Lead Generation & Social Media Specialist",
       meta: [
-        { label: "Role", value: "Lead Architect" },
-        { label: "Stack", value: "GHL, Make.com" },
+        { label: "Role", value: "Executive Assistant" },
+        { label: "Timeline", value: "2023 - 2025" },
       ],
-      link: "#",
       gallery: [
-        UNSPLASH("1551288049-bebda4e38f71"),
-        UNSPLASH("1460925895917-afdab827c52f"),
-        UNSPLASH("1504868584819-f8e8b4b6d7e3")
+        "/img/LC_EA/7.png",
+        "/img/LC_EA/8.png",
+        "/img/LC_EA/9.png"
       ],
       content: (
         <>
-          <p>Completely overhauled the data architecture for a multi-state real estate brokerage, migrating 10,000+ contacts into GoHighLevel.</p>
-          <p className="mt-4">Designed custom automated pipelines that trigger localized SMS follow-ups based on the lead's viewing history.</p>
+          <p>Provided comprehensive executive support designed to actively scale business operations rather than just manage them. Acting as a dedicated growth partner, I seamlessly combined high-level organizational workflows with aggressive lead generation, automated CRM architectures, and strategic social media management to drive client acquisition and elevate brand authority.</p>
+          
+          <ul className="list-disc pl-6 mt-6 space-y-6 text-white/80 marker:text-accent">
+            <li className="pl-2">
+              <strong>Targeted Lead Generation & Outreach:</strong> Drove client acquisition by building highly targeted lead lists, conducting strategic outreach, and engineering automated, high-converting email campaigns.
+              <div className="flex flex-wrap gap-2 pt-3">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">LinkedIn</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Sales Navigator</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Facebook Ads</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">ClientScraper</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Microsoft Excel</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">GoHighLevel (GHL)</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Kartra</span>
+              </div>
+            </li>
+            
+            <li className="pl-2">
+              <strong>Social Media Management:</strong> Oversaw end-to-end online presence, running targeted campaigns, scheduling cross-platform posts, and tracking analytics to apply proven strategies that boost overall reach.
+              <div className="flex flex-wrap gap-2 pt-3">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Facebook Ads Manager</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Buffer</span>
+              </div>
+            </li>
+            
+            <li className="pl-2">
+              <strong>Creative Content Production:</strong> Designed eye-catching graphics and edited dynamic video content to ensure social channels maintained a steady stream of high-quality, daily posts that build brand authority.
+              <div className="flex flex-wrap gap-2 pt-3">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Canva</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Filmora</span>
+              </div>
+            </li>
+          </ul>
         </>
       )
     },
     {
-      src: UNSPLASH("1531297172868-522fcbce0229"),
-      alt: "E-Commerce Bot",
-      title: "E-Commerce AI Support Bot",
-      subtitle: "AI Integration",
+      src: "/img/LC_WD/5.png",
+      alt: "LifeCrafting - Full Stack Web Developer",
+      title: "LifeCrafting - California, USA",
+      subtitle: "Full Stack Web & Application Developer | UI/UX Designer",
       meta: [
-        { label: "Role", value: "AI Developer" },
-        { label: "Stack", value: "OpenAI, Zapier" },
+        { label: "Role", value: "Full Stack Developer" },
+        { label: "Timeline", value: "2024 - 2025" },
       ],
-      link: "#",
       gallery: [
-        UNSPLASH("1531297172868-522fcbce0229"),
-        UNSPLASH("1485827404703-89b55fcc595e"),
-        UNSPLASH("1555949963-ff9fe0c870eb")
+        "/img/LC_WD/10.png"
       ],
       content: (
         <>
-          <p>Built a custom ChatGPT-powered support agent that interfaces directly with Shopify and Zendesk.</p>
-          <p className="mt-4">The agent successfully handles 60% of tier-1 support tickets automatically, checking order status and processing standard return requests.</p>
+          <p>Bridged the gap between intuitive design and robust technical execution to lead digital projects from initial concept to successful launch. Leveraging a strong engineering foundation and rapid technology adoption, I architected, prototyped, and deployed highly functional web applications across both custom-coded and agile no-code environments.</p>
+          
+          <ul className="list-disc pl-6 mt-6 space-y-6 text-white/80 marker:text-accent">
+            <li className="pl-2">
+              <strong>End-to-End Project Leadership & UI/UX Design:</strong> Managed the complete development lifecycle for company websites and applications, drafting intuitive, aesthetically pleasing wireframes and user interfaces from concept to launch.
+              <div className="flex flex-wrap gap-2 pt-3">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Figma</span>
+              </div>
+            </li>
+            
+            <li className="pl-2">
+              <strong>Versatile Development Execution:</strong> Built highly responsive, user-friendly digital solutions, leveraging both traditional custom coding environments and agile, rapid-deployment platforms.
+              <div className="flex flex-wrap gap-2 pt-3">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">VSCode</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Softr</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Wix</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Namecheap</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">HTML</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">CSS</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">React.js</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">NoSQL</span>
+              </div>
+            </li>
+          </ul>
         </>
       )
     },
