@@ -1,10 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeft, ChevronRight, Maximize2, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 
 import { cn } from "../../lib/utils";
-import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from "./dialog";
 
 const useIsoLayoutEffect =
   typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
@@ -18,99 +17,6 @@ export interface CoverflowSlide {
   content?: React.ReactNode;
   link?: string;
   gallery?: string[];
-}
-
-function GalleryScrollColumn({ slide }: { slide: CoverflowSlide }) {
-  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const node = scrollContainerRef.current;
-    if (!node) return;
-
-    let rafId: number;
-    let isUserScrolling = false;
-    let timeout: ReturnType<typeof setTimeout>;
-    
-    let scrollAccumulator = 0;
-    const speed = 0.35; // Pixels per frame, slower for cinematic effect
-
-    const startAutoScroll = () => {
-      const step = () => {
-        if (!isUserScrolling && node.scrollTop < (node.scrollHeight - node.clientHeight - 2)) {
-          scrollAccumulator += speed;
-          if (scrollAccumulator >= 1) {
-            const add = Math.floor(scrollAccumulator);
-            node.scrollTop += add;
-            scrollAccumulator -= add;
-          }
-        }
-        rafId = requestAnimationFrame(step);
-      };
-      rafId = requestAnimationFrame(step);
-    };
-
-    const handleInteraction = () => {
-      isUserScrolling = true;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => { isUserScrolling = false; }, 3000);
-    };
-
-    const handleTouchStart = () => {
-      isUserScrolling = true;
-      clearTimeout(timeout);
-    };
-
-    node.addEventListener('wheel', handleInteraction, { passive: true });
-    node.addEventListener('touchstart', handleTouchStart, { passive: true });
-    node.addEventListener('touchend', handleInteraction, { passive: true });
-    node.addEventListener('mousedown', handleInteraction, { passive: true });
-
-    const initialTimeout = setTimeout(startAutoScroll, 1000);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      clearTimeout(initialTimeout);
-      clearTimeout(timeout);
-      node.removeEventListener('wheel', handleInteraction);
-      node.removeEventListener('touchstart', handleTouchStart);
-      node.removeEventListener('touchend', handleInteraction);
-      node.removeEventListener('mousedown', handleInteraction);
-    };
-  }, []);
-
-  return (
-    <div 
-      ref={scrollContainerRef}
-      className="flex-1 h-[60vh] md:h-full overflow-y-auto custom-scrollbar bg-[#050505] min-h-0"
-    >
-      <div className="flex flex-col gap-px pb-20">
-        <div className="w-full relative bg-slate-900 group">
-          <img 
-            src={slide.src} 
-            alt={slide.alt} 
-            className="w-full h-auto object-cover"
-          />
-          <div className="absolute inset-0 bg-black/20 mix-blend-overlay pointer-events-none" />
-        </div>
-        
-        {slide.gallery?.map((imgUrl, idx) => (
-          <div key={idx} className="w-full relative bg-slate-900 group">
-            <img 
-              src={imgUrl} 
-              alt={`${slide.title} gallery image ${idx + 1}`} 
-              className="w-full h-auto object-cover"
-            />
-            <div className="absolute inset-0 bg-black/20 mix-blend-overlay pointer-events-none" />
-          </div>
-        ))}
-        
-        <div className="w-full py-12 flex flex-col items-center justify-center opacity-30">
-          <div className="w-12 h-1 bg-white/30 rounded-full mb-4"></div>
-          <p className="text-xs uppercase tracking-widest text-white font-bold">End of Gallery</p>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 export interface CoverflowCarouselProps {
@@ -137,6 +43,7 @@ export interface CoverflowCarouselProps {
   label?: string;
   className?: string;
   cardClassName?: string;
+  onSlideClick?: (slide: CoverflowSlide) => void;
 }
 
 export function CoverflowCarousel({
@@ -155,6 +62,7 @@ export function CoverflowCarousel({
   label = "Cover carousel",
   className,
   cardClassName,
+  onSlideClick,
 }: CoverflowCarouselProps) {
   const count = slides.length;
 
@@ -179,7 +87,6 @@ export function CoverflowCarousel({
   } | null>(null);
 
   const [selected, setSelected] = React.useState(0);
-  const [expandedSlide, setExpandedSlide] = React.useState<CoverflowSlide | null>(null);
 
   /** Nearest whole card, folded back into 0..count-1. */
   const indexAt = React.useCallback(
@@ -326,7 +233,7 @@ export function CoverflowCarousel({
     if (isClick && drag.targetIndex !== null) {
       const index = drag.targetIndex;
       if (index === selected && slides[index].content) {
-        setExpandedSlide(slides[index]);
+        onSlideClick?.(slides[index]);
       } else {
         goTo(index);
       }
@@ -417,8 +324,10 @@ export function CoverflowCarousel({
                 aria-roledescription="slide"
                 aria-label={`${index + 1} of ${count}`}
                 className={cn(
-                  "absolute left-1/2 top-0 aspect-[3/4] md:aspect-square overflow-hidden rounded-3xl bg-muted shadow-xl will-change-transform",
-                  index === selected && slide.content ? "cursor-pointer" : "",
+                  "absolute left-1/2 top-0 aspect-[3/4] md:aspect-square overflow-hidden rounded-3xl bg-slate-900 transition-shadow duration-500 will-change-transform",
+                  index === selected 
+                    ? "shadow-[0_0_70px_-10px_rgba(212,175,55,0.4)] border-2 border-accent/60 cursor-pointer z-20" 
+                    : "shadow-[0_0_40px_-10px_rgba(212,175,55,0.25)] border border-accent/30 z-10",
                   cardClassName,
                 )}
                 style={{ width: "var(--cf-card)" }}
@@ -468,25 +377,15 @@ export function CoverflowCarousel({
       </div>
 
       {showCaption && active && (
-        <div
-          key={selected}
-          className="mt-2 flex flex-col items-center px-6 duration-300 animate-in fade-in pb-16"
-        >
-          <p className="text-3xl font-bold tracking-tight text-white font-heading text-center">
-            {active.title}
-          </p>
-          {active.subtitle && (
-            <p className="mt-2 text-sm text-accent font-semibold tracking-[0.2em] uppercase text-center">
-              {active.subtitle}
-            </p>
-          )}
-          
+        <div className="mt-8 flex flex-col items-center text-center w-full px-4 z-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <h3 className="text-3xl md:text-4xl font-heading font-bold text-white mb-2 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] tracking-wide">{active.title}</h3>
+          <p className="text-sm md:text-base text-accent mb-6 font-semibold tracking-widest uppercase">{active.subtitle}</p>
           {active.content && (
             <button 
-              onClick={() => setExpandedSlide(active)}
-              className="mt-6 group relative inline-flex h-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 px-8 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-accent/30 focus:outline-none backdrop-blur-md shadow-[inset_0_1px_0_rgba(250,249,246,0.1)]"
+              onClick={() => onSlideClick?.(active)}
+              className="group relative inline-flex h-12 items-center justify-center rounded-xl bg-white/5 border border-white/20 px-8 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-accent/50 focus:outline-none backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(212,175,55,0.25)] active:scale-95"
             >
-              <span className="relative z-10 flex items-center pointer-events-none">
+              <span className="relative z-10 flex items-center">
                 <Maximize2 className="mr-3 h-4 w-4 text-accent transition-transform group-hover:scale-110" />
                 View Full Details
               </span>
@@ -512,64 +411,6 @@ export function CoverflowCarousel({
           ))}
         </div>
       )}
-
-      {/* Expanded Modal / Shadcn Dialog */}
-      <Dialog open={!!expandedSlide} onOpenChange={(open) => !open && setExpandedSlide(null)}>
-        <DialogContent className="max-w-[95vw] md:max-w-[90vw] h-[95vh] md:h-[90vh] bg-slate-950/80 backdrop-blur-2xl border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,1)] text-white p-0 overflow-hidden rounded-[2rem] gap-0 flex flex-col min-h-0">
-          <div className="flex flex-col md:flex-row h-full w-full flex-1 min-h-0">
-            
-            {/* Left Column: Sticky Content Section */}
-            <div className="w-full md:w-1/3 flex flex-col h-[40vh] md:h-full border-b md:border-b-0 md:border-r border-white/10 bg-slate-950/50 shrink-0 min-h-0">
-              <div className="flex-1 p-6 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar">
-                <div className="mb-8">
-                  <DialogTitle className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 leading-tight">{expandedSlide?.title}</DialogTitle>
-                  <DialogDescription className="text-accent text-sm font-semibold tracking-[0.2em] uppercase">
-                    {expandedSlide?.subtitle}
-                  </DialogDescription>
-                </div>
-
-                {expandedSlide?.meta && expandedSlide.meta.length > 0 && (
-                  <div className="flex flex-wrap gap-4 mb-10 pb-10 border-b border-white/10">
-                    {expandedSlide.meta.map((row) => (
-                      <div key={row.label} className="bg-white/5 rounded-xl px-5 py-3 border border-white/5 flex-1 min-w-[120px]">
-                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1.5">{row.label}</p>
-                        <p className="text-sm font-semibold text-white">{row.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                <div className="text-muted-foreground font-light leading-relaxed space-y-6 text-sm md:text-base pr-2">
-                  {expandedSlide?.content}
-                </div>
-              </div>
-              
-              {/* Sticky Footer for Actions */}
-              <div className="p-6 md:p-10 border-t border-white/10 bg-slate-950/80 backdrop-blur-md flex flex-wrap gap-4 mt-auto">
-                {expandedSlide?.link && (
-                  <a 
-                    href={expandedSlide.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex h-14 items-center justify-center rounded-xl bg-accent px-8 text-sm font-bold text-accent-foreground shadow-[0_0_30px_-5px_rgba(229,211,179,0.4)] transition-all hover:bg-accent/90"
-                  >
-                    Visit Project <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                )}
-                <DialogClose asChild>
-                  <button className="flex-1 inline-flex h-14 items-center justify-center rounded-xl bg-white/5 border border-white/10 px-8 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-white/20">
-                    Close Details
-                  </button>
-                </DialogClose>
-              </div>
-            </div>
-
-            {/* Right Column: Scrollable Image Gallery with Auto-Scroll */}
-            {expandedSlide && <GalleryScrollColumn slide={expandedSlide} />}
-            
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

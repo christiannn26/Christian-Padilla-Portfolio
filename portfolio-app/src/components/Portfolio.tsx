@@ -1,7 +1,14 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { CoverflowCarousel } from './ui/coverflow-carousel';
+import React from 'react';
+import { Maximize2, ExternalLink, Grid, MonitorPlay } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { CoverflowCarousel } from "./ui/coverflow-carousel";
+import type { CoverflowSlide } from "./ui/coverflow-carousel";
+import { ProjectDetailsModal } from "./ProjectDetailsModal";
+import { cn } from "../lib/utils";
 
 export default function Portfolio() {
+  const [viewMode, setViewMode] = React.useState<'carousel' | 'grid'>('carousel');
+  const [expandedSlide, setExpandedSlide] = React.useState<CoverflowSlide | null>(null);
   const UNSPLASH = (id: string) => `https://images.unsplash.com/photo-${id}?w=1200&q=80`;
 
   const backgroundSlides = [
@@ -309,25 +316,49 @@ export default function Portfolio() {
         </div>
 
         <Tabs defaultValue="background" className="w-full relative z-10">
-          <div className="flex justify-center mb-6">
-            <TabsList className="bg-white/5 border border-white/10 p-1.5 rounded-2xl backdrop-blur-md">
-              <TabsTrigger 
-                value="background" 
-                className="rounded-xl px-8 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"
-              >
-                Background & Certificates
-              </TabsTrigger>
-              <TabsTrigger 
-                value="projects" 
-                className="rounded-xl px-8 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"
-              >
-                Featured Projects
-              </TabsTrigger>
-            </TabsList>
-          </div>
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
+          <TabsList className="bg-white/5 border border-white/10 p-1.5 rounded-2xl backdrop-blur-md">
+            <TabsTrigger 
+              value="background" 
+              className="rounded-xl px-8 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"
+            >
+              Background & Certificates
+            </TabsTrigger>
+            <TabsTrigger 
+              value="projects" 
+              className="rounded-xl px-8 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"
+            >
+              Featured Projects
+            </TabsTrigger>
+          </TabsList>
 
-          <TabsContent value="background" className="mt-0 outline-none w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <div className="w-full max-w-6xl mx-auto">
+          <div className="flex bg-white/5 border border-white/10 p-1.5 rounded-2xl backdrop-blur-md z-20">
+            <button 
+              onClick={() => setViewMode('carousel')}
+              className={cn(
+                "px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2",
+                viewMode === 'carousel' ? "bg-accent text-accent-foreground shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)]" : "text-muted-foreground hover:text-white"
+              )}
+            >
+              <MonitorPlay className="w-4 h-4" />
+              Cinematic
+            </button>
+            <button 
+              onClick={() => setViewMode('grid')}
+              className={cn(
+                "px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2",
+                viewMode === 'grid' ? "bg-accent text-accent-foreground shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)]" : "text-muted-foreground hover:text-white"
+              )}
+            >
+              <Grid className="w-4 h-4" />
+              Grid View
+            </button>
+          </div>
+        </div>
+
+        <TabsContent value="background" className="mt-0 outline-none w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="w-full max-w-6xl mx-auto">
+            {viewMode === 'carousel' ? (
               <CoverflowCarousel 
                 slides={backgroundSlides} 
                 showCaption 
@@ -337,12 +368,36 @@ export default function Portfolio() {
                 cardWidth="clamp(220px, 28vw, 320px)"
                 gap={-0.15}
                 fade={0.05}
+                onSlideClick={setExpandedSlide}
               />
-            </div>
-          </TabsContent>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-10">
+                {backgroundSlides.map((slide, i) => (
+                  <div 
+                    key={i}
+                    onClick={() => setExpandedSlide(slide)}
+                    className="group relative aspect-square rounded-3xl overflow-hidden cursor-pointer bg-slate-900 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:border-accent/40 hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] transition-all duration-500 will-change-transform hover:-translate-y-2"
+                  >
+                    <img src={slide.src} alt={slide.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                      <h4 className="text-2xl font-heading font-bold text-white mb-1 drop-shadow-md">{slide.title}</h4>
+                      <p className="text-accent text-xs font-semibold tracking-widest uppercase mb-4">{slide.subtitle}</p>
+                      <div className="inline-flex h-10 items-center justify-center rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        <Maximize2 className="mr-2 h-3 w-3 text-accent" />
+                        View Details
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </TabsContent>
 
-          <TabsContent value="projects" className="mt-0 outline-none w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <div className="w-full max-w-6xl mx-auto">
+        <TabsContent value="projects" className="mt-0 outline-none w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="w-full max-w-6xl mx-auto">
+            {viewMode === 'carousel' ? (
               <CoverflowCarousel 
                 slides={projectSlides} 
                 showCaption 
@@ -352,12 +407,36 @@ export default function Portfolio() {
                 cardWidth="clamp(220px, 28vw, 320px)"
                 gap={-0.15}
                 fade={0.05}
+                onSlideClick={setExpandedSlide}
               />
-            </div>
-          </TabsContent>
-        </Tabs>
-
-      </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-10">
+                {projectSlides.map((slide, i) => (
+                  <div 
+                    key={i}
+                    onClick={() => setExpandedSlide(slide)}
+                    className="group relative aspect-square rounded-3xl overflow-hidden cursor-pointer bg-slate-900 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:border-accent/40 hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] transition-all duration-500 will-change-transform hover:-translate-y-2"
+                  >
+                    <img src={slide.src} alt={slide.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                      <h4 className="text-2xl font-heading font-bold text-white mb-1 drop-shadow-md">{slide.title}</h4>
+                      <p className="text-accent text-xs font-semibold tracking-widest uppercase mb-4">{slide.subtitle}</p>
+                      <div className="inline-flex h-10 items-center justify-center rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        <Maximize2 className="mr-2 h-3 w-3 text-accent" />
+                        View Details
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </TabsContent>
+      </Tabs>
+      
+      <ProjectDetailsModal slide={expandedSlide} onClose={() => setExpandedSlide(null)} />
+    </div>
     </section>
   );
 }
