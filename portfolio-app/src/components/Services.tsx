@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Settings, MessageSquare, Briefcase, Zap, BarChart, Users } from 'lucide-react';
+import { Zap, Database, Code, Filter, Server, Briefcase } from 'lucide-react';
 import { use3DTilt } from '../hooks/useGSAP';
 
 function ServiceCard({ service, variants }: { service: any, variants: any }) {
@@ -9,9 +9,9 @@ function ServiceCard({ service, variants }: { service: any, variants: any }) {
     <motion.div 
       ref={cardRef}
       variants={variants}
-      className="group relative p-8 rounded-3xl glass-panel transition-all duration-300 overflow-hidden"
       style={{ transformStyle: "preserve-3d" }}
     >
+      <div className="group relative p-8 h-full rounded-3xl glass-panel transition-all duration-300 overflow-hidden" style={{ transformStyle: "preserve-3d" }}>
       <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
       {/* Soft ambient glow */}
@@ -25,6 +25,20 @@ function ServiceCard({ service, variants }: { service: any, variants: any }) {
       <p className="text-muted-foreground leading-relaxed text-sm font-light" style={{ transform: "translateZ(20px)" }}>
         {service.description}
       </p>
+      
+      {service.poweredBy && (
+        <div className="mt-5 pt-4 border-t border-white/5" style={{ transform: "translateZ(25px)" }}>
+          <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.15em] mb-2.5">Powered By</p>
+          <div className="flex flex-wrap gap-2">
+            {service.poweredBy.map((tech: string, idx: number) => (
+              <span key={idx} className="px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-medium border border-accent/20">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+      </div>
     </motion.div>
   );
 }
@@ -32,34 +46,40 @@ function ServiceCard({ service, variants }: { service: any, variants: any }) {
 export default function Services() {
   const services = [
     {
-      title: "CRM Architecture",
-      description: "Custom GoHighLevel setups designed to capture, nurture, and convert leads seamlessly.",
-      icon: Settings
-    },
-    {
-      title: "AI Chatbots",
-      description: "Intelligent conversational agents for 24/7 customer support and automated appointment booking.",
-      icon: MessageSquare
-    },
-    {
       title: "Workflow Automation",
-      description: "Connecting apps via Make/Zapier to eliminate manual data entry and save hundreds of hours.",
-      icon: Zap
+      description: "I connect your favorite apps and build AI-driven workflows that do the heavy lifting, saving you hours of manual data entry every single week.",
+      icon: Zap,
+      poweredBy: ["GHL", "n8n", "Make.com", "Zapier"]
     },
     {
-      title: "Lead Generation",
-      description: "Designing high-converting funnels and automated follow-up sequences that never miss a beat.",
-      icon: Users
+      title: "GHL | CRM Architecture",
+      description: "Stop losing track of leads. I build out comprehensive CRM architectures complete with clean data migration, smart pipelines, and automated follow-ups.",
+      icon: Database,
+      poweredBy: ["GoHighLevel"]
     },
     {
-      title: "Funnel Optimization",
-      description: "Data-driven enhancements to landing pages and emails to maximize your ROI.",
-      icon: BarChart
+      title: "Full-Stack Web Development",
+      description: "From smooth front-end designs to secure back-end databases, I code and launch reliable web applications that look incredible and work flawlessly.",
+      icon: Code,
+      poweredBy: ["React.js", "Next.js", "VS Code", "ClaudeCode", "Custom Databases"]
     },
     {
-      title: "Systems Management",
-      description: "Ongoing technical support and continuous iteration of your automated ecosystems.",
-      icon: Briefcase
+      title: "Designing Funnels",
+      description: "I design and build strategic sales funnels that guide your visitors step-by-step, maximizing your conversion rates and driving more revenue.",
+      icon: Filter,
+      poweredBy: ["GoHighLevel", "Figma"]
+    },
+    {
+      title: "System Management",
+      description: "Technology breaks; I make sure yours doesn't. I provide ongoing support, manage your custom API webhooks, and keep your hosted systems running smoothly.",
+      icon: Server,
+      poweredBy: ["Vercel", "Railway", "Claude AI"]
+    },
+    {
+      title: "Overall Executive Assistance",
+      description: "Think of me as the digital manager for your business. I handle the technical troubleshooting, social media management, and daily operations so you are free to be the CEO.",
+      icon: Briefcase,
+      poweredBy: ["Buffer", "GHL", "Social Medias"]
     }
   ];
 

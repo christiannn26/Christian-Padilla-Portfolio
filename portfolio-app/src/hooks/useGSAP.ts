@@ -34,11 +34,13 @@ export const useMagnetic = <T extends HTMLElement>() => {
     };
 
     el.addEventListener('pointermove', onPointerMove);
-    el.addEventListener('pointerleave', onPointerLeave);
+    el.addEventListener('mouseleave', onPointerLeave);
+    el.addEventListener('pointercancel', onPointerLeave);
 
     return () => {
       el.removeEventListener('pointermove', onPointerMove);
-      el.removeEventListener('pointerleave', onPointerLeave);
+      el.removeEventListener('mouseleave', onPointerLeave);
+      el.removeEventListener('pointercancel', onPointerLeave);
     };
   }, []);
 
@@ -76,11 +78,13 @@ export const use3DTilt = <T extends HTMLElement>() => {
     };
 
     el.addEventListener('pointermove', onPointerMove);
-    el.addEventListener('pointerleave', onPointerLeave);
+    el.addEventListener('mouseleave', onPointerLeave);
+    el.addEventListener('pointercancel', onPointerLeave);
 
     return () => {
       el.removeEventListener('pointermove', onPointerMove);
-      el.removeEventListener('pointerleave', onPointerLeave);
+      el.removeEventListener('mouseleave', onPointerLeave);
+      el.removeEventListener('pointercancel', onPointerLeave);
     };
   }, []);
 
