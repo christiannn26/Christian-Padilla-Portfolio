@@ -1,10 +1,32 @@
 import { motion } from 'framer-motion';
+import { Database } from 'lucide-react';
+
+const VSCodeIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 0 8.026v7.946a1 1 0 0 0 .327.765l1.323 1.202a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/>
+  </svg>
+);
+
+const GHLIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="5 17 12 10 19 17" />
+    <polyline points="5 12 12 5 19 12" />
+    <polyline points="5 7 12 0 19 7" />
+  </svg>
+);
 
 export default function TechStack() {
   const tools = [
-    "GoHighLevel", "HubSpot", "Salesforce", "Zapier", 
-    "Make (Integromat)", "ChatGPT", "Claude AI", "ActiveCampaign",
-    "Stripe", "Calendly", "Asana", "Monday.com"
+    { name: "GoHighLevel", customImg: "/img/logo/GhlLogo-removebg-preview.png" },
+    { name: "n8n", customImg: "/img/logo/n8n.png" },
+    { name: "Zapier", customImg: "/img/logo/zapier.png" },
+    { name: "Make.com", customImg: "/img/logo/make.png" },
+    { name: "Claude AI", customImg: "/img/logo/claude.png" },
+    { name: "VsCode", customImg: "/img/logo/vscode.png" },
+    { name: "React.js", slug: "react" },
+    { name: "Databases", icon: <Database className="w-6 h-6 text-accent" /> },
+    { name: "Buffer", customImg: "/img/logo/bff.png" },
+    { name: "Calendly", customImg: "/img/logo/calend.png" }
   ];
 
   return (
@@ -32,9 +54,27 @@ export default function TechStack() {
           {[...tools, ...tools].map((tool, i) => (
             <div 
               key={i} 
-              className="group mx-4 flex items-center justify-center px-8 py-5 rounded-2xl glass-panel hover:bg-white/10 hover:border-accent/40 transition-all duration-300 cursor-pointer shrink-0 hover:scale-105 hover:shadow-[0_0_20px_-5px_rgba(229,211,179,0.3)]"
+              className="group mx-4 flex items-center justify-center gap-3 px-8 py-5 rounded-2xl glass-panel hover:bg-white/10 hover:border-accent/40 transition-all duration-300 cursor-pointer shrink-0 hover:scale-105 hover:shadow-[0_0_20px_-5px_rgba(229,211,179,0.3)]"
             >
-              <span className="text-base font-medium text-white tracking-wide group-hover:text-accent transition-colors">{tool}</span>
+              {tool.customImg ? (
+                <img 
+                  src={tool.customImg} 
+                  alt={tool.name} 
+                  className="w-6 h-6 object-contain opacity-70 group-hover:opacity-100 transition-opacity brightness-0 invert" 
+                />
+              ) : tool.slug ? (
+                <img 
+                  src={`https://cdn.simpleicons.org/${tool.slug}/white`} 
+                  alt={tool.name} 
+                  className="w-6 h-6 opacity-70 group-hover:opacity-100 transition-opacity" 
+                  style={{ imageRendering: "high-quality" }}
+                />
+              ) : (
+                <div className="opacity-70 group-hover:opacity-100 transition-opacity">
+                  {tool.icon}
+                </div>
+              )}
+              <span className="text-base font-medium text-white tracking-wide group-hover:text-accent transition-colors">{tool.name}</span>
             </div>
           ))}
         </motion.div>
