@@ -8,9 +8,9 @@ export default function About() {
   const cardRef = use3DTilt<HTMLDivElement>();
 
   const valueProps = [
-    "Streamlining complex workflows with Make & Zapier",
-    "Deploying highly trained AI Chatbots for Support & Sales",
-    "Comprehensive CRM architecture and data migration"
+    "Streamlining complex workflows with GHL & N8n",
+    "Deploying smart AI bots that drive support and sales",
+    "Full GHL CRM setups and zero-stress data moves"
   ];
 
   return (
@@ -31,7 +31,7 @@ export default function About() {
             
             <div className="glass-panel p-8 rounded-3xl space-y-4 text-muted-foreground leading-relaxed font-light">
               <p>
-                I am a Virtual Assistant specializing in GoHighLevel (GHL), CRM architecture, and AI automation. I partner with forward-thinking businesses to eliminate operational bottlenecks and turn manual chaos into seamless, automated ecosystems.
+                A computer engineering graduate and a Virtual Assistant specializing in GoHighLevel (GHL), CRM architecture, and AI automation. I partner with forward-thinking businesses to eliminate operational bottlenecks and turn manual chaos into seamless, automated ecosystems.
               </p>
               <p>
                 By blending cutting-edge artificial intelligence with robust CRM logic, I create systems that work tirelessly for you 24/7.
@@ -67,15 +67,16 @@ export default function About() {
           >
             <div 
               ref={cardRef}
-              className="glass-panel aspect-[4/5] max-w-md mx-auto lg:mx-0 rounded-3xl overflow-hidden relative p-2"
+              className="glass-panel aspect-[4/5] max-w-md mx-auto lg:mx-0 rounded-3xl overflow-hidden relative group p-2 cursor-pointer"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
+              <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay group-hover:opacity-0 transition-opacity duration-700"></div>
               <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white/20 font-medium tracking-widest text-sm uppercase">Secondary Image</span>
-                </div>
-                {/* Optional actual image here */}
+                <img 
+                  src="/img/abtme.JPG" 
+                  alt="About Christian Padilla" 
+                  className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-100 group-hover:mix-blend-normal transition-all duration-700 pointer-events-none"
+                />
               </div>
             </div>
           </div>
