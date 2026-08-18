@@ -181,101 +181,51 @@ export default function Portfolio() {
       )
     },
     {
-      src: UNSPLASH("1460925895917-afdab827c52f"),
-      alt: "Automated Lead Funnel",
-      title: "Automated Lead Funnel",
-      subtitle: "Make/Zapier Workflow",
+      src: "/img/ibex/2024_09_16_10_45_IMG_8527.jpg",
+      alt: "IBEX GLOBAL - Technical Support",
+      title: "IBEX GLOBAL",
+      subtitle: "Technical Support & Client Retention Specialist – Walmart Logistics",
       meta: [
-        { label: "Role", value: "Automation Expert" },
-        { label: "Stack", value: "Next.js, Make" },
+        { label: "Role", value: "Technical Specialist" },
+        { label: "Timeline", value: "2022 - 2023" },
       ],
-      link: "#",
+      imagePosition: "object-center",
       gallery: [
-        UNSPLASH("1460925895917-afdab827c52f"),
-        UNSPLASH("1551288049-bebda4e38f71")
+        "/img/ibex/IMG_6885.jpg",
+        "/img/ibex/IMG_6889.jpg"
       ],
       content: (
         <>
-          <p>Created a highly optimized, dynamic lead generation funnel using Next.js on the frontend and intricate Make.com webhooks on the backend.</p>
-          <p className="mt-4">Leads are automatically enriched using Clearbit before being injected into the sales team's CRM.</p>
-        </>
-      )
-    },
-    {
-      src: UNSPLASH("1551288049-bebda4e38f71"),
-      alt: "SaaS Dashboard",
-      title: "Enterprise SaaS Dashboard",
-      subtitle: "React & Node.js",
-      meta: [
-        { label: "Role", value: "Frontend Lead" },
-        { label: "Stack", value: "React, Tailwind" },
-      ],
-      link: "#",
-      gallery: [
-        UNSPLASH("1460925895917-afdab827c52f"),
-        UNSPLASH("1504868584819-f8e8b4b6d7e3")
-      ],
-      content: (
-        <>
-          <p>Designed and built a highly performant analytics dashboard capable of rendering 100,000+ data points in real time using WebGL and React.</p>
-        </>
-      )
-    },
-    {
-      src: UNSPLASH("1522071820081-009f0129c71c"),
-      alt: "Mobile E-commerce App",
-      title: "Mobile E-commerce Platform",
-      subtitle: "React Native Build",
-      meta: [
-        { label: "Role", value: "Full Stack Engineer" },
-        { label: "Stack", value: "React Native, AWS" },
-      ],
-      link: "#",
-      gallery: [
-        UNSPLASH("1517245386807-bb43f82c33c4"),
-        UNSPLASH("1551288049-bebda4e38f71")
-      ],
-      content: (
-        <>
-          <p>Architected a cross-platform mobile application that generated $2M in revenue in its first year, scaling the backend to handle massive traffic spikes during sales.</p>
-        </>
-      )
-    },
-    {
-      src: UNSPLASH("1460925895917-afdab827c52f"),
-      alt: "Finance Dashboard",
-      title: "Personal Finance App",
-      subtitle: "FinTech Portfolio",
-      meta: [
-        { label: "Role", value: "Solo Developer" },
-        { label: "Stack", value: "React, Firebase" },
-      ],
-      link: "#",
-      gallery: [
-        UNSPLASH("1504868584819-f8e8b4b6d7e3")
-      ],
-      content: (
-        <>
-          <p>Developed a complete personal finance tracking tool with real-time budget analytics and categorization using Plaid API.</p>
-        </>
-      )
-    },
-    {
-      src: UNSPLASH("1517245386807-bb43f82c33c4"),
-      alt: "IoT Control Center",
-      title: "IoT Home Hub",
-      subtitle: "Smart Home Integration",
-      meta: [
-        { label: "Role", value: "Hardware & Software" },
-        { label: "Stack", value: "Vue.js, Node.js" },
-      ],
-      link: "#",
-      gallery: [
-        UNSPLASH("1551288049-bebda4e38f71")
-      ],
-      content: (
-        <>
-          <p>Built a custom dashboard that aggregates data from 20+ smart home sensors into a single beautiful UI panel.</p>
+          <p>Served as a dynamic technical specialist for Walmart’s enterprise delivery application, strategically blending software troubleshooting with frontline retention and product marketing. Operating in a high-pressure environment, I resolved complex technical friction while actively driving new feature adoption and preventing driver churn through persuasive, sales-driven communication.</p>
+          
+          <ul className="list-disc pl-6 mt-6 space-y-6 text-white/80 marker:text-accent">
+            <li className="pl-2">
+              <strong>Client Retention & Objection Handling:</strong> Managed high-stress interactions utilizing strategic objection-handling to de-escalate critical issues. Successfully turned frustrated users into satisfied brand advocates, directly preventing churn and preserving supply chain volume.
+              <div className="flex flex-wrap gap-2 pt-3">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">CRM Ticketing Systems</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">VoIP Systems</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Customer Success Metrics (CSAT)</span>
+              </div>
+            </li>
+            
+            <li className="pl-2">
+              <strong>Product Marketing & Feature Adoption:</strong> Acted as a frontline brand ambassador by pitching the value proposition of new UI updates. Drove rapid user adoption by educating drivers on how software enhancements optimized their daily delivery workflows.
+              <div className="flex flex-wrap gap-2 pt-3">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Proprietary Enterprise Software</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Omnichannel Support Platforms</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Knowledge Base Architecture</span>
+              </div>
+            </li>
+            
+            <li className="pl-2">
+              <strong>Advanced Troubleshooting & UX Optimization:</strong> Rapidly diagnosed complex mobile app malfunctions, connectivity drops, and GPS routing errors. Translated technical pain points into structured market feedback for development teams to elevate the overall user journey.
+              <div className="flex flex-wrap gap-2 pt-3">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">iOS/Android OS</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Bug Tracking Software</span>
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]">Mobile Diagnostic Tools</span>
+              </div>
+            </li>
+          </ul>
         </>
       )
     }
@@ -290,20 +240,20 @@ export default function Portfolio() {
           <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight font-heading">My Portfolio</h3>
         </div>
 
-        <Tabs defaultValue="background" className="w-full relative z-10">
+        <Tabs defaultValue="projects" className="w-full relative z-10">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
           <TabsList className="bg-white/5 border border-white/10 p-1.5 rounded-2xl backdrop-blur-md">
+            <TabsTrigger 
+              value="projects" 
+              className="rounded-xl px-8 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"
+            >
+              Professional Background
+            </TabsTrigger>
             <TabsTrigger 
               value="background" 
               className="rounded-xl px-8 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"
             >
               Background & Certificates
-            </TabsTrigger>
-            <TabsTrigger 
-              value="projects" 
-              className="rounded-xl px-8 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"
-            >
-              Featured Projects
             </TabsTrigger>
           </TabsList>
 
