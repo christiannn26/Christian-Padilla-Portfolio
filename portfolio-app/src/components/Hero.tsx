@@ -77,7 +77,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
             </h1>
             
             <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
-              I design powerful, easy-to-use systems. By linking smart AI technology directly to your GHL CRM, I engineer automation setups that make your daily operations faster and more profitable.
+              I help service-based businesses turn leads into booked appointments through conversion-focused funnels, CRM architecture, and automated follow-up systems built inside GoHighLevel.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6 pointer-events-auto">
@@ -118,10 +118,17 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
               <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
+                {/* OLD DARK HOVER ANIMATION:
                 <img 
                   src="/img/Hero_Face.png" 
                   alt="Christian Padilla" 
                   className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-80 group-hover:mix-blend-normal transition-all duration-700 pointer-events-none"
+                />
+                */}
+                <img 
+                  src="/img/Hero_Face.png" 
+                  alt="Christian Padilla" 
+                  className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
                 />
               </div>
             </div>

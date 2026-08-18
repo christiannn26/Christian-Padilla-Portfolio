@@ -197,7 +197,7 @@ function App() {
             <GalaxyBackground />
           </div>
           <div className="relative z-10">
-            <About />
+            <About onNavigate={(id) => scrollToSection(null, id)} />
             <TechStack />
             <Services />
             <Portfolio />

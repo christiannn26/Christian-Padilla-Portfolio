@@ -1,40 +1,47 @@
 import { motion } from 'framer-motion';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { useScrollReveal, use3DTilt } from '../hooks/useGSAP';
 
-export default function About() {
+interface AboutProps {
+  onNavigate?: (id: string) => void;
+}
+
+export default function About({ onNavigate }: AboutProps) {
   const textRef = useScrollReveal<HTMLDivElement>();
   const imageRef = useScrollReveal<HTMLDivElement>(0.2);
   const cardRef = use3DTilt<HTMLDivElement>();
 
   const valueProps = [
-    "Streamlining complex workflows with GHL & N8n",
-    "Deploying smart AI bots that drive support and sales",
-    "Full GHL CRM setups and zero-stress data moves"
+    "Funnel Strategist",
+    "Landing Page Designer",
+    "Full CRM & Automation Builder"
   ];
 
   return (
     <section id="about" className="py-32 relative z-10 pt-24">
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="flex flex-col lg:flex-row-reverse items-center gap-16 lg:gap-24">
+        <div className="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16">
           
           <div 
             ref={textRef}
-            className="flex-1 space-y-8"
+            className="lg:w-[60%] space-y-8"
           >
             <div>
               <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-accent mb-4 font-sans">About Me</h2>
               <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight font-heading leading-tight">
-                Streamlining operations through intelligent automation.
+                Hi! I'm Christian <br/> <span className="bg-gradient-to-br from-[#FAF9F6] via-accent to-[#B8860B] bg-clip-text text-transparent">I design intelligent lead systems and streamline operations for businesses.</span>
               </h3>
             </div>
             
             <div className="glass-panel p-8 rounded-3xl space-y-4 text-muted-foreground leading-relaxed font-light">
               <p>
-                A computer engineering graduate and a Virtual Assistant specializing in GoHighLevel (GHL), CRM architecture, and AI automation. I partner with forward-thinking businesses to eliminate operational bottlenecks and turn manual chaos into seamless, automated ecosystems.
+                I partner with service businesses to transform their offers into high-converting funnels, landing pages, and backend architectures that seamlessly transition leads from casual interest to booked calls and inquiries.
               </p>
               <p>
-                By blending cutting-edge artificial intelligence with robust CRM logic, I create systems that work tirelessly for you 24/7.
+                My approach always begins with strategy: mapping out your audience, traffic sources, trust signals, and the specific action we need visitors to take. Once the strategy is set, I design and develop the front-end funnel, then wire up the entire backend—integrating the CRM, sales pipelines, email/SMS workflows, appointment reminders, and follow-up sequences so the ecosystem operates flawlessly beyond the initial click.
+              </p>
+              <p>
+                While my core specialty is GoHighLevel, my expertise spans comprehensive funnel strategy, CRM architecture, advanced automations, custom ReactJS web development, and complex integrations using Zapier, Make, and n8n.
               </p>
             </div>
 
@@ -58,24 +65,53 @@ export default function About() {
                 ))}
               </ul>
             </div>
+            
+            <motion.div 
+              className="pt-6"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
+              <button 
+                onClick={() => onNavigate && onNavigate('contact')}
+                className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-accent px-8 text-sm font-semibold text-accent-foreground shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)] transition-all hover:bg-accent/90 hover:shadow-[0_0_50px_-5px_rgba(212,175,55,0.6)] focus:outline-none"
+              >
+                <span className="relative z-10 flex items-center pointer-events-none">
+                  Let's get to work!
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </button>
+            </motion.div>
           </div>
 
           <div 
             ref={imageRef}
-            className="flex-1 w-full"
+            className="lg:w-[40%] w-full"
             style={{ perspective: "1000px" }}
           >
             <div 
               ref={cardRef}
-              className="glass-panel aspect-[4/5] max-w-md mx-auto lg:mx-0 rounded-3xl overflow-hidden relative group p-2 cursor-pointer"
+              className="glass-panel aspect-[2/3] max-w-lg mx-auto lg:mx-0 rounded-3xl overflow-hidden relative group p-2 cursor-pointer"
               style={{ transformStyle: "preserve-3d" }}
             >
+              {/* OLD DARK HOVER ANIMATION:
               <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay group-hover:opacity-0 transition-opacity duration-700"></div>
               <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
                 <img 
-                  src="/img/abtme.JPG" 
+                  src="/img/abotme.jpg" 
                   alt="About Christian Padilla" 
                   className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-100 group-hover:mix-blend-normal transition-all duration-700 pointer-events-none"
+                />
+              </div>
+              */}
+              
+              <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
+              <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
+                <img 
+                  src="/img/abotme.jpg" 
+                  alt="About Christian Padilla" 
+                  className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
                 />
               </div>
             </div>
