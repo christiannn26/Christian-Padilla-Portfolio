@@ -1,4 +1,5 @@
 import React, { useState, useRef, WheelEvent, PointerEvent, useEffect } from 'react';
+import { Play } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
@@ -50,6 +51,7 @@ const workflows: WorkflowData[] = [
 
 export default function WorkflowsShowcase() {
   const [selectedWorkflow, setSelectedWorkflow] = useState<WorkflowData | null>(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   // Background Preloading Engine
   useEffect(() => {
@@ -99,6 +101,52 @@ export default function WorkflowsShowcase() {
             </div>
           ))}
         </div>
+
+        {/* Full-width Video Showcase Container */}
+        <div className="mt-20 max-w-5xl mx-auto">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight font-heading mb-3">
+              See The System In Action
+            </h3>
+            <div className="w-16 h-1 bg-accent/50 mx-auto mb-4 rounded-full" />
+            <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
+              Watch a full walkthrough of how these precise automation workflows interconnect to build a seamless, conversion-driven machine.
+            </p>
+          </div>
+          
+          <div 
+            className="relative w-full aspect-video rounded-3xl overflow-hidden bg-slate-900 border border-white/10 shadow-[0_0_50px_-15px_rgba(212,175,55,0.3)] group cursor-pointer" 
+            onClick={() => setIsVideoPlaying(true)}
+          >
+            {!isVideoPlaying ? (
+              <>
+                <img 
+                  src="/img/coverdemo.jpg" 
+                  alt="System Demo Cover" 
+                  className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent pointer-events-none" />
+                
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-20 h-20 bg-accent/90 backdrop-blur rounded-full flex items-center justify-center pl-2 shadow-[0_0_30px_rgba(212,175,55,0.6)] group-hover:scale-110 group-hover:bg-accent transition-all duration-300">
+                    <Play className="w-8 h-8 text-slate-950 fill-current" />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <iframe 
+                className="w-full h-full absolute inset-0"
+                src="https://www.youtube.com/embed/KQQQuX8c6PY?autoplay=1&rel=0&modestbranding=1" 
+                title="System Walkthrough" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+              ></iframe>
+            )}
+          </div>
+        </div>
+
       </div>
 
       {selectedWorkflow && (
