@@ -180,9 +180,10 @@ function App() {
           <a 
             href="#top"
             onClick={(e) => scrollToSection(e, 'top')}
-            className="font-heading font-bold text-2xl tracking-wide text-primary hover:text-accent transition-colors duration-300 cursor-pointer"
+            className="flex items-center gap-3 font-heading font-bold text-2xl tracking-wide text-primary hover:text-accent transition-colors duration-300 cursor-pointer"
           >
-            Christian Padilla<span className="text-accent">.</span>
+            <img src="/img/CPlogo.png" alt="CP Logo" className="h-8 w-auto object-contain" />
+            <span>Christian Padilla<span className="text-accent">.</span></span>
           </a>
           <div className="space-x-8 text-sm font-medium hidden md:block uppercase tracking-widest text-xs">
             <a href="#portfolio" onClick={(e) => scrollToSection(e, 'portfolio')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Portfolio</a>
