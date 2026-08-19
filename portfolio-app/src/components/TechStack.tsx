@@ -4,16 +4,16 @@ import { Database } from 'lucide-react';
 
 export default function TechStack() {
   const tools = [
-    { name: "GoHighLevel", customImg: "/img/logo/GhlLogo-removebg-preview.png" },
-    { name: "n8n", customImg: "/img/logo/n8n.png" },
-    { name: "Zapier", customImg: "/img/logo/zapier.png" },
-    { name: "Make.com", customImg: "/img/logo/make.png" },
-    { name: "Claude AI", customImg: "/img/logo/claude.png" },
-    { name: "VsCode", customImg: "/img/logo/vscode.png" },
+    { name: "GoHighLevel", customImg: "./img/logo/GhlLogo-removebg-preview.png" },
+    { name: "n8n", customImg: "./img/logo/n8n.png" },
+    { name: "Zapier", customImg: "./img/logo/zapier.png" },
+    { name: "Make.com", customImg: "./img/logo/make.png" },
+    { name: "Claude AI", customImg: "./img/logo/claude.png" },
+    { name: "VsCode", customImg: "./img/logo/vscode.png" },
     { name: "React.js", slug: "react" },
     { name: "Databases", icon: <Database className="w-6 h-6 text-accent" /> },
-    { name: "Buffer", customImg: "/img/logo/bff.png" },
-    { name: "Calendly", customImg: "/img/logo/calend.png" }
+    { name: "Buffer", customImg: "./img/logo/bff.png" },
+    { name: "Calendly", customImg: "./img/logo/calend.png" }
   ];
 
   return (

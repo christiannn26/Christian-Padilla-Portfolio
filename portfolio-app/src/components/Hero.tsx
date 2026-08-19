@@ -120,13 +120,13 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
               <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
                 {/* OLD DARK HOVER ANIMATION:
                 <img 
-                  src="/img/Hero_Face.png" 
+                  src="./img/Hero_Face.png" 
                   alt="Christian Padilla" 
                   className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-80 group-hover:mix-blend-normal transition-all duration-700 pointer-events-none"
                 />
                 */}
                 <img 
-                  src="/img/Hero_Face.png" 
+                  src="./img/Hero_Face.png" 
                   alt="Christian Padilla" 
                   className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
                 />

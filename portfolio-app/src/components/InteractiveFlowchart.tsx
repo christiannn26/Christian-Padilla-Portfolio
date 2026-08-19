@@ -8,7 +8,7 @@ interface InteractiveFlowchartProps {
 }
 
 export default function InteractiveFlowchart({ 
-  imageSrc = "/img/Mermaid.svg",
+  imageSrc = "./img/Mermaid.svg",
   zoomLevel = 1.7,
   lensSize = 250
 }: InteractiveFlowchartProps) {

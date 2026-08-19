@@ -121,7 +121,7 @@ export default function WorkflowsShowcase() {
             {!isVideoPlaying ? (
               <>
                 <img 
-                  src="/img/coverdemo.jpg" 
+                  src="./img/coverdemo.jpg" 
                   alt="System Demo Cover" 
                   className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
                 />

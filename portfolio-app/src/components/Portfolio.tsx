@@ -12,7 +12,7 @@ export default function Portfolio() {
 
   const backgroundSlides = [
     {
-      src: "/img/certs/11.png",
+      src: "./img/certs/11.png",
       alt: "Certifications & Advanced Training",
       title: "Certifications & Advanced Training",
       subtitle: "Professional Credentials",
@@ -22,7 +22,7 @@ export default function Portfolio() {
         { label: "Timeline", value: "Ongoing" },
       ],
       gallery: [
-        "/img/certs/12.png"
+        "./img/certs/12.png"
       ],
       content: (
         <>
@@ -37,7 +37,7 @@ export default function Portfolio() {
       )
     },
     {
-      src: "/img/GHLEvent/IMG_2033.JPG",
+      src: "./img/GHLEvent/IMG_2033.JPG",
       alt: "HighLevel Manila 2026",
       title: "HighLevel Manila 2026",
       subtitle: "GoHighLevel Event",
@@ -47,10 +47,10 @@ export default function Portfolio() {
         { label: "Timeline", value: "July 2026" },
       ],
       gallery: [
-        "/img/GHLEvent/IMG_2034.JPG",
-        "/img/GHLEvent/IMG_2035.JPG",
-        "/img/GHLEvent/IMG_2036.JPG",
-        "/img/GHLEvent/IMG_2037.JPG"
+        "./img/GHLEvent/IMG_2034.JPG",
+        "./img/GHLEvent/IMG_2035.JPG",
+        "./img/GHLEvent/IMG_2036.JPG",
+        "./img/GHLEvent/IMG_2037.JPG"
       ],
       content: (
         <>
@@ -62,7 +62,7 @@ export default function Portfolio() {
       )
     },
     {
-      src: "/img/bachelors/IMG_1576.JPG",
+      src: "./img/bachelors/IMG_1576.JPG",
       alt: "B.S. Computer Engineering",
       title: "B.S. Computer Engineering",
       subtitle: "Colegio de Muntinlupa",
@@ -71,8 +71,8 @@ export default function Portfolio() {
         { label: "Timeline", value: "2022 - 2026" },
       ],
       gallery: [
-        "/img/bachelors/IMG_1584.JPG",
-        "/img/bachelors/IMG_2076.JPG"
+        "./img/bachelors/IMG_1584.JPG",
+        "./img/bachelors/IMG_2076.JPG"
       ],
       content: (
         <>
@@ -88,7 +88,7 @@ export default function Portfolio() {
 
   const projectSlides = [
     {
-      src: "/img/LC_EA/4.png",
+      src: "./img/LC_EA/4.png",
       alt: "LifeCrafting - Executive Assistant",
       title: "LifeCrafting - California, USA",
       subtitle: "Executive Assistant | Lead Generation & Social Media Specialist",
@@ -97,9 +97,9 @@ export default function Portfolio() {
         { label: "Timeline", value: "2023 - 2025" },
       ],
       gallery: [
-        "/img/LC_EA/7.png",
-        "/img/LC_EA/8.png",
-        "/img/LC_EA/9.png"
+        "./img/LC_EA/7.png",
+        "./img/LC_EA/8.png",
+        "./img/LC_EA/9.png"
       ],
       content: (
         <>
@@ -139,7 +139,7 @@ export default function Portfolio() {
       )
     },
     {
-      src: "/img/LC_WD/5.png",
+      src: "./img/LC_WD/5.png",
       alt: "LifeCrafting - Full Stack Web Developer",
       title: "LifeCrafting - California, USA",
       subtitle: "Full Stack Web & Application Developer | UI/UX Designer",
@@ -148,7 +148,7 @@ export default function Portfolio() {
         { label: "Timeline", value: "2024 - 2025" },
       ],
       gallery: [
-        "/img/LC_WD/10.png"
+        "./img/LC_WD/10.png"
       ],
       content: (
         <>
@@ -180,7 +180,7 @@ export default function Portfolio() {
       )
     },
     {
-      src: "/img/ibex/2024_09_16_10_45_IMG_8527.jpg",
+      src: "./img/ibex/2024_09_16_10_45_IMG_8527.jpg",
       alt: "IBEX GLOBAL - Technical Support",
       title: "IBEX GLOBAL",
       subtitle: "Technical Support & Client Retention Specialist – Walmart Logistics",
@@ -190,8 +190,8 @@ export default function Portfolio() {
       ],
       imagePosition: "object-center",
       gallery: [
-        "/img/ibex/IMG_6885.jpg",
-        "/img/ibex/IMG_6889.jpg"
+        "./img/ibex/IMG_6885.jpg",
+        "./img/ibex/IMG_6889.jpg"
       ],
       content: (
         <>
