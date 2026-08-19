@@ -6,6 +6,7 @@ import type { CoverflowSlide } from "./ui/coverflow-carousel";
 import { ProjectDetailsModal } from "./ProjectDetailsModal";
 import SystemsShowcase from "./SystemsShowcase";
 import InteractiveFlowchart from "./InteractiveFlowchart";
+import WorkflowsShowcase from "./WorkflowsShowcase";
 import { cn } from "../lib/utils";
 
 export default function Portfolio() {
@@ -368,6 +369,7 @@ export default function Portfolio() {
     
     <SystemsShowcase />
     <InteractiveFlowchart />
+    <WorkflowsShowcase />
     </section>
   );
 }
