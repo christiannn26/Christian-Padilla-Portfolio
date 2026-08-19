@@ -4,10 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { CoverflowCarousel } from "./ui/coverflow-carousel";
 import type { CoverflowSlide } from "./ui/coverflow-carousel";
 import { ProjectDetailsModal } from "./ProjectDetailsModal";
-import ProblemSolution from "./ProblemSolution";
-import SystemsShowcase from "./SystemsShowcase";
-import InteractiveFlowchart from "./InteractiveFlowchart";
-import WorkflowsShowcase from "./WorkflowsShowcase";
 import { cn } from "../lib/utils";
 
 export default function Portfolio() {
@@ -367,11 +363,6 @@ export default function Portfolio() {
       
       <ProjectDetailsModal slide={expandedSlide} onClose={() => setExpandedSlide(null)} />
     </div>
-    
-    <ProblemSolution />
-    <SystemsShowcase />
-    <InteractiveFlowchart />
-    <WorkflowsShowcase />
     </section>
   );
 }

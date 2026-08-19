@@ -6,6 +6,10 @@ import Services from './components/Services';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
 import GalaxyBackground from './components/ui/GalaxyBackground';
+import ProblemSolution from './components/ProblemSolution';
+import InteractiveFlowchart from './components/InteractiveFlowchart';
+import SystemsShowcase from './components/SystemsShowcase';
+import WorkflowsShowcase from './components/WorkflowsShowcase';
 import { useEffect, useState } from 'react';
 
 function App() {
@@ -181,10 +185,10 @@ function App() {
             Christian Padilla<span className="text-accent">.</span>
           </a>
           <div className="space-x-8 text-sm font-medium hidden md:block uppercase tracking-widest text-xs">
-            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-muted-foreground hover:text-primary transition-colors duration-300">About</a>
-            <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Services</a>
             <a href="#portfolio" onClick={(e) => scrollToSection(e, 'portfolio')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Portfolio</a>
-            <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Contact</a>
+            <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Services</a>
+            <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-muted-foreground hover:text-primary transition-colors duration-300">About</a>
+            <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Contact Me</a>
           </div>
         </div>
       </nav>
@@ -197,10 +201,14 @@ function App() {
             <GalaxyBackground />
           </div>
           <div className="relative z-10">
-            <About onNavigate={(id) => scrollToSection(null, id)} />
-            <TechStack />
-            <Services />
+            <ProblemSolution />
+            <InteractiveFlowchart />
+            <SystemsShowcase />
+            <WorkflowsShowcase />
             <Portfolio />
+            <Services />
+            <TechStack />
+            <About onNavigate={(id) => scrollToSection(null, id)} />
             <Contact />
           </div>
         </div>
