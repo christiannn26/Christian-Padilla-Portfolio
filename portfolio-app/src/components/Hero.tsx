@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, FileText, Sparkles } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { SplitText } from 'gsap-trial/SplitText';
+import { SplitText } from 'gsap/SplitText';
 import { useMagnetic, use3DTilt } from '../hooks/useGSAP';
 import VoxelTopographyGrid from './ui/voxel-topography-grid';
 
