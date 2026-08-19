@@ -5,25 +5,29 @@ const mockData = [
     title: "Crowning Glory Co.",
     type: "Appointment/Services Booking website",
     industry: "Beauty Industry",
-    image: "/img/Funnels/salon.png"
+    image: "/img/Funnels/salon.png",
+    link: "http://crowningglory.me/"
   },
   {
     title: "Bright Smiles Dental Clinic",
     type: "Appointment Booking Funnel (w/ free consultation offer)",
     industry: "Dental/Family Healthcare",
-    image: "/img/Funnels/brightsmiles.png"
+    image: "/img/Funnels/brightsmiles.png",
+    link: "http://brightsmiles.christianpadilla.online/"
   },
   {
     title: "HighLevel Webinar",
     type: "Webinar Funnel",
     industry: "Software as a Service (SaaS)",
-    image: "/img/Funnels/webinar.png"
+    image: "/img/Funnels/webinar.png",
+    link: "http://highlevelwebinar.christianpadilla.online/"
   },
   {
     title: "NovaScale Marketing Agency",
     type: "Landing Page",
     industry: "Marketing Agency",
-    image: "/img/Funnels/marketing.png"
+    image: "/img/Funnels/marketing.png",
+    link: "http://novascale.christianpadilla.online/"
   }
 ];
 
@@ -78,9 +82,14 @@ export default function SystemsShowcase() {
                 </p>
               </div>
 
-              <button className="w-full py-3 px-4 bg-accent/10 hover:bg-accent hover:text-accent-foreground text-accent font-bold rounded-lg transition-all duration-300 border border-accent/20 hover:shadow-[0_0_20px_-5px_rgba(212,175,55,0.4)] tracking-wider text-xs uppercase">
+              <a 
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3 px-4 bg-accent/10 hover:bg-accent hover:text-accent-foreground text-accent font-bold rounded-lg transition-all duration-300 border border-accent/20 hover:shadow-[0_0_20px_-5px_rgba(212,175,55,0.4)] tracking-wider text-xs uppercase text-center flex items-center justify-center"
+              >
                 View Live Demo
-              </button>
+              </a>
             </div>
           </div>
         ))}
