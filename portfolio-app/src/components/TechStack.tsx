@@ -1,19 +1,6 @@
 import { motion } from 'framer-motion';
 import { Database } from 'lucide-react';
 
-const VSCodeIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 0 8.026v7.946a1 1 0 0 0 .327.765l1.323 1.202a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/>
-  </svg>
-);
-
-const GHLIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="5 17 12 10 19 17" />
-    <polyline points="5 12 12 5 19 12" />
-    <polyline points="5 7 12 0 19 7" />
-  </svg>
-);
 
 export default function TechStack() {
   const tools = [
@@ -67,7 +54,7 @@ export default function TechStack() {
                   src={`https://cdn.simpleicons.org/${tool.slug}/white`} 
                   alt={tool.name} 
                   className="w-6 h-6 opacity-70 group-hover:opacity-100 transition-opacity" 
-                  style={{ imageRendering: "high-quality" }}
+                  style={{ imageRendering: "auto" }}
                 />
               ) : (
                 <div className="opacity-70 group-hover:opacity-100 transition-opacity">

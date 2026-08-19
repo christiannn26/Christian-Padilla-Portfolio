@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Hourglass, AlertCircle, CalendarX, Unplug, Zap, TrendingUp, CheckCircle, Layers } from 'lucide-react';
 
 const flipCards = [

@@ -1,4 +1,4 @@
-import React, { useState, useRef, WheelEvent, PointerEvent, useEffect } from 'react';
+import { useState, useRef, type WheelEvent, type PointerEvent, useEffect } from 'react';
 import { Play } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
@@ -237,8 +237,8 @@ function InteractiveCanvas({ workflow }: { workflow: WorkflowData }) {
     };
 
     // Cast as generic EventListener to satisfy TS
-    el.addEventListener('wheel', handleWheelNative as EventListener, { passive: false });
-    return () => el.removeEventListener('wheel', handleWheelNative as EventListener);
+    el.addEventListener('wheel', handleWheelNative as unknown as EventListener, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheelNative as unknown as EventListener);
   }, []);
 
   return (

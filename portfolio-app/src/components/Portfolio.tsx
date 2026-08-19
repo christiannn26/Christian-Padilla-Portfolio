@@ -9,7 +9,6 @@ import { cn } from "../lib/utils";
 export default function Portfolio() {
   const [viewMode, setViewMode] = React.useState<'carousel' | 'grid'>('carousel');
   const [expandedSlide, setExpandedSlide] = React.useState<CoverflowSlide | null>(null);
-  const UNSPLASH = (id: string) => `https://images.unsplash.com/photo-${id}?w=1200&q=80`;
 
   const backgroundSlides = [
     {

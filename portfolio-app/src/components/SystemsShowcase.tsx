@@ -1,5 +1,3 @@
-import React from 'react';
-
 const mockData = [
   {
     title: "Crowning Glory Co.",
