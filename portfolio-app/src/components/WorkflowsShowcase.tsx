@@ -245,7 +245,7 @@ function InteractiveCanvas({ workflow }: { workflow: WorkflowData }) {
     <div 
       ref={containerRef}
       className={cn(
-        "relative w-full h-full overflow-hidden bg-slate-950 flex items-center justify-center select-none",
+        "relative w-full h-full overflow-hidden bg-slate-950 flex items-center justify-center select-none touch-none",
         scale > 1 ? (isDragging ? "cursor-grabbing" : "cursor-grab") : "cursor-default"
       )}
       onPointerDown={handlePointerDown}

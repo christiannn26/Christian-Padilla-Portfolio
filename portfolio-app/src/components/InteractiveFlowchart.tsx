@@ -51,7 +51,7 @@ export default function InteractiveFlowchart({
         {/* Main interactive container */}
         <div 
           ref={containerRef}
-          className="relative w-full overflow-hidden bg-transparent cursor-crosshair"
+          className="relative w-full overflow-hidden bg-transparent cursor-crosshair touch-none"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onMouseMove={handleMouseMove}

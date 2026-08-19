@@ -11,6 +11,7 @@ import InteractiveFlowchart from './components/InteractiveFlowchart';
 import SystemsShowcase from './components/SystemsShowcase';
 import WorkflowsShowcase from './components/WorkflowsShowcase';
 import { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
 function App() {
   const cursorX = useMotionValue(-100);
@@ -22,6 +23,7 @@ function App() {
 
   const [isHovering, setIsHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // Check if mobile
@@ -185,13 +187,41 @@ function App() {
             <img src="./img/CPlogo.png" alt="CP Logo" className="h-8 w-auto object-contain" />
             <span>Christian Padilla<span className="text-accent">.</span></span>
           </a>
+          
+          {/* Desktop Navigation */}
           <div className="space-x-8 text-sm font-medium hidden md:block uppercase tracking-widest text-xs">
             <a href="#portfolio" onClick={(e) => scrollToSection(e, 'portfolio')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Portfolio</a>
             <a href="#services" onClick={(e) => scrollToSection(e, 'services')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Services</a>
             <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="text-muted-foreground hover:text-primary transition-colors duration-300">About</a>
             <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="text-muted-foreground hover:text-primary transition-colors duration-300">Contact Me</a>
           </div>
+
+          {/* Mobile Hamburger Button */}
+          <div className="md:hidden">
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-white hover:text-accent focus:outline-none p-2"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden absolute top-20 left-0 w-full glass-panel border-t border-white/10 shadow-2xl flex flex-col py-6 px-8 gap-6 z-50"
+          >
+            <a href="#portfolio" onClick={(e) => { setIsMobileMenuOpen(false); scrollToSection(e, 'portfolio'); }} className="text-white hover:text-accent font-medium tracking-widest uppercase text-sm">Portfolio</a>
+            <a href="#services" onClick={(e) => { setIsMobileMenuOpen(false); scrollToSection(e, 'services'); }} className="text-white hover:text-accent font-medium tracking-widest uppercase text-sm">Services</a>
+            <a href="#about" onClick={(e) => { setIsMobileMenuOpen(false); scrollToSection(e, 'about'); }} className="text-white hover:text-accent font-medium tracking-widest uppercase text-sm">About</a>
+            <a href="#contact" onClick={(e) => { setIsMobileMenuOpen(false); scrollToSection(e, 'contact'); }} className="text-white hover:text-accent font-medium tracking-widest uppercase text-sm">Contact Me</a>
+          </motion.div>
+        )}
       </nav>
 
       <main className="relative z-10 flex flex-col">

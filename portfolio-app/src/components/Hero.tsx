@@ -58,7 +58,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
             <motion.div 
-              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(250,249,246,0.1)] pointer-events-auto"
+              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] md:text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(250,249,246,0.1)] pointer-events-auto"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
@@ -67,7 +67,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
               Elevating Operational Efficiency
             </motion.div>
             
-            <h1 ref={headlineRef} className="text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.1] font-heading" style={{ perspective: "1000px" }}>
+            <h1 ref={headlineRef} className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.1] font-heading" style={{ perspective: "1000px" }}>
               <span className="text-white">Automating Success Through AI</span> <br />
               <span 
                 className="gsap-gradient-text"

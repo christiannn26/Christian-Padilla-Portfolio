@@ -1,5 +1,6 @@
-
+import { useState } from 'react';
 import { Hourglass, AlertCircle, CalendarX, Unplug, Zap, TrendingUp, CheckCircle, Layers } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 const flipCards = [
   {
@@ -41,6 +42,8 @@ const flipCards = [
 ];
 
 export default function ProblemSolution() {
+  const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
+
   return (
     <div className="w-full mt-32 mb-16 px-4 relative z-10">
       <div className="container mx-auto max-w-7xl">
@@ -54,13 +57,20 @@ export default function ProblemSolution() {
 
         {/* CSS Grid Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {flipCards.map((card) => (
+          {flipCards.map((card) => {
+            const isFlipped = flippedCardId === card.id;
+            return (
             <div 
               key={card.id} 
-              className="group w-full h-[320px] [perspective:1000px]"
+              className="group w-full h-[320px] [perspective:1000px] cursor-pointer"
+              onClick={() => setFlippedCardId(isFlipped ? null : card.id)}
             >
               <div 
-                className="relative w-full h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
+                className={cn(
+                  "relative w-full h-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] [transform-style:preserve-3d]",
+                  "lg:group-hover:[transform:rotateY(180deg)]",
+                  isFlipped && "[transform:rotateY(180deg)]"
+                )}
               >
                 
                 {/* Front Side: The Problem */}
@@ -81,7 +91,8 @@ export default function ProblemSolution() {
 
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
