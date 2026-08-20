@@ -109,52 +109,57 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
           </motion.div>
 
           <motion.div 
-            className="flex-1 w-full max-w-md lg:max-w-none relative pointer-events-auto"
+            className="flex-1 w-full max-w-md lg:max-w-none pointer-events-auto"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div 
-              ref={cardRef}
-              className="glass-panel aspect-[4/5] lg:aspect-square rounded-3xl overflow-hidden relative group p-2 cursor-pointer"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
-              <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
-                {/* OLD DARK HOVER ANIMATION:
-                <img 
-                  src="./img/Hero_Face.png" 
-                  alt="Christian Padilla" 
-                  className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-80 group-hover:mix-blend-normal transition-all duration-700 pointer-events-none"
-                />
-                */}
-                <img 
-                  src="./img/Hero_Face.png" 
-                  alt="Christian Padilla" 
-                  className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
-                />
+            {/* Dedicated Wrapper for Picture and Badge to act as a single unit */}
+            <div className="relative flex flex-col items-center lg:items-start w-full">
+              
+              <div 
+                ref={cardRef}
+                className="glass-panel w-full aspect-[4/5] lg:aspect-square rounded-3xl overflow-hidden relative group p-2 cursor-pointer"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-tr from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
+                <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
+                  {/* OLD DARK HOVER ANIMATION:
+                  <img 
+                    src="./img/Hero_Face.png" 
+                    alt="Christian Padilla" 
+                    className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-80 group-hover:mix-blend-normal transition-all duration-700 pointer-events-none"
+                  />
+                  */}
+                  <img 
+                    src="./img/Hero_Face.png" 
+                    alt="Christian Padilla" 
+                    className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
+                  />
+                </div>
               </div>
+              
+              {/* Decorative floating glass elements - absolute positioned relative to the new wrapper */}
+              <motion.div 
+                className="absolute -bottom-4 left-0 sm:-bottom-8 sm:-left-8 glass-panel rounded-2xl p-4 sm:p-5 flex items-center gap-4 sm:gap-5 cursor-default scale-90 sm:scale-100 origin-bottom-left z-10"
+                animate={{ y: [0, -15, 0] }}
+                transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+                style={{ transform: "translateZ(50px)" }}
+              >
+                <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold font-heading text-xl shadow-[0_0_20px_-5px_rgba(229,211,179,0.4)] border border-accent/30">
+                  10+
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white tracking-wide">Systems Built</p>
+                  <p className="text-xs text-muted-foreground">Automated perfectly</p>
+                </div>
+              </motion.div>
+              
             </div>
             
-            {/* Decorative floating glass elements */}
+            {/* Action buttons (Mobile only: separated from the picture wrapper) */}
             <motion.div 
-              className="absolute -bottom-4 left-0 sm:-bottom-8 sm:-left-8 glass-panel rounded-2xl p-4 sm:p-5 flex items-center gap-4 sm:gap-5 cursor-default scale-90 sm:scale-100 origin-bottom-left"
-              animate={{ y: [0, -15, 0] }}
-              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-              style={{ transform: "translateZ(50px)" }}
-            >
-              <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold font-heading text-xl shadow-[0_0_20px_-5px_rgba(229,211,179,0.4)] border border-accent/30">
-                10+
-              </div>
-              <div>
-                <p className="text-sm font-bold text-white tracking-wide">Systems Built</p>
-                <p className="text-xs text-muted-foreground">Automated perfectly</p>
-              </div>
-            </motion.div>
-            
-            {/* Action buttons (Mobile only: moved under the picture and badge group) */}
-            <motion.div 
-              className="flex lg:hidden flex-col sm:flex-row items-center justify-center gap-6 pt-12 pointer-events-auto relative z-20"
+              className="flex lg:hidden flex-col sm:flex-row items-center justify-center gap-6 pt-16 pointer-events-auto relative z-20"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
