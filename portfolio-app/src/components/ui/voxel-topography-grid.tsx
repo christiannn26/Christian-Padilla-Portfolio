@@ -115,7 +115,7 @@ export function VoxelTopographyGrid({
     const tileW = tileSize * 0.866025; // cos(30 deg)
     const tileH = tileSize * 0.5;      // sin(30 deg)
     const maxRadiusSq = 220 * 220;
-    const invMaxHeight = 1 / (maxHeight + 55);
+    const invMaxHeight = 1 / (maxHeight + 90);
 
     let isVisible = false;
     let isDrawing = false;
@@ -130,9 +130,9 @@ export function VoxelTopographyGrid({
       
       time += speed;
 
-      // Responsive, smooth lerping cursor tracking
-      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.15;
-      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.15;
+      // Responsive, smooth lerping cursor tracking with added weight for buttery deceleration
+      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
+      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.08;
 
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
@@ -184,7 +184,7 @@ export function VoxelTopographyGrid({
           if (distSq < maxRadiusSq) {
             const dist = Math.sqrt(distSq);
             const influence = 1 - dist / 220;
-            h += influence * influence * 55;
+            h += influence * influence * 90;
           }
 
           const py = isoY - h;
