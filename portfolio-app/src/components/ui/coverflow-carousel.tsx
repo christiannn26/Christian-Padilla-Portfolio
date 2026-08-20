@@ -302,7 +302,7 @@ export function CoverflowCarousel({
             }
           }}
           // Vertical padding keeps the drop shadows clear of the overflow clip.
-          className="cursor-grab overflow-hidden py-10 outline-none ring-ring focus-visible:ring-2 active:cursor-grabbing"
+          className="cursor-grab overflow-hidden pt-10 pb-16 md:py-10 outline-none ring-ring focus-visible:ring-2 active:cursor-grabbing"
           style={{
             perspective: `calc(var(--cf-card) * ${perspective})`,
             // Horizontal drag is ours; the page keeps vertical scrolling.
@@ -310,9 +310,8 @@ export function CoverflowCarousel({
           }}
         >
           <div
-            className="relative select-none"
+            className="relative select-none h-[calc(var(--cf-card)*4/3)] md:h-[var(--cf-card)]"
             style={{
-              height: "var(--cf-card)",
               transformStyle: "preserve-3d",
             }}
           >

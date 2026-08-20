@@ -48,39 +48,42 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
       
       <VoxelTopographyGrid primaryColor="#1a1a1a" tileSize={60} wireColor="rgba(253, 251, 247, 0.3)"/>
       
-      <div className="container mx-auto px-4 max-w-6xl relative z-10 pointer-events-none pt-20">
+      <div className="container mx-auto px-4 max-w-6xl relative z-10 pointer-events-none pt-32 lg:pt-20 pb-32 lg:pb-0">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
           <motion.div 
-            className="flex-1 space-y-8 text-center lg:text-left"
+            className="flex-1 text-center lg:text-left"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <motion.div 
-              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] md:text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(250,249,246,0.1)] pointer-events-auto"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-            >
-              <Sparkles className="mr-2 h-3 w-3 text-accent" />
-              Elevating Operational Efficiency
-            </motion.div>
-            
-            <h1 ref={headlineRef} className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.1] font-heading" style={{ perspective: "1000px" }}>
-              <span className="text-white">Automating Success Through AI</span> <br />
-              <span 
-                className="gsap-gradient-text"
+            <div className="space-y-4 lg:space-y-8">
+              <motion.div 
+                className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] md:text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(250,249,246,0.1)] pointer-events-auto"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
               >
-                and Your GHL CRM.
-              </span>
-            </h1>
+                <Sparkles className="mr-2 h-3 w-3 text-accent" />
+                Elevating Operational Efficiency
+              </motion.div>
+              
+              <h1 ref={headlineRef} className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.1] font-heading" style={{ perspective: "1000px" }}>
+                <span className="text-white">Automating Success Through AI</span> <br />
+                <span 
+                  className="gsap-gradient-text"
+                >
+                  and Your GHL CRM.
+                </span>
+              </h1>
+              
+              <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed mt-8">
+                I help service-based businesses turn leads into booked appointments through conversion-focused funnels, CRM architecture, and automated follow-up systems built inside GoHighLevel.
+              </p>
+            </div>
             
-            <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
-              I help service-based businesses turn leads into booked appointments through conversion-focused funnels, CRM architecture, and automated follow-up systems built inside GoHighLevel.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-6 pointer-events-auto">
+            {/* Action buttons (Desktop only) */}
+            <div className="hidden lg:flex flex-row items-center justify-start gap-6 pt-12 pointer-events-auto">
               <button 
                 ref={btn1Ref} 
                 onClick={() => onNavigate && onNavigate('contact')}
@@ -147,6 +150,34 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
                 <p className="text-sm font-bold text-white tracking-wide">Systems Built</p>
                 <p className="text-xs text-muted-foreground">Automated perfectly</p>
               </div>
+            </motion.div>
+            
+            {/* Action buttons (Mobile only: moved under the picture and badge group) */}
+            <motion.div 
+              className="flex lg:hidden flex-col sm:flex-row items-center justify-center gap-6 pt-12 pointer-events-auto relative z-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+            >
+              <button 
+                onClick={() => onNavigate && onNavigate('contact')}
+                className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-5px_rgba(250,249,246,0.4)] transition-all hover:bg-primary/90 hover:shadow-[0_0_50px_-5px_rgba(250,249,246,0.6)] focus:outline-none w-full sm:w-auto"
+              >
+                <span className="relative z-10 flex items-center pointer-events-none">
+                  Contact Now
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </button>
+              
+              <button 
+                onClick={() => onNavigate && onNavigate('portfolio')}
+                className="group inline-flex h-14 items-center justify-center rounded-xl glass-panel px-8 text-sm font-medium text-white transition-all hover:bg-white/5 focus:outline-none w-full sm:w-auto"
+              >
+                <span className="relative z-10 flex items-center pointer-events-none">
+                  Learn More
+                  <FileText className="ml-2 h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
+                </span>
+              </button>
             </motion.div>
             
           </motion.div>
