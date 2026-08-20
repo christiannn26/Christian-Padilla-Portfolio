@@ -13,7 +13,8 @@ export const useMagnetic = <T extends HTMLElement>() => {
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || isReducedMotion()) return;
+    const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!el || isReducedMotion() || !hasHover) return;
 
     // quickTo is highly optimized for mouse following
     const xTo = gsap.quickTo(el, "x", { duration: 0.4, ease: "elastic.out(1, 0.4)" });
@@ -53,7 +54,8 @@ export const use3DTilt = <T extends HTMLElement>() => {
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || isReducedMotion()) return;
+    const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!el || isReducedMotion() || !hasHover) return;
 
     const xTo = gsap.quickTo(el, "rotateX", { duration: 0.6, ease: "power2.out" });
     const yTo = gsap.quickTo(el, "rotateY", { duration: 0.6, ease: "power2.out" });

@@ -135,7 +135,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
             
             {/* Decorative floating glass elements */}
             <motion.div 
-              className="absolute -bottom-8 -left-8 glass-panel rounded-2xl p-5 flex items-center gap-5 cursor-default"
+              className="absolute -bottom-4 left-0 sm:-bottom-8 sm:-left-8 glass-panel rounded-2xl p-4 sm:p-5 flex items-center gap-4 sm:gap-5 cursor-default scale-90 sm:scale-100 origin-bottom-left"
               animate={{ y: [0, -15, 0] }}
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
               style={{ transform: "translateZ(50px)" }}

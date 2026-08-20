@@ -57,11 +57,22 @@ function App() {
     };
   }, [isMobile]);
 
-  // Elegant custom smooth scrolling
+  // Elegant custom smooth scrolling (Desktop) & Native Momentum (Mobile)
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement> | null, targetId: string) => {
     if (e) e.preventDefault();
     
     const targetElement = document.getElementById(targetId);
+    
+    // On mobile, use the browser's native smooth scroll to preserve momentum physics
+    if (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches) {
+      if (targetId === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
+
     const startPosition = window.scrollY;
     const targetPosition = targetId === 'top' ? 0 : (targetElement ? targetElement.getBoundingClientRect().top + startPosition : 0);
     const distance = targetPosition - startPosition;
