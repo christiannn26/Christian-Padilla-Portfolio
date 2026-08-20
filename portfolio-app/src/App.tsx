@@ -106,7 +106,7 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen font-sans text-foreground selection:bg-accent/30 overflow-x-hidden">
+    <div className="relative min-h-screen font-sans text-foreground selection:bg-accent/30 overflow-clip">
       
       {/* Custom Cursor */}
       {!isMobile && (

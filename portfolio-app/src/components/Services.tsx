@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
 import { Zap, Database, Code, Filter, Server, Briefcase } from 'lucide-react';
 
-function ServiceCard({ service, variants }: { service: any, variants: any }) {
+function ServiceCard({ service, variants, index }: { service: any, variants: any, index: number }) {
   return (
     <motion.div 
       variants={variants}
-      className="group relative p-8 h-full rounded-3xl glass-panel transition-all duration-300 overflow-hidden hover:-translate-y-2"
+      className="group relative p-8 h-full rounded-3xl glass-panel transition-all duration-300 overflow-hidden md:hover:-translate-y-2 sticky top-[200px] md:static md:top-auto"
+      style={{ zIndex: (index + 1) * 10 }}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
       
       {/* Soft ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent/20 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -96,13 +97,13 @@ export default function Services() {
   return (
     <section id="services" className="py-16 md:py-32 section-overlap pt-16 md:pt-24">
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-20 sticky top-20 md:static md:top-auto z-50 bg-background md:bg-transparent pt-4 pb-4 md:py-0 -mx-4 px-4 md:mx-0">
           <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-accent mb-4">Services</h2>
           <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight font-heading">How I can help you scale</h3>
         </div>
 
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          className="flex flex-col gap-6 pb-32 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8"
           variants={container}
           initial="hidden"
           whileInView="show"
@@ -110,7 +111,7 @@ export default function Services() {
           style={{ perspective: "1000px" }}
         >
           {services.map((service, i) => (
-            <ServiceCard key={i} service={service} variants={item} />
+            <ServiceCard key={i} service={service} variants={item} index={i} />
           ))}
         </motion.div>
       </div>
