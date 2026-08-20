@@ -44,7 +44,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
   }, []);
 
   return (
-    <section className="relative w-full h-screen bg-transparent flex items-center justify-center overflow-hidden">
+    <section className="relative w-full min-h-screen bg-transparent flex items-center justify-center overflow-hidden">
       
       <VoxelTopographyGrid primaryColor="#1a1a1a" tileSize={60} wireColor="rgba(253, 251, 247, 0.3)"/>
       

@@ -52,11 +52,11 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-32 relative z-10 bg-transparent rounded-t-[40px] border-t border-white/10 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.9),0_-5px_20px_rgba(255,255,255,0.04)]">
+    <section id="contact" className="py-16 md:py-32 section-overlap pt-16 md:pt-24">
       <div className="container mx-auto px-4 max-w-6xl">
         <div 
           ref={containerRef}
-          className="glass-panel rounded-[3rem] p-8 md:p-16 relative overflow-hidden shadow-2xl"
+          className="glass-panel rounded-2xl md:rounded-[3rem] p-6 md:p-16 relative overflow-hidden shadow-2xl"
         >
           {/* Decorative background elements */}
           <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-accent/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />

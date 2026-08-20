@@ -66,7 +66,7 @@ export default function WorkflowsShowcase() {
   }, []);
 
   return (
-    <div className="w-full mt-32 mb-16 px-4">
+    <div className="w-full mt-16 md:mt-32 mb-16 px-4">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-accent mb-4">Deep Dives</h2>
@@ -84,7 +84,7 @@ export default function WorkflowsShowcase() {
             <div 
               key={wf.id}
               onClick={() => setSelectedWorkflow(wf)}
-              className="group relative w-full sm:w-[calc(50%-16px)] md:w-[calc(33.333%-22px)] min-w-[320px] max-w-[450px] h-80 md:h-96 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-accent/50 transition-colors bg-slate-900"
+              className="group relative w-full sm:w-[calc(50%-16px)] md:w-[calc(33.333%-22px)] min-w-0 sm:min-w-[320px] max-w-[450px] h-64 md:h-96 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-accent/50 transition-colors bg-slate-900"
             >
               {/* If no image exists yet, the alt text or a blank slate will show, but object-cover is applied */}
               <img 

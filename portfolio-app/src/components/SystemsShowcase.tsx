@@ -31,8 +31,8 @@ const mockData = [
 
 export default function SystemsShowcase() {
   return (
-    <div className="mt-40 w-full relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-      <div className="text-center mb-20 space-y-8 px-4">
+    <div className="mt-16 md:mt-40 w-full relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <div className="text-center mb-10 md:mb-20 space-y-8 px-4">
         <div>
           <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight font-heading mb-4">
             <span className="text-accent drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]">The System</span> Behind Every Funnel

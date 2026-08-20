@@ -231,7 +231,7 @@ export default function Portfolio() {
   ];
 
   return (
-    <section id="portfolio" className="py-32 relative z-10 bg-transparent rounded-t-[40px] border-t border-white/10 -mt-8 pt-24 shadow-[0_-20px_50px_rgba(0,0,0,0.9),0_-5px_20px_rgba(255,255,255,0.04)] overflow-hidden">
+    <section id="portfolio" className="py-16 md:py-32 section-overlap pt-16 md:pt-24 overflow-hidden">
       <div className="container mx-auto px-4 max-w-7xl">
         
         <div className="text-center mb-16 relative z-10">
@@ -244,14 +244,12 @@ export default function Portfolio() {
           <TabsList className="bg-white/5 border border-white/10 p-1.5 rounded-2xl backdrop-blur-md">
             <TabsTrigger 
               value="projects" 
-              className="rounded-xl px-8 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"
-            >
+              className="rounded-xl px-4 sm:px-8 py-3 text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"            >
               Professional Background
             </TabsTrigger>
             <TabsTrigger 
               value="background" 
-              className="rounded-xl px-8 py-3 text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"
-            >
+              className="rounded-xl px-4 sm:px-8 py-3 text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"            >
               Background & Certificates
             </TabsTrigger>
           </TabsList>
@@ -290,7 +288,7 @@ export default function Portfolio() {
                 showNavigation
                 showPagination
                 loop
-                cardWidth="clamp(220px, 28vw, 320px)"
+                cardWidth="clamp(260px, 65vw, 320px)"
                 gap={-0.15}
                 fade={0.05}
                 onSlideClick={setExpandedSlide}
@@ -329,7 +327,7 @@ export default function Portfolio() {
                 showNavigation
                 showPagination
                 loop
-                cardWidth="clamp(220px, 28vw, 320px)"
+                cardWidth="clamp(260px, 65vw, 320px)"
                 gap={-0.15}
                 fade={0.05}
                 onSlideClick={setExpandedSlide}

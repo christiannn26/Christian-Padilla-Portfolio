@@ -45,10 +45,10 @@ export default function ProblemSolution() {
   const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
 
   return (
-    <div className="w-full mt-32 mb-16 px-4 relative z-10">
+    <div className="w-full mt-16 md:mt-32 mb-16 px-4 relative z-10">
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
-        <div className="text-center mb-16 space-y-4">
+        <div className="text-center mb-10 md:mb-16 space-y-4">
           <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-accent mb-4">The Impact</h2>
           <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight font-heading mb-6">
             Transforming <span className="text-slate-400 line-through decoration-red-500/50 decoration-2">Broken Funnels</span><br className="hidden md:block"/> Into <span className="text-accent drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]">Structured Systems</span>
@@ -62,7 +62,7 @@ export default function ProblemSolution() {
             return (
             <div 
               key={card.id} 
-              className="group w-full h-[320px] [perspective:1000px] cursor-pointer"
+              className="group w-full h-[280px] sm:h-[320px] [perspective:1000px] cursor-pointer"
               onClick={() => setFlippedCardId(isFlipped ? null : card.id)}
             >
               <div 
