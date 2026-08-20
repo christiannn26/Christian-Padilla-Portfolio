@@ -8,7 +8,10 @@ function ServiceCard({ service, variants, index }: { service: any, variants: any
       className="group relative p-8 h-full rounded-3xl glass-panel transition-all duration-300 overflow-hidden md:hover:-translate-y-2 sticky top-[200px] md:static md:top-auto"
       style={{ zIndex: (index + 1) * 10 }}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+      {/* Mobile background blocker for Android to prevent stacked cards from bleeding text */}
+      <div className="absolute inset-0 bg-[#0a0a0c] md:hidden pointer-events-none" />
+
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       
       {/* Soft ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent/20 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
