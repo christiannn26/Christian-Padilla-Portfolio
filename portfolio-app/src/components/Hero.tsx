@@ -166,7 +166,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
             >
               <button 
                 onClick={() => onNavigate && onNavigate('contact')}
-                className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-5px_rgba(250,249,246,0.4)] transition-all hover:bg-primary/90 hover:shadow-[0_0_50px_-5px_rgba(250,249,246,0.6)] focus:outline-none w-full sm:w-auto"
+                className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-5px_rgba(250,249,246,0.4)] transition-all hover:bg-primary/90 hover:shadow-[0_0_50px_-5px_rgba(250,249,246,0.6)] focus:outline-none w-full max-w-[240px] sm:max-w-none sm:w-auto"
               >
                 <span className="relative z-10 flex items-center pointer-events-none">
                   Contact Now
@@ -176,7 +176,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
               
               <button 
                 onClick={() => onNavigate && onNavigate('portfolio')}
-                className="group inline-flex h-14 items-center justify-center rounded-xl glass-panel px-8 text-sm font-medium text-white transition-all hover:bg-white/5 focus:outline-none w-full sm:w-auto"
+                className="group inline-flex h-14 items-center justify-center rounded-xl glass-panel px-8 text-sm font-medium text-white transition-all hover:bg-white/5 focus:outline-none w-full max-w-[240px] sm:max-w-none sm:w-auto"
               >
                 <span className="relative z-10 flex items-center pointer-events-none">
                   Learn More

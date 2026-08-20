@@ -64,7 +64,7 @@ function GalleryScrollColumn({ slide }: { slide: CoverflowSlide }) {
   return (
     <div 
       ref={scrollContainerRef}
-      className="flex-1 h-[60vh] md:h-full overflow-y-auto custom-scrollbar bg-[#050505] min-h-0"
+      className="flex-1 h-[45%] md:h-full overflow-y-auto custom-scrollbar bg-[#050505] min-h-0"
     >
       <div className="flex flex-col gap-px pb-20">
         <div className="w-full relative bg-slate-900 group">
@@ -108,7 +108,7 @@ export function ProjectDetailsModal({ slide, onClose }: ProjectDetailsModalProps
         <div className="flex flex-col md:flex-row h-full w-full flex-1 min-h-0">
           
           {/* Left Column: Sticky Content Section */}
-          <div className="w-full md:w-1/3 flex flex-col h-[40vh] md:h-full border-b md:border-b-0 md:border-r border-white/10 bg-slate-950/50 shrink-0 min-h-0">
+          <div className="w-full md:w-1/3 flex flex-col h-[55%] md:h-full border-b md:border-b-0 md:border-r border-white/10 bg-slate-950/50 shrink-0 min-h-0">
             <div className="flex-1 p-6 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar">
               <div className="mb-8">
                 <DialogTitle className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 leading-tight">{slide?.title}</DialogTitle>
