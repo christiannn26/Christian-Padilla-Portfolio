@@ -141,11 +141,24 @@ export function VoxelTopographyGrid({
       ctx.fillStyle = '#000000'; // matches slate-950
       ctx.fillRect(0, 0, width, height);
 
-      const gridCols = Math.ceil(width / tileW) + 4;
-      const gridRows = Math.ceil(height / tileH) + 8;
+      const aspect = width / height;
+      const isMobileViewport = width < 768 || aspect < 1;
+      
+      // Dynamic Voxel Sizing: Medium 'sweet spot' (0.78x) on mobile
+      const effectiveTileSize = isMobileViewport ? tileSize * 0.78 : tileSize;
+      
+      const currentTileW = effectiveTileSize * 0.866025;
+      const currentTileH = effectiveTileSize * 0.5;
+
+      // Diagonal Corner Fix: Aggressively oversize the grid by 3x on mobile to push the slanted edges completely out of view
+      const overscanW = isMobileViewport ? 2.8 : 1;
+      const overscanH = isMobileViewport ? 3.0 : 1;
+      const gridCols = Math.ceil((width * overscanW) / currentTileW) + 4;
+      const gridRows = Math.ceil((height * overscanH) / currentTileH) + 8;
 
       const originX = width * 0.5;
-      const originY = height / 3.2;
+      // Center the camera vertically on mobile, preserve desktop high-angle view
+      const originY = isMobileViewport ? height * 0.5 : height / 3.2;
 
       const startR = -Math.floor(gridRows / 2);
       const endR = Math.ceil(gridRows / 2);
@@ -155,8 +168,8 @@ export function VoxelTopographyGrid({
       // Render loop with Back-to-Front Painter's Algorithm
       for (let r = startR; r < endR; r++) {
         for (let c = startC; c < endC; c++) {
-          const isoX = originX + (c - r) * tileW;
-          const isoY = originY + (c + r) * tileH;
+          const isoX = originX + (c - r) * currentTileW;
+          const isoY = originY + (c + r) * currentTileH;
 
           // Distance check to mouse target
           const dx = isoX - mx;
@@ -178,19 +191,19 @@ export function VoxelTopographyGrid({
 
           // Fast Screen-Space Culling: Skip rendering voxels completely out of bounds
           if (
-            isoX + tileW < 0 ||
-            isoX - tileW > width ||
+            isoX + currentTileW < 0 ||
+            isoX - currentTileW > width ||
             py + h + 15 < 0 ||
-            py - tileH > height
+            py - currentTileH > height
           ) {
             continue;
           }
 
           // Top Face Vertices
-          const topP1Y = py - tileH;
-          const topP2X = isoX + tileW;
-          const topP3Y = py + tileH;
-          const topP4X = isoX - tileW;
+          const topP1Y = py - currentTileH;
+          const topP2X = isoX + currentTileW;
+          const topP3Y = py + currentTileH;
+          const topP4X = isoX - currentTileW;
 
           const sideBottomShift = h + 15;
 
