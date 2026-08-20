@@ -5,8 +5,11 @@ function ServiceCard({ service, variants, index }: { service: any, variants: any
   return (
     <motion.div 
       variants={variants}
-      className="group relative p-8 h-full rounded-3xl glass-panel transition-all duration-300 overflow-hidden md:hover:-translate-y-2 sticky top-[200px] md:static md:top-auto"
-      style={{ zIndex: (index + 1) * 10 }}
+      className="group relative p-8 h-full rounded-3xl glass-panel transition-all duration-300 overflow-hidden md:hover:-translate-y-2 sticky md:static"
+      style={{ 
+        top: `calc(var(--card-base-top) + ${index * 20}px)`, 
+        zIndex: (index + 1) * 10 
+      } as React.CSSProperties}
     >
       {/* Mobile background blocker for Android to prevent stacked cards from bleeding text */}
       <div className="absolute inset-0 bg-[#0a0a0c] md:hidden pointer-events-none" />
@@ -100,13 +103,13 @@ export default function Services() {
   return (
     <section id="services" className="py-16 md:py-32 section-overlap pt-16 md:pt-24">
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center mb-12 md:mb-20 sticky top-20 md:static md:top-auto z-50 bg-background md:bg-transparent pt-4 pb-4 md:py-0 -mx-4 px-4 md:mx-0">
+        <div className="text-center mb-8 md:mb-20 sticky top-20 md:relative z-50 bg-background md:bg-transparent pt-2 pb-1 md:py-0 -mx-4 px-4 md:mx-0">
           <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-accent mb-4">Services</h2>
           <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight font-heading">How I can help you scale</h3>
         </div>
 
         <motion.div 
-          className="flex flex-col gap-6 pb-32 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8"
+          className="flex flex-col gap-6 pb-32 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8 [--card-base-top:220px] min-[400px]:[--card-base-top:190px]"
           variants={container}
           initial="hidden"
           whileInView="show"
