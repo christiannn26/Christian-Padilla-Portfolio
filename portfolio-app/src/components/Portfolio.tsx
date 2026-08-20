@@ -244,12 +244,12 @@ export default function Portfolio() {
           <TabsList className="bg-white/5 border border-white/10 p-1.5 rounded-2xl backdrop-blur-md">
             <TabsTrigger 
               value="projects" 
-              className="rounded-xl px-4 sm:px-8 py-3 text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"            >
+              className="rounded-xl px-2.5 min-[400px]:px-4 sm:px-8 py-3 text-[11px] min-[400px]:text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"            >
               Professional Background
             </TabsTrigger>
             <TabsTrigger 
               value="background" 
-              className="rounded-xl px-4 sm:px-8 py-3 text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"            >
+              className="rounded-xl px-2.5 min-[400px]:px-4 sm:px-8 py-3 text-[11px] min-[400px]:text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300"            >
               Background & Certificates
             </TabsTrigger>
           </TabsList>
@@ -258,17 +258,17 @@ export default function Portfolio() {
             <button 
               onClick={() => setViewMode('carousel')}
               className={cn(
-                "px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2",
+                "px-3 min-[400px]:px-4 py-2.5 rounded-xl text-xs min-[400px]:text-sm font-medium transition-all duration-300 flex items-center gap-1.5 min-[400px]:gap-2",
                 viewMode === 'carousel' ? "bg-accent text-accent-foreground shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)]" : "text-muted-foreground hover:text-white"
               )}
             >
-              <MonitorPlay className="w-4 h-4" />
+              <MonitorPlay className="w-3.5 h-3.5 min-[400px]:w-4 min-[400px]:h-4" />
               Cinematic
             </button>
             <button 
               onClick={() => setViewMode('grid')}
               className={cn(
-                "px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2",
+                "px-3 min-[400px]:px-4 py-2.5 rounded-xl text-xs min-[400px]:text-sm font-medium transition-all duration-300 flex items-center gap-1.5 min-[400px]:gap-2",
                 viewMode === 'grid' ? "bg-accent text-accent-foreground shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)]" : "text-muted-foreground hover:text-white"
               )}
             >
