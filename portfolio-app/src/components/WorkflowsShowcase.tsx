@@ -2,6 +2,7 @@ import { useState, useRef, type WheelEvent, type PointerEvent, useEffect } from 
 import { Play } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 interface WorkflowData {
   id: string;
@@ -178,7 +179,7 @@ function WorkflowModal({ workflow, onClose }: { workflow: WorkflowData, onClose:
   );
 }
 
-function InteractiveCanvas({ workflow }: { workflow: WorkflowData }) {
+function DesktopInteractiveCanvas({ workflow }: { workflow: WorkflowData }) {
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -290,4 +291,78 @@ function InteractiveCanvas({ workflow }: { workflow: WorkflowData }) {
       />
     </div>
   );
+}
+
+function MobileInteractiveCanvas({ workflow }: { workflow: WorkflowData }) {
+  const [isHighResLoaded, setIsHighResLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsHighResLoaded(false);
+    const img = new Image();
+    img.src = workflow.highResSrc;
+    img.onload = () => setIsHighResLoaded(true);
+  }, [workflow.highResSrc]);
+
+  return (
+    <div className="relative w-full h-full overflow-hidden bg-slate-950 flex items-center justify-center select-none touch-none">
+      <TransformWrapper
+        initialScale={1}
+        minScale={1}
+        maxScale={5}
+        centerZoomedOut={true}
+        wheel={{ wheelDisabled: true }}
+      >
+        {({ state }) => (
+          <>
+            <div className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-slate-900/80 rounded-full border border-white/10 text-xs font-mono text-white/80 backdrop-blur pointer-events-none shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+              Pinch to Zoom • Drag to Pan
+            </div>
+            
+            <div className="absolute bottom-4 right-4 z-10 px-3 py-1.5 bg-slate-900/80 rounded-full border border-white/10 text-xs font-mono text-white/80 backdrop-blur pointer-events-none shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+              {Math.round(state.scale * 100)}%
+            </div>
+
+            <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full flex items-center justify-center">
+              <div className="relative w-full h-full flex items-center justify-center">
+                <img 
+                  src={workflow.thumbnailSrc} 
+                  alt="Canvas Base"
+                  draggable={false}
+                  className="absolute max-w-full max-h-full object-contain pointer-events-none filter blur-md transition-opacity duration-700 ease-in-out"
+                  style={{ opacity: isHighResLoaded ? 0 : 1 }}
+                />
+                
+                <img 
+                  src={workflow.highResSrc} 
+                  alt="Interactive Canvas"
+                  draggable={false}
+                  className="absolute max-w-full max-h-full object-contain pointer-events-none transition-opacity duration-700 ease-in-out"
+                  style={{ opacity: isHighResLoaded ? 1 : 0 }}
+                />
+              </div>
+            </TransformComponent>
+          </>
+        )}
+      </TransformWrapper>
+    </div>
+  );
+}
+
+function InteractiveCanvas({ workflow }: { workflow: WorkflowData }) {
+  const [hasHover, setHasHover] = useState(true);
+
+  useEffect(() => {
+    const checkPointer = () => {
+      setHasHover(window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+    };
+    checkPointer();
+    window.addEventListener('resize', checkPointer);
+    return () => window.removeEventListener('resize', checkPointer);
+  }, []);
+
+  if (!hasHover) {
+    return <MobileInteractiveCanvas workflow={workflow} />;
+  }
+
+  return <DesktopInteractiveCanvas workflow={workflow} />;
 }
