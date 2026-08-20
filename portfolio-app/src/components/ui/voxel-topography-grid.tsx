@@ -112,8 +112,6 @@ export function VoxelTopographyGrid({
     container.addEventListener('pointerleave', handlePointerLeave, { passive: true });
 
     // Constants for grid iteration
-    const tileW = tileSize * 0.866025; // cos(30 deg)
-    const tileH = tileSize * 0.5;      // sin(30 deg)
     const maxRadiusSq = 220 * 220;
     const invMaxHeight = 1 / (maxHeight + 90);
 
