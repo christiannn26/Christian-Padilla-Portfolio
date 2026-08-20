@@ -10,6 +10,7 @@ import ProblemSolution from './components/ProblemSolution';
 import InteractiveFlowchart from './components/InteractiveFlowchart';
 import SystemsShowcase from './components/SystemsShowcase';
 import WorkflowsShowcase from './components/WorkflowsShowcase';
+import Footer from './components/Footer';
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
@@ -252,6 +253,7 @@ function App() {
             <TechStack />
             <About onNavigate={(id) => scrollToSection(null, id)} />
             <Contact />
+            <Footer />
           </div>
         </div>
       </main>

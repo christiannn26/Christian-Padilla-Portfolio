@@ -171,16 +171,22 @@ export function VoxelTopographyGrid({
           const isoX = originX + (c - r) * currentTileW;
           const isoY = originY + (c + r) * currentTileH;
 
-          // Distance check to mouse target
-          const dx = isoX - mx;
-          const dy = isoY - my;
-          const distSq = dx * dx + dy * dy;
-
           // Trigonometric Height Wave
           const wave1 = Math.sin(time * 2 + c * 0.25 + r * 0.25);
           const wave2 = Math.cos(time * 1.5 + c * 0.15 - r * 0.3);
-          let h = (wave1 + wave2 + 2) * 0.25 * maxHeight;
+          const baseH = (wave1 + wave2 + 2) * 0.25 * maxHeight;
 
+          // Perspective Fix: Calculate distance against the expected elevated top face
+          // rather than the flat floor. This mathematically aligns the peak of the 90px hover wave
+          // perfectly with the cursor in isometric space.
+          const projectedY = isoY - baseH - 90;
+
+          // Distance check to mouse target
+          const dx = isoX - mx;
+          const dy = projectedY - my;
+          const distSq = dx * dx + dy * dy;
+
+          let h = baseH;
           if (distSq < maxRadiusSq) {
             const dist = Math.sqrt(distSq);
             const influence = 1 - dist / 220;

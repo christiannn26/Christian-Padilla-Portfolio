@@ -65,24 +65,6 @@ export default function About({ onNavigate }: AboutProps) {
                 ))}
               </ul>
             </div>
-            
-            <motion.div 
-              className="hidden lg:block pt-6"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              <button 
-                onClick={() => onNavigate && onNavigate('contact')}
-                className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-accent px-8 text-sm font-semibold text-accent-foreground shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)] transition-all hover:bg-accent/90 hover:shadow-[0_0_50px_-5px_rgba(212,175,55,0.6)] focus:outline-none"
-              >
-                <span className="relative z-10 flex items-center pointer-events-none">
-                  Let's get to work!
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </button>
-            </motion.div>
           </div>
 
           <div 
@@ -115,28 +97,35 @@ export default function About({ onNavigate }: AboutProps) {
                 />
               </div>
             </div>
-            
-            {/* Mobile only: button moved under the picture */}
-            <motion.div 
-              className="flex lg:hidden pt-10 justify-center w-full"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              <button 
-                onClick={() => onNavigate && onNavigate('contact')}
-                className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-accent px-8 text-sm font-semibold text-accent-foreground shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)] transition-all hover:bg-accent/90 hover:shadow-[0_0_50px_-5px_rgba(212,175,55,0.6)] focus:outline-none w-full max-w-[240px]"
-              >
-                <span className="relative z-10 flex items-center pointer-events-none">
-                  Let's get to work!
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </button>
-            </motion.div>
           </div>
           
         </div>
+
+        {/* Unified Call to Action */}
+        <motion.div 
+          className="w-full flex flex-col items-center text-center mt-24 pt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-white mb-6 tracking-tight">
+            Ready to Turn Your Leads Into <span className="text-accent">Booked Calls</span>?
+          </h3>
+          <p className="text-muted-foreground font-light mb-10 max-w-2xl text-lg lg:text-xl">
+            Let's map out your funnel system, Book a Free Discovery Call.
+          </p>
+          <button 
+            onClick={() => onNavigate && onNavigate('contact')}
+            className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-accent px-10 text-sm font-semibold text-accent-foreground shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)] transition-all hover:bg-accent/90 hover:shadow-[0_0_50px_-5px_rgba(212,175,55,0.6)] focus:outline-none w-full max-w-[280px]"
+          >
+            <span className="relative z-10 flex items-center pointer-events-none">
+              Let's get to work!
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </span>
+          </button>
+        </motion.div>
+
       </div>
     </section>
   );
