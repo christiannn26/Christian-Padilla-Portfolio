@@ -97,7 +97,7 @@ export default function Portfolio() {
         { label: "Timeline", value: "2023 - 2025" },
       ],
       gallery: [
-        "./img/LC_EA/7.png",
+        "./img/LC_EA/77.png",
         "./img/LC_EA/8.png",
         "./img/LC_EA/9.png"
       ],
