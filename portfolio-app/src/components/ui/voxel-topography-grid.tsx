@@ -68,8 +68,10 @@ export function VoxelTopographyGrid({
       topColorLUT[i] = `rgb(${r},${g},${b})`;
     }
 
+    // Cap DPR at 1.5 for crisp visuals without the full cost of 2x+ rendering
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
     const handleResize = () => {
-      const dpr = 0.5;
       width = container.clientWidth;
       height = container.clientHeight;
 
@@ -78,7 +80,8 @@ export function VoxelTopographyGrid({
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.imageSmoothingEnabled = false;
     };
 
     const resizeObserver = new ResizeObserver(handleResize);
