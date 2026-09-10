@@ -74,7 +74,7 @@ export default function About({ onNavigate }: AboutProps) {
           >
             <div 
               ref={cardRef}
-              className="glass-panel aspect-[2/3] max-w-lg mx-auto lg:mx-0 rounded-3xl overflow-hidden relative group p-2 cursor-pointer"
+              className="glass-panel aspect-[2/3] max-w-lg mx-auto lg:mx-0 rounded-3xl overflow-visible relative group p-2 cursor-pointer"
               style={{ transformStyle: "preserve-3d" }}
             >
               {/* OLD DARK HOVER ANIMATION:
@@ -96,6 +96,35 @@ export default function About({ onNavigate }: AboutProps) {
                   className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
                 />
               </div>
+
+              {/* HLA Badge */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onNavigate) onNavigate('portfolio');
+                  setTimeout(() => {
+                    const tabTrigger = document.querySelector<HTMLButtonElement>('[data-state][value="background"]');
+                    if (tabTrigger) tabTrigger.click();
+                    // After tab switches, dispatch event to open HLA modal
+                    setTimeout(() => {
+                      window.dispatchEvent(new CustomEvent('open-hla-certification'));
+                    }, 500);
+                  }, 400);
+                }}
+                className="absolute -bottom-5 -right-5 z-30 w-[130px] h-[130px] md:w-[155px] md:h-[155px] rounded-full cursor-pointer transition-all duration-300 hover:scale-110 focus:outline-none"
+                style={{ 
+                  animation: 'badgeFloat 3s ease-in-out infinite',
+                  filter: 'drop-shadow(0 4px 20px rgba(212, 175, 55, 0.4))',
+                }}
+                aria-label="View HLA Automation Builder Certification"
+              >
+                <img 
+                  src="./img/badge.png" 
+                  alt="HLA Automation Builder Badge" 
+                  className="w-full h-full object-contain pointer-events-none"
+                />
+              </button>
             </div>
           </div>
           

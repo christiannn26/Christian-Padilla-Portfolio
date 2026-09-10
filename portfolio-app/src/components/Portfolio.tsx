@@ -9,8 +9,40 @@ import { cn } from "../lib/utils";
 export default function Portfolio() {
   const [viewMode, setViewMode] = React.useState<'carousel' | 'grid'>('carousel');
   const [expandedSlide, setExpandedSlide] = React.useState<CoverflowSlide | null>(null);
+  const [pendingHlaOpen, setPendingHlaOpen] = React.useState(false);
+
+  // Listen for badge click from About section
+  React.useEffect(() => {
+    const handleOpenHla = () => setPendingHlaOpen(true);
+    window.addEventListener('open-hla-certification', handleOpenHla);
+    return () => window.removeEventListener('open-hla-certification', handleOpenHla);
+  }, []);
 
   const backgroundSlides = [
+    {
+      src: "./img/certs/HLA.png",
+      alt: "HLA Automation Builder Certification",
+      title: "HLA Automation Builder Certification",
+      subtitle: "Official GoHighLevel Certificate",
+      imagePosition: "object-center",
+      meta: [
+        { label: "Type", value: "Certification" },
+        { label: "Timeline", value: "2026" },
+      ],
+      gallery: [],
+      content: (
+        <>
+          <p>Recognized and validated by HL Accelerator, this credential solidifies my technical expertise as a GoHighLevel (GHL) specialist capable of architecting end-to-end business solutions from the ground up.</p>
+          <ul className="list-disc pl-6 mt-4 space-y-3 text-white/80 marker:text-accent">
+            <li className="pl-2"><strong>Core CRM Architecture:</strong> Successfully built a fully functional CRM using HighLevel, configuring comprehensive sales pipelines, dynamic appointment calendars, and centralized communication hubs.</li>
+            <li className="pl-2"><strong>Advanced Automations:</strong> Engineered complex backend workflows to completely automate lead nurturing and internal operations, utilizing webhooks and custom API integrations for seamless third-party connectivity.</li>
+            <li className="pl-2"><strong>Frontend Conversion Systems:</strong> Designed and deployed high-converting sales funnels, professional websites, and intelligent forms/surveys to maximize lead capture and client acquisition.</li>
+            <li className="pl-2"><strong>Infrastructure & Deliverability:</strong> Managed crucial backend infrastructure, including Mailgun/LC Email configuration and A2P 10DLC compliance to ensure strictly optimized SMS and email deliverability.</li>
+            <li className="pl-2"><strong>Rapid Deployment:</strong> Leveraged custom GHL snapshots for the efficient, repeatable scaling of proven CRM frameworks across multiple client accounts.</li>
+          </ul>
+        </>
+      )
+    },
     {
       src: "./img/certs/11.png",
       alt: "Certifications & Advanced Training",
@@ -85,6 +117,14 @@ export default function Portfolio() {
       )
     }
   ];
+
+  // Auto-open HLA certification modal when triggered by badge click
+  React.useEffect(() => {
+    if (pendingHlaOpen && backgroundSlides.length > 0) {
+      setExpandedSlide(backgroundSlides[0]);
+      setPendingHlaOpen(false);
+    }
+  }, [pendingHlaOpen]);
 
   const projectSlides = [
     {

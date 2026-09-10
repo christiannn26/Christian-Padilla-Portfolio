@@ -138,7 +138,7 @@ export default function WorkflowsShowcase() {
             ) : (
               <iframe 
                 className="w-full h-full absolute inset-0"
-                src="https://www.youtube.com/embed/-q9pgSpVH8M?autoplay=1&rel=0&modestbranding=1" 
+                src="https://www.youtube.com/embed/Y6sjEW6EaMU?autoplay=1&rel=0&modestbranding=1" 
                 title="System Action Demo" 
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
