@@ -122,10 +122,19 @@ export function VoxelTopographyGrid({
     let isDrawing = false;
     let isScrolling = false;
     let scrollTimeout: ReturnType<typeof setTimeout>;
+    let frameCount = 0;
 
     const draw = () => {
       if (!isVisible || isScrolling) {
         isDrawing = false;
+        return;
+      }
+
+      // Throttle to ~30fps when cursor is not interacting with the grid
+      const isIdle = mouseRef.current.targetX <= -500;
+      frameCount++;
+      if (isIdle && frameCount % 2 !== 0) {
+        animationFrameId = requestAnimationFrame(draw);
         return;
       }
       

@@ -167,25 +167,14 @@ function App() {
           }}
         />
 
-        <motion.div 
-          className="absolute top-[5%] left-[10%] w-[60vw] h-[60vw] rounded-full pointer-events-none will-change-transform opacity-60"
+        {/* CSS-only ambient spotlights — zero JS overhead vs Framer Motion infinite animations */}
+        <div 
+          className="absolute top-[5%] left-[10%] w-[60vw] h-[60vw] rounded-full pointer-events-none opacity-60 spotlight-drift-1"
           style={{ background: "radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%)" }}
-          animate={{ 
-            x: [0, 40, -40, 0],
-            y: [0, -40, 40, 0],
-            scale: [1, 1.05, 0.95, 1]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         />
-        <motion.div 
-          className="absolute bottom-[10%] right-[5%] w-[70vw] h-[70vw] rounded-full pointer-events-none will-change-transform opacity-60"
+        <div 
+          className="absolute bottom-[10%] right-[5%] w-[70vw] h-[70vw] rounded-full pointer-events-none opacity-60 spotlight-drift-2"
           style={{ background: "radial-gradient(circle at 50% 50%, rgba(250, 249, 246, 0.05) 0%, transparent 50%)" }}
-          animate={{ 
-            x: [0, -50, 50, 0],
-            y: [0, 50, -50, 0],
-            scale: [1, 0.9, 1.1, 1]
-          }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         />
       </div>
 

@@ -5,7 +5,7 @@ export default function GalaxyBackground() {
       <div 
         className="absolute inset-0 bg-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&q=80&w=2000')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&q=60&w=1200')`,
           backgroundSize: '1200px auto',
           opacity: 0.5,
           transform: 'translateZ(0)',

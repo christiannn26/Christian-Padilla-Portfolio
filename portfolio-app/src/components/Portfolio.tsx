@@ -341,7 +341,7 @@ export default function Portfolio() {
                     onClick={() => setExpandedSlide(slide)}
                     className="group relative aspect-square rounded-3xl overflow-hidden cursor-pointer bg-slate-900 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:border-accent/40 hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] transition-all duration-500 will-change-transform hover:-translate-y-2"
                   >
-                    <img src={slide.src} alt={slide.alt} className={cn("w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100", slide.imagePosition || "object-top")} />
+                    <img src={slide.src} alt={slide.alt} loading="lazy" decoding="async" className={cn("w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100", slide.imagePosition || "object-top")} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                     <div className="absolute inset-0 p-6 flex flex-col justify-end">
                       <h4 className="text-2xl font-heading font-bold text-white mb-1 drop-shadow-md">{slide.title}</h4>
@@ -380,7 +380,7 @@ export default function Portfolio() {
                     onClick={() => setExpandedSlide(slide)}
                     className="group relative aspect-square rounded-3xl overflow-hidden cursor-pointer bg-slate-900 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:border-accent/40 hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] transition-all duration-500 will-change-transform hover:-translate-y-2"
                   >
-                    <img src={slide.src} alt={slide.alt} className={cn("w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100", slide.imagePosition || "object-top")} />
+                    <img src={slide.src} alt={slide.alt} loading="lazy" decoding="async" className={cn("w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100", slide.imagePosition || "object-top")} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                     <div className="absolute inset-0 p-6 flex flex-col justify-end">
                       <h4 className="text-2xl font-heading font-bold text-white mb-1 drop-shadow-md">{slide.title}</h4>

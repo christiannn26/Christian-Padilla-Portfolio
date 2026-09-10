@@ -135,6 +135,8 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
                     src="./img/Hero_Face.png" 
                     alt="Christian Padilla" 
                     className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
+                    decoding="async"
+                    fetchPriority="high"
                   />
                 </div>
               </div>

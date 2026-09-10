@@ -94,6 +94,8 @@ export default function About({ onNavigate }: AboutProps) {
                   src="./img/abotme.jpg" 
                   alt="About Christian Padilla" 
                   className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
 
