@@ -113,8 +113,8 @@
 }
 
 @keyframes badgeFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%, 100% { transform: translateY(0) translateZ(50px); }
+  50% { transform: translateY(-8px) translateZ(50px); }
 }
 
 /* GPU-composited spotlight drift — replaces Framer Motion infinite JS animations */
