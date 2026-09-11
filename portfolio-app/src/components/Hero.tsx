@@ -11,7 +11,7 @@ gsap.registerPlugin(SplitText);
 export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void }) {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const btn1Ref = useMagnetic<HTMLButtonElement>();
-  const btn2Ref = useMagnetic<HTMLButtonElement>();
+  const btn2Ref = useMagnetic<HTMLAnchorElement>();
   const cardRef = use3DTilt<HTMLDivElement>();
 
   useEffect(() => {
@@ -95,16 +95,17 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
                 </span>
               </button>
               
-              <button 
+              <a 
                 ref={btn2Ref} 
-                onClick={() => onNavigate && onNavigate('portfolio')}
+                href="/Christian_Padilla_CV.pdf"
+                download
                 className="group inline-flex h-14 items-center justify-center rounded-xl glass-panel px-8 text-sm font-medium text-white transition-all hover:bg-white/5 focus:outline-none"
               >
                 <span className="relative z-10 flex items-center pointer-events-none">
-                  Learn More
+                  Download CV
                   <FileText className="ml-2 h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
                 </span>
-              </button>
+              </a>
             </div>
           </motion.div>
 
@@ -176,15 +177,16 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
                 </span>
               </button>
               
-              <button 
-                onClick={() => onNavigate && onNavigate('portfolio')}
+              <a 
+                href="/Christian_Padilla_CV.pdf"
+                download
                 className="group inline-flex h-14 items-center justify-center rounded-xl glass-panel px-8 text-sm font-medium text-white transition-all hover:bg-white/5 focus:outline-none w-full max-w-[240px] sm:max-w-none sm:w-auto"
               >
                 <span className="relative z-10 flex items-center pointer-events-none">
-                  Learn More
+                  Download CV
                   <FileText className="ml-2 h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
                 </span>
-              </button>
+              </a>
             </motion.div>
             
           </motion.div>
