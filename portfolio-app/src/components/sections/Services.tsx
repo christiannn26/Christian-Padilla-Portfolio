@@ -1,4 +1,4 @@
-import { motion, type Variants } from 'framer-motion';
+import { motion, type Variants } from 'motion/react';
 import { SERVICES, type Service } from '../../data/services';
 import { SECTION_TITLE } from '../../lib/styles';
 import { SectionEyebrow } from '../ui/SectionEyebrow';

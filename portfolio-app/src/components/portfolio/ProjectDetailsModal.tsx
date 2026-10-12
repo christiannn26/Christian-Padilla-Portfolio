@@ -93,7 +93,7 @@ interface ProjectDetailsModalProps {
   onClose: () => void;
 }
 
-export function ProjectDetailsModal({ slide: requestedSlide, onClose }: ProjectDetailsModalProps) {
+export default function ProjectDetailsModal({ slide: requestedSlide, onClose }: ProjectDetailsModalProps) {
   // Keep the last slide on screen while the close animation plays.
   const slide = useLastNonNull(requestedSlide);
 

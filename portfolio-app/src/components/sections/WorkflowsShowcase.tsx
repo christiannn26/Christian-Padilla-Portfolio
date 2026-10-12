@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { Play } from 'lucide-react';
 import { WORKFLOWS, type Workflow } from '../../data/workflows';
 import { FOCUS_RING, pressable } from '../../lib/a11y';
 import { SECTION_TITLE } from '../../lib/styles';
 import { cn } from '../../lib/utils';
 import { SectionEyebrow } from '../ui/SectionEyebrow';
-import WorkflowModal from '../workflows/WorkflowModal';
+
+// Modal + zoom/pan canvas (and react-zoom-pan-pinch) live in their own chunk.
+const WorkflowModal = lazy(() => import('../workflows/WorkflowModal'));
 
 export default function WorkflowsShowcase() {
   const [selectedWorkflow, setSelectedWorkflow] = useState<Workflow | null>(null);
@@ -98,7 +100,9 @@ export default function WorkflowsShowcase() {
         </div>
       </div>
 
-      <WorkflowModal workflow={selectedWorkflow} onClose={() => setSelectedWorkflow(null)} />
+      <Suspense fallback={null}>
+        <WorkflowModal workflow={selectedWorkflow} onClose={() => setSelectedWorkflow(null)} />
+      </Suspense>
     </div>
   );
 }

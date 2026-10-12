@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { Grid, MonitorPlay } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { CoverflowCarousel, type CoverflowSlide } from '../ui/coverflow-carousel';
 import { SectionEyebrow } from '../ui/SectionEyebrow';
-import { ProjectDetailsModal } from '../portfolio/ProjectDetailsModal';
 import { SlideGrid } from '../portfolio/SlideGrid';
 import { backgroundSlides, projectSlides } from '../portfolio/slides';
 import { usePortfolioNav, type PortfolioTab } from '../../context/portfolioNav';
 import { SECTION_TITLE } from '../../lib/styles';
 import { cn } from '../../lib/utils';
+
+// Split out of the main bundle; the chunk is fetched right after first render, so opening stays instant.
+const ProjectDetailsModal = lazy(() => import('../portfolio/ProjectDetailsModal'));
 
 type ViewMode = 'carousel' | 'grid';
 
@@ -99,7 +101,9 @@ export default function Portfolio() {
           </TabsContent>
         </Tabs>
 
-        <ProjectDetailsModal slide={openSlide} onClose={() => setOpenSlide(null)} />
+        <Suspense fallback={null}>
+          <ProjectDetailsModal slide={openSlide} onClose={() => setOpenSlide(null)} />
+        </Suspense>
       </div>
     </section>
   );

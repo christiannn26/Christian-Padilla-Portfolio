@@ -1,5 +1,5 @@
 import { useState, type MouseEvent } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { NAV_ITEMS } from '../../data/navigation';
 import { scrollToSection } from '../../lib/smoothScroll';

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { FLIP_CARDS, type FlipCard } from '../../data/flipCards';
 import { FOCUS_RING, pressable } from '../../lib/a11y';
 import { cn } from '../../lib/utils';

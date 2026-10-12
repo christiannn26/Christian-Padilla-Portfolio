@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { usePortfolioNav } from '../../context/portfolioNav';
 import { useScrollReveal, use3DTilt } from '../../hooks/gsapEffects';

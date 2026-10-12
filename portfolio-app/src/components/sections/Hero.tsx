@@ -1,5 +1,5 @@
 import { useRef, type ComponentProps } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { ArrowRight, FileText, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
