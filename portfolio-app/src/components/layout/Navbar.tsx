@@ -1,5 +1,5 @@
 import { useState, type MouseEvent } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { NAV_ITEMS } from '../../data/navigation';
 import { scrollToSection } from '../../lib/smoothScroll';
@@ -42,36 +42,46 @@ export default function Navbar() {
 
         {/* Mobile Hamburger Button */}
         <div className="md:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white hover:text-accent focus:outline-none p-2">
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+            className="text-white hover:text-accent focus:outline-none p-2"
+          >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.2 }}
-          className="md:hidden absolute top-20 left-0 w-full glass-panel border-t border-white/10 shadow-2xl flex flex-col py-6 px-8 gap-6 z-50"
-        >
-          {NAV_ITEMS.map(({ id, label }) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              onClick={(e) => {
-                setIsMenuOpen(false);
-                navigate(e, id);
-              }}
-              className="text-white hover:text-accent font-medium tracking-widest uppercase text-sm"
-            >
-              {label}
-            </a>
-          ))}
-        </motion.div>
-      )}
+      {/* Mobile Dropdown Menu (AnimatePresence lets the exit animation play) */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden absolute top-20 left-0 w-full glass-panel border-t border-white/10 shadow-2xl flex flex-col py-6 px-8 gap-6 z-50"
+          >
+            {NAV_ITEMS.map(({ id, label }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => {
+                  setIsMenuOpen(false);
+                  navigate(e, id);
+                }}
+                className="text-white hover:text-accent font-medium tracking-widest uppercase text-sm"
+              >
+                {label}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

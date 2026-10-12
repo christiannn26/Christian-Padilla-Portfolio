@@ -64,27 +64,31 @@ export default function InteractiveFlowchart({ imageSrc = './img/Mermaid.svg', z
       </div>
 
       {/* Magnifying Glass Lens (Desktop Only) */}
+      {/* Outer layer follows the cursor; inner layer owns the pop-in so the
+          enter animation's transform never fights the positioning transform. */}
       {isHovered && hasHover && containerSize.w > 0 && (
         <div
-          className="absolute top-0 left-0 pointer-events-none overflow-hidden rounded-full border-2 border-accent bg-slate-900 shadow-[0_0_30px_rgba(212,175,55,0.5)] z-20 animate-in zoom-in-50 fade-in duration-200 ease-out"
+          className="absolute top-0 left-0 pointer-events-none z-20"
           style={{
             width: lensSize,
             height: lensSize,
             transform: `translate(${mousePos.x - R}px, ${mousePos.y - R}px)`,
           }}
         >
-          <div
-            className="absolute top-0 left-0 flex items-center justify-center"
-            style={{
-              width: containerSize.w,
-              height: containerSize.h,
-              transform: `translate(${-(mousePos.x - R)}px, ${-(mousePos.y - R)}px) scale(${zoomLevel})`,
-              transformOrigin: `${mousePos.x}px ${mousePos.y}px`,
-            }}
-          >
-            <img src={imageSrc} alt="Zoomed Flowchart" className="w-full h-full object-contain drop-shadow-[0_0_3px_rgba(255,255,255,0.9)]" />
+          <div className="relative w-full h-full overflow-hidden rounded-full border-2 border-accent bg-slate-900 shadow-[0_0_30px_rgba(212,175,55,0.5)] animate-in zoom-in-50 fade-in duration-200 ease-out">
+            <div
+              className="absolute top-0 left-0 flex items-center justify-center"
+              style={{
+                width: containerSize.w,
+                height: containerSize.h,
+                transform: `translate(${-(mousePos.x - R)}px, ${-(mousePos.y - R)}px) scale(${zoomLevel})`,
+                transformOrigin: `${mousePos.x}px ${mousePos.y}px`,
+              }}
+            >
+              <img src={imageSrc} alt="Zoomed Flowchart" className="w-full h-full object-contain drop-shadow-[0_0_3px_rgba(255,255,255,0.9)]" />
+            </div>
+            <div className="absolute inset-0 rounded-full shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] pointer-events-none mix-blend-overlay" />
           </div>
-          <div className="absolute inset-0 rounded-full shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] pointer-events-none mix-blend-overlay" />
         </div>
       )}
     </div>

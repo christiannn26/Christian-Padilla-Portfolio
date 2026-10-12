@@ -319,7 +319,7 @@ export function VoxelTopographyGrid({
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full z-0 overflow-hidden opacity-60 cursor-pointer touch-none will-change-transform"
+      className="absolute inset-0 w-full h-full z-0 overflow-hidden opacity-60 cursor-pointer touch-pan-y will-change-transform"
       style={{ transform: 'translateZ(0)' }}
     >
       <canvas ref={canvasRef} className="block w-full h-full" />

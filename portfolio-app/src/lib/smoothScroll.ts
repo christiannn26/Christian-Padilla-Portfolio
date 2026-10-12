@@ -1,4 +1,4 @@
-import { matches, TOUCH_OR_SMALL } from './media';
+import { matches, REDUCED_MOTION, TOUCH_OR_SMALL } from './media';
 
 /** Dispatched on window around the custom desktop glide so heavy canvases can pause. */
 export const SCROLL_START_EVENT = 'scroll-start';
@@ -12,16 +12,19 @@ const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2
 /**
  * Scrolls to the section with `targetId` ('top' for the page top).
  * Desktop gets a custom eased glide; touch devices keep the browser's native
- * smooth scroll so momentum physics are preserved.
+ * smooth scroll so momentum physics are preserved. Visitors who prefer reduced
+ * motion jump straight there.
  */
 export function scrollToSection(targetId: string) {
   const targetElement = document.getElementById(targetId);
+  const reduceMotion = matches(REDUCED_MOTION);
 
-  if (matches(TOUCH_OR_SMALL)) {
+  if (reduceMotion || matches(TOUCH_OR_SMALL)) {
+    const behavior: ScrollBehavior = reduceMotion ? 'instant' : 'smooth';
     if (targetId === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior });
     } else {
-      targetElement?.scrollIntoView({ behavior: 'smooth' });
+      targetElement?.scrollIntoView({ behavior });
     }
     return;
   }

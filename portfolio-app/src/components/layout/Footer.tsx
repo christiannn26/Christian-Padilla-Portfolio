@@ -1,9 +1,10 @@
 import { ArrowUp } from 'lucide-react';
+import { REDUCED_MOTION, matches } from '../../lib/media';
 
 export default function Footer() {
   const scrollToTop = () => {
     // Elegant smooth scroll to top matching the native/custom behavior of the app
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: matches(REDUCED_MOTION) ? 'instant' : 'smooth' });
   };
 
   return (

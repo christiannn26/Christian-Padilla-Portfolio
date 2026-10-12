@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { usePortfolioNav } from '../../context/portfolioNav';
 import { useScrollReveal, use3DTilt } from '../../hooks/gsapEffects';
 import { SECTION_TITLE } from '../../lib/styles';
 import { cn } from '../../lib/utils';
@@ -15,6 +16,7 @@ export default function About({ onNavigate }: AboutProps) {
   const textRef = useScrollReveal<HTMLDivElement>();
   const imageRef = useScrollReveal<HTMLDivElement>(0.2);
   const cardRef = use3DTilt<HTMLDivElement>();
+  const { showCertification } = usePortfolioNav();
 
   return (
     <section id="about" className="py-32 relative z-10 pt-24">
@@ -92,15 +94,8 @@ export default function About({ onNavigate }: AboutProps) {
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (onNavigate) onNavigate('portfolio');
-                  setTimeout(() => {
-                    const tabTrigger = document.querySelector<HTMLButtonElement>('[data-state][value="background"]');
-                    if (tabTrigger) tabTrigger.click();
-                    // After tab switches, dispatch event to open HLA modal
-                    setTimeout(() => {
-                      window.dispatchEvent(new CustomEvent('open-hla-certification'));
-                    }, 500);
-                  }, 400);
+                  onNavigate?.('portfolio');
+                  showCertification();
                 }}
                 className="absolute -bottom-5 -right-5 z-30 w-[130px] h-[130px] md:w-[155px] md:h-[155px] rounded-full cursor-pointer transition-all duration-300 hover:scale-110 focus:outline-none"
                 style={{

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
 import type { CoverflowSlide } from '../ui/coverflow-carousel';
+import { useLastNonNull } from '../../hooks/useLastNonNull';
 
 const AUTO_SCROLL_SPEED = 0.35; // Pixels per frame, slower for cinematic effect
 const AUTO_SCROLL_DELAY = 1000;
@@ -92,9 +93,12 @@ interface ProjectDetailsModalProps {
   onClose: () => void;
 }
 
-export function ProjectDetailsModal({ slide, onClose }: ProjectDetailsModalProps) {
+export function ProjectDetailsModal({ slide: requestedSlide, onClose }: ProjectDetailsModalProps) {
+  // Keep the last slide on screen while the close animation plays.
+  const slide = useLastNonNull(requestedSlide);
+
   return (
-    <Dialog open={!!slide} onOpenChange={(open) => !open && onClose()}>
+    <Dialog open={!!requestedSlide} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-[95vw] md:max-w-[90vw] h-[95vh] md:h-[90vh] bg-slate-950/80 backdrop-blur-2xl border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,1)] text-white p-0 overflow-hidden rounded-[2rem] gap-0 flex flex-col min-h-0">
         <div className="flex flex-col md:flex-row h-full w-full flex-1 min-h-0">
           {/* Left Column: Sticky Content Section */}
@@ -136,7 +140,7 @@ export function ProjectDetailsModal({ slide, onClose }: ProjectDetailsModalProps
           </div>
 
           {/* Right Column: Scrollable Image Gallery with Auto-Scroll */}
-          {slide && <GalleryScrollColumn slide={slide} />}
+          {slide && <GalleryScrollColumn key={slide.src} slide={slide} />}
         </div>
       </DialogContent>
     </Dialog>

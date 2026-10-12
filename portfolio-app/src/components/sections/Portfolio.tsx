@@ -1,24 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Grid, MonitorPlay } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { CoverflowCarousel, type CoverflowSlide } from '../ui/coverflow-carousel';
 import { SectionEyebrow } from '../ui/SectionEyebrow';
 import { ProjectDetailsModal } from '../portfolio/ProjectDetailsModal';
-import { SlideDetails } from '../portfolio/SlideDetails';
 import { SlideGrid } from '../portfolio/SlideGrid';
-import { BACKGROUND_SLIDES, PROJECT_SLIDES, type PortfolioSlide } from '../../data/portfolio';
+import { backgroundSlides, projectSlides } from '../portfolio/slides';
+import { usePortfolioNav, type PortfolioTab } from '../../context/portfolioNav';
 import { SECTION_TITLE } from '../../lib/styles';
 import { cn } from '../../lib/utils';
 
 type ViewMode = 'carousel' | 'grid';
-
-const toCoverflowSlide = ({ details, ...slide }: PortfolioSlide): CoverflowSlide => ({
-  ...slide,
-  content: <SlideDetails {...details} />,
-});
-
-const backgroundSlides = BACKGROUND_SLIDES.map(toCoverflowSlide);
-const projectSlides = PROJECT_SLIDES.map(toCoverflowSlide);
 
 const TAB_TRIGGER_CLASS =
   'rounded-xl px-2.5 min-[400px]:px-4 sm:px-8 py-3 text-[11px] min-[400px]:text-xs sm:text-sm font-medium text-muted-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)] transition-all duration-300';
@@ -61,14 +53,8 @@ function SlidesView({
 
 export default function Portfolio() {
   const [viewMode, setViewMode] = useState<ViewMode>('carousel');
-  const [expandedSlide, setExpandedSlide] = useState<CoverflowSlide | null>(null);
-
-  // Listen for badge click from About section
-  useEffect(() => {
-    const handleOpenHla = () => setExpandedSlide(backgroundSlides[0]);
-    window.addEventListener('open-hla-certification', handleOpenHla);
-    return () => window.removeEventListener('open-hla-certification', handleOpenHla);
-  }, []);
+  // Tab and open modal are shared so the About badge can jump straight to the HLA certificate.
+  const { tab, setTab, openSlide, setOpenSlide } = usePortfolioNav();
 
   const viewToggle = (mode: ViewMode) =>
     cn(VIEW_TOGGLE_CLASS, viewMode === mode ? 'bg-accent text-accent-foreground shadow-[0_0_20px_-5px_rgba(229,211,179,0.5)]' : 'text-muted-foreground hover:text-white');
@@ -81,7 +67,7 @@ export default function Portfolio() {
           <h3 className={SECTION_TITLE}>My Portfolio</h3>
         </div>
 
-        <Tabs defaultValue="projects" className="w-full relative z-10">
+        <Tabs value={tab} onValueChange={(value) => setTab(value as PortfolioTab)} className="w-full relative z-10">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
             <TabsList className="bg-white/5 border border-white/10 p-1.5 rounded-2xl backdrop-blur-md">
               <TabsTrigger value="projects" className={TAB_TRIGGER_CLASS}>
@@ -93,11 +79,11 @@ export default function Portfolio() {
             </TabsList>
 
             <div className="flex bg-white/5 border border-white/10 p-1.5 rounded-2xl backdrop-blur-md z-20">
-              <button onClick={() => setViewMode('carousel')} className={viewToggle('carousel')}>
+              <button type="button" aria-pressed={viewMode === 'carousel'} onClick={() => setViewMode('carousel')} className={viewToggle('carousel')}>
                 <MonitorPlay className="w-3.5 h-3.5 min-[400px]:w-4 min-[400px]:h-4" />
                 Cinematic
               </button>
-              <button onClick={() => setViewMode('grid')} className={viewToggle('grid')}>
+              <button type="button" aria-pressed={viewMode === 'grid'} onClick={() => setViewMode('grid')} className={viewToggle('grid')}>
                 <Grid className="w-4 h-4" />
                 Grid View
               </button>
@@ -105,15 +91,15 @@ export default function Portfolio() {
           </div>
 
           <TabsContent value="background" className="mt-0 outline-none w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <SlidesView slides={backgroundSlides} viewMode={viewMode} initialSlide={1} onSelect={setExpandedSlide} />
+            <SlidesView slides={backgroundSlides} viewMode={viewMode} initialSlide={1} onSelect={setOpenSlide} />
           </TabsContent>
 
           <TabsContent value="projects" className="mt-0 outline-none w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <SlidesView slides={projectSlides} viewMode={viewMode} onSelect={setExpandedSlide} />
+            <SlidesView slides={projectSlides} viewMode={viewMode} onSelect={setOpenSlide} />
           </TabsContent>
         </Tabs>
 
-        <ProjectDetailsModal slide={expandedSlide} onClose={() => setExpandedSlide(null)} />
+        <ProjectDetailsModal slide={openSlide} onClose={() => setOpenSlide(null)} />
       </div>
     </section>
   );

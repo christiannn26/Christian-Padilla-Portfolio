@@ -1,5 +1,6 @@
 import { Maximize2 } from 'lucide-react';
 import type { CoverflowSlide } from '../ui/coverflow-carousel';
+import { FOCUS_RING, pressable } from '../../lib/a11y';
 import { cn } from '../../lib/utils';
 
 /** "Grid View" alternative to the coverflow carousel. */
@@ -9,8 +10,11 @@ export function SlideGrid({ slides, onSelect }: { slides: CoverflowSlide[]; onSe
       {slides.map((slide) => (
         <div
           key={slide.src}
-          onClick={() => onSelect(slide)}
-          className="group relative aspect-square rounded-3xl overflow-hidden cursor-pointer bg-slate-900 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:border-accent/40 hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] transition-all duration-500 will-change-transform hover:-translate-y-2"
+          {...pressable(() => onSelect(slide))}
+          className={cn(
+            FOCUS_RING,
+            'group relative aspect-square rounded-3xl overflow-hidden cursor-pointer bg-slate-900 border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:border-accent/40 hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] transition-all duration-500 will-change-transform hover:-translate-y-2',
+          )}
         >
           <img
             src={slide.src}

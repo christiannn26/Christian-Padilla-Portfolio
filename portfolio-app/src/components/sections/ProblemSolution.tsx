@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FLIP_CARDS, type FlipCard } from '../../data/flipCards';
+import { FOCUS_RING, pressable } from '../../lib/a11y';
 import { cn } from '../../lib/utils';
 import { SectionEyebrow } from '../ui/SectionEyebrow';
 
@@ -78,8 +79,9 @@ export default function ProblemSolution() {
             return (
               <div
                 key={card.id}
-                className="group w-full h-[280px] sm:h-[320px] [perspective:1000px] cursor-pointer"
-                onClick={() => setFlippedCardId(isFlipped ? null : card.id)}
+                className={cn(FOCUS_RING, 'group w-full h-[280px] sm:h-[320px] [perspective:1000px] cursor-pointer rounded-2xl')}
+                {...pressable(() => setFlippedCardId(isFlipped ? null : card.id))}
+                aria-pressed={isFlipped}
               >
                 <div
                   className={cn(

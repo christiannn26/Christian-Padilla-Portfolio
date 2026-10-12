@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Play } from 'lucide-react';
 import { WORKFLOWS, type Workflow } from '../../data/workflows';
+import { FOCUS_RING, pressable } from '../../lib/a11y';
 import { SECTION_TITLE } from '../../lib/styles';
 import { cn } from '../../lib/utils';
 import { SectionEyebrow } from '../ui/SectionEyebrow';
@@ -9,18 +10,6 @@ import WorkflowModal from '../workflows/WorkflowModal';
 export default function WorkflowsShowcase() {
   const [selectedWorkflow, setSelectedWorkflow] = useState<Workflow | null>(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-
-  // Background Preloading Engine
-  useEffect(() => {
-    // Wait 3 seconds after initial mount to safely silently preload 4K assets
-    const timer = setTimeout(() => {
-      WORKFLOWS.forEach((wf) => {
-        const img = new Image();
-        img.src = wf.highResSrc;
-      });
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="w-full mt-16 md:mt-32 mb-16 px-4">
@@ -41,8 +30,11 @@ export default function WorkflowsShowcase() {
           {WORKFLOWS.map((wf) => (
             <div
               key={wf.id}
-              onClick={() => setSelectedWorkflow(wf)}
-              className="group relative w-full sm:w-[calc(50%-16px)] md:w-[calc(33.333%-22px)] min-w-0 sm:min-w-[320px] max-w-[450px] h-64 md:h-96 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-accent/50 transition-colors bg-slate-900"
+              {...pressable(() => setSelectedWorkflow(wf))}
+              className={cn(
+                FOCUS_RING,
+                'group relative w-full sm:w-[calc(50%-16px)] md:w-[calc(33.333%-22px)] min-w-0 sm:min-w-[320px] max-w-[450px] h-64 md:h-96 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-accent/50 transition-colors bg-slate-900',
+              )}
             >
               <img
                 src={wf.thumbnailSrc}
@@ -70,8 +62,11 @@ export default function WorkflowsShowcase() {
           </div>
 
           <div
-            className="relative w-full aspect-video rounded-3xl overflow-hidden bg-slate-900 border border-white/10 shadow-[0_0_50px_-15px_rgba(212,175,55,0.3)] group cursor-pointer"
-            onClick={() => setIsVideoPlaying(true)}
+            className={cn(
+              FOCUS_RING,
+              'relative w-full aspect-video rounded-3xl overflow-hidden bg-slate-900 border border-white/10 shadow-[0_0_50px_-15px_rgba(212,175,55,0.3)] group cursor-pointer',
+            )}
+            {...(isVideoPlaying ? {} : { ...pressable(() => setIsVideoPlaying(true)), 'aria-label': 'Play the system demo video' })}
           >
             {!isVideoPlaying ? (
               <>
@@ -103,7 +98,7 @@ export default function WorkflowsShowcase() {
         </div>
       </div>
 
-      {selectedWorkflow && <WorkflowModal workflow={selectedWorkflow} onClose={() => setSelectedWorkflow(null)} />}
+      <WorkflowModal workflow={selectedWorkflow} onClose={() => setSelectedWorkflow(null)} />
     </div>
   );
 }

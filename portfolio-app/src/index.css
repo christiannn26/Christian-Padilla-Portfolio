@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
   /* Volumetric Dark Glass Aesthetic */
@@ -10,6 +11,8 @@
   
   --color-accent: #D4AF37; /* Champagne Gold */
   --color-accent-foreground: #050505;
+
+  --color-ring: #D4AF37; /* Focus rings use the accent gold */
   
   --color-background: #050505; /* Deep cinematic obsidian */
   --color-foreground: #FAF9F6; /* Cream text */
@@ -24,6 +27,14 @@
   
   --font-sans: 'Montserrat', sans-serif;
   --font-heading: 'Cormorant', serif;
+
+  /* Tech-stack logo strip: the track holds two copies, so -50% is one seamless loop */
+  --animate-marquee: marquee 25s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0%); }
+    to { transform: translateX(-50%); }
+  }
 }
 
 @layer utilities {

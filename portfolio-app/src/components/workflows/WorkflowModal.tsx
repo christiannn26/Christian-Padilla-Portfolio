@@ -3,6 +3,7 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
 import type { Workflow } from '../../data/workflows';
 import { useImageLoaded } from '../../hooks/useImageLoaded';
+import { useLastNonNull } from '../../hooks/useLastNonNull';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { FINE_POINTER } from '../../lib/media';
 import { cn } from '../../lib/utils';
@@ -149,11 +150,14 @@ function MobileInteractiveCanvas({ workflow }: { workflow: Workflow }) {
   );
 }
 
-export default function WorkflowModal({ workflow, onClose }: { workflow: Workflow; onClose: () => void }) {
+export default function WorkflowModal({ workflow: requested, onClose }: { workflow: Workflow | null; onClose: () => void }) {
   const hasHover = useMediaQuery(FINE_POINTER);
+  // Keep the last workflow on screen while the close animation plays.
+  const workflow = useLastNonNull(requested);
+  if (!workflow) return null;
 
   return (
-    <Dialog open={!!workflow} onOpenChange={(open) => !open && onClose()}>
+    <Dialog open={!!requested} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-[95vw] md:max-w-[90vw] h-[95vh] md:h-[90vh] bg-slate-950/80 backdrop-blur-2xl border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,1)] text-white p-0 overflow-hidden rounded-[2rem] gap-0 flex flex-col md:grid md:grid-cols-2 min-h-0">
         {/* Left Column: Details */}
         <div className="p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/10 bg-slate-950/50 order-2 md:order-1 h-[40vh] md:h-full overflow-y-auto shrink-0 min-h-0">

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { TOOLS, type Tool } from '../../data/techStack';
 import { SectionEyebrow } from '../ui/SectionEyebrow';
 
@@ -43,26 +42,19 @@ export default function TechStack() {
         <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-20 pointer-events-none" />
         <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-20 pointer-events-none" />
 
-        <motion.div
-          className="flex whitespace-nowrap items-center"
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{
-            repeat: Infinity,
-            ease: 'linear',
-            duration: 25,
-          }}
-        >
-          {/* Double the array for seamless looping */}
+        <div className="flex whitespace-nowrap items-center animate-marquee">
+          {/* Double the array for seamless looping (the copy is hidden from screen readers) */}
           {[...TOOLS, ...TOOLS].map((tool, i) => (
             <div
               key={i}
+              aria-hidden={i >= TOOLS.length || undefined}
               className="group mx-4 flex items-center justify-center gap-3 px-8 py-5 rounded-2xl glass-panel hover:bg-white/10 hover:border-accent/40 transition-all duration-300 cursor-pointer shrink-0 hover:scale-105 hover:shadow-[0_0_20px_-5px_rgba(229,211,179,0.3)]"
             >
               <ToolIcon tool={tool} />
               <span className="text-base font-medium text-white tracking-wide group-hover:text-accent transition-colors">{tool.name}</span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
