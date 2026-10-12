@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
-import { useScrollReveal, use3DTilt } from '../hooks/useGSAP';
+import { useScrollReveal, use3DTilt } from '../../hooks/gsapEffects';
+import { SECTION_TITLE } from '../../lib/styles';
+import { cn } from '../../lib/utils';
+import { SectionEyebrow } from '../ui/SectionEyebrow';
+
+const VALUE_PROPS = ['Funnel Strategist', 'Landing Page Designer', 'Full CRM & Automation Builder'];
 
 interface AboutProps {
   onNavigate?: (id: string) => void;
@@ -11,46 +16,44 @@ export default function About({ onNavigate }: AboutProps) {
   const imageRef = useScrollReveal<HTMLDivElement>(0.2);
   const cardRef = use3DTilt<HTMLDivElement>();
 
-  const valueProps = [
-    "Funnel Strategist",
-    "Landing Page Designer",
-    "Full CRM & Automation Builder"
-  ];
-
   return (
     <section id="about" className="py-32 relative z-10 pt-24">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16">
-          
-          <div 
-            ref={textRef}
-            className="lg:w-[60%] space-y-8"
-          >
+          <div ref={textRef} className="lg:w-[60%] space-y-8">
             <div>
-              <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-accent mb-4 font-sans">About Me</h2>
-              <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight font-heading leading-tight">
-                Hi! I'm Christian <br/> <span className="bg-gradient-to-br from-[#FAF9F6] via-accent to-[#B8860B] bg-clip-text text-transparent">I design intelligent lead systems and streamline operations for businesses.</span>
+              <SectionEyebrow className="font-sans">About Me</SectionEyebrow>
+              <h3 className={cn(SECTION_TITLE, 'leading-tight')}>
+                Hi! I'm Christian <br />{' '}
+                <span className="bg-gradient-to-br from-[#FAF9F6] via-accent to-[#B8860B] bg-clip-text text-transparent">
+                  I design intelligent lead systems and streamline operations for businesses.
+                </span>
               </h3>
             </div>
-            
+
             <div className="glass-panel p-8 rounded-3xl space-y-4 text-muted-foreground leading-relaxed font-light">
               <p>
-                I partner with service businesses to transform their offers into high-converting funnels, landing pages, and backend architectures that seamlessly transition leads from casual interest to booked calls and inquiries.
+                I partner with service businesses to transform their offers into high-converting funnels, landing pages, and backend
+                architectures that seamlessly transition leads from casual interest to booked calls and inquiries.
               </p>
               <p>
-                My approach always begins with strategy: mapping out your audience, traffic sources, trust signals, and the specific action we need visitors to take. Once the strategy is set, I design and develop the front-end funnel, then wire up the entire backend—integrating the CRM, sales pipelines, email/SMS workflows, appointment reminders, and follow-up sequences so the ecosystem operates flawlessly beyond the initial click.
+                My approach always begins with strategy: mapping out your audience, traffic sources, trust signals, and the specific action we
+                need visitors to take. Once the strategy is set, I design and develop the front-end funnel, then wire up the entire
+                backend—integrating the CRM, sales pipelines, email/SMS workflows, appointment reminders, and follow-up sequences so the ecosystem
+                operates flawlessly beyond the initial click.
               </p>
               <p>
-                While my core specialty is GoHighLevel, my expertise spans comprehensive funnel strategy, CRM architecture, advanced automations, custom ReactJS web development, and complex integrations using Zapier, Make, and n8n.
+                While my core specialty is GoHighLevel, my expertise spans comprehensive funnel strategy, CRM architecture, advanced
+                automations, custom ReactJS web development, and complex integrations using Zapier, Make, and n8n.
               </p>
             </div>
 
             <div className="pt-4">
               <h4 className="text-lg font-medium text-white mb-6 font-heading">Core Value Proposition</h4>
               <ul className="space-y-4">
-                {valueProps.map((prop, i) => (
-                  <motion.li 
-                    key={i} 
+                {VALUE_PROPS.map((prop, i) => (
+                  <motion.li
+                    key={prop}
                     className="flex items-center gap-4 text-muted-foreground glass-panel p-4 rounded-xl hover:bg-white/10 transition-colors"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -67,32 +70,17 @@ export default function About({ onNavigate }: AboutProps) {
             </div>
           </div>
 
-          <div 
-            ref={imageRef}
-            className="lg:w-[40%] w-full"
-            style={{ perspective: "1000px" }}
-          >
-            <div 
+          <div ref={imageRef} className="lg:w-[40%] w-full" style={{ perspective: '1000px' }}>
+            <div
               ref={cardRef}
               className="glass-panel aspect-[2/3] max-w-lg mx-auto lg:mx-0 rounded-3xl overflow-visible relative group p-2 cursor-pointer"
-              style={{ transformStyle: "preserve-3d" }}
+              style={{ transformStyle: 'preserve-3d' }}
             >
-              {/* OLD DARK HOVER ANIMATION:
-              <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay group-hover:opacity-0 transition-opacity duration-700"></div>
-              <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
-                <img 
-                  src="./img/abotme.jpg" 
-                  alt="About Christian Padilla" 
-                  className="w-full h-full object-cover mix-blend-luminosity opacity-50 group-hover:opacity-100 group-hover:mix-blend-normal transition-all duration-700 pointer-events-none"
-                />
-              </div>
-              */}
-              
               <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
-              <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: "translateZ(30px)" }}>
-                <img 
-                  src="./img/abotme.jpg" 
-                  alt="About Christian Padilla" 
+              <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: 'translateZ(30px)' }}>
+                <img
+                  src="./img/abotme.jpg"
+                  alt="About Christian Padilla"
                   className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
                   loading="lazy"
                   decoding="async"
@@ -115,25 +103,20 @@ export default function About({ onNavigate }: AboutProps) {
                   }, 400);
                 }}
                 className="absolute -bottom-5 -right-5 z-30 w-[130px] h-[130px] md:w-[155px] md:h-[155px] rounded-full cursor-pointer transition-all duration-300 hover:scale-110 focus:outline-none"
-                style={{ 
+                style={{
                   animation: 'badgeFloat 3s ease-in-out infinite',
                   filter: 'drop-shadow(0 4px 20px rgba(212, 175, 55, 0.4))',
                 }}
                 aria-label="View HLA Automation Builder Certification"
               >
-                <img 
-                  src="./img/badge.png" 
-                  alt="HLA Automation Builder Badge" 
-                  className="w-full h-full object-contain pointer-events-none"
-                />
+                <img src="./img/badge.png" alt="HLA Automation Builder Badge" className="w-full h-full object-contain pointer-events-none" />
               </button>
             </div>
           </div>
-          
         </div>
 
         {/* Unified Call to Action */}
-        <motion.div 
+        <motion.div
           className="w-full flex flex-col items-center text-center mt-24 pt-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -146,8 +129,8 @@ export default function About({ onNavigate }: AboutProps) {
           <p className="text-muted-foreground font-light mb-10 max-w-2xl text-lg lg:text-xl">
             Let's map out your funnel system, Book a Free Discovery Call.
           </p>
-          <button 
-            onClick={() => onNavigate && onNavigate('contact')}
+          <button
+            onClick={() => onNavigate?.('contact')}
             className="group relative inline-flex h-14 items-center justify-center rounded-xl bg-accent px-10 text-sm font-semibold text-accent-foreground shadow-[0_0_30px_-5px_rgba(212,175,55,0.4)] transition-all hover:bg-accent/90 hover:shadow-[0_0_50px_-5px_rgba(212,175,55,0.6)] focus:outline-none w-full max-w-[280px]"
           >
             <span className="relative z-10 flex items-center pointer-events-none">
@@ -156,7 +139,6 @@ export default function About({ onNavigate }: AboutProps) {
             </span>
           </button>
         </motion.div>
-
       </div>
     </section>
   );

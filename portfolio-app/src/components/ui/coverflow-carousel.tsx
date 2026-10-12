@@ -1,12 +1,7 @@
-"use client";
-
 import * as React from "react";
 import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 
 import { cn } from "../../lib/utils";
-
-const useIsoLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export interface CoverflowSlide {
   src: string;
@@ -250,7 +245,7 @@ export function CoverflowCarousel({
 
   // Card width drives pitch, depth and perspective, so it is the only thing
   // worth measuring — and only when the box actually changes.
-  useIsoLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     const frame = frameRef.current;
     if (!frame) return;
 
@@ -334,7 +329,6 @@ export function CoverflowCarousel({
                 )}
                 style={{ width: "var(--cf-card)" }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={slide.src}
                   alt={slide.alt}

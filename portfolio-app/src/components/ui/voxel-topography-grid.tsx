@@ -1,6 +1,5 @@
-'use client';
-
 import { useEffect, useRef } from 'react';
+import { SCROLL_END_EVENT, SCROLL_START_EVENT } from '../../lib/smoothScroll';
 
 export interface VoxelTopographyGridProps {
   tileSize?: number;
@@ -9,6 +8,28 @@ export interface VoxelTopographyGridProps {
   wireColor?: string;
   speed?: number;
 }
+
+const HOVER_RADIUS = 220;
+const HOVER_LIFT = 90;
+
+// Fast Hex to RGB conversion
+const hexToRgb = (hex: string) => {
+  const cleanHex = hex.replace('#', '');
+  const bigint = parseInt(
+    cleanHex.length === 3
+      ? cleanHex
+          .split('')
+          .map((c) => c + c)
+          .join('')
+      : cleanHex,
+    16,
+  );
+  return {
+    r: (bigint >> 16) & 255,
+    g: (bigint >> 8) & 255,
+    b: bigint & 255,
+  };
+};
 
 export function VoxelTopographyGrid({
   tileSize = 28,
@@ -36,22 +57,6 @@ export function VoxelTopographyGrid({
     let height = 0;
     let time = 0;
 
-    // Fast Hex to RGB conversion
-    const hexToRgb = (hex: string) => {
-      const cleanHex = hex.replace('#', '');
-      const bigint = parseInt(
-        cleanHex.length === 3
-          ? cleanHex.split('').map((c) => c + c).join('')
-          : cleanHex,
-        16
-      );
-      return {
-        r: (bigint >> 16) & 255,
-        g: (bigint >> 8) & 255,
-        b: bigint & 255,
-      };
-    };
-
     const baseRgb = hexToRgb(primaryColor);
 
     // Pre-computed constant side face colors (0 allocations per frame)
@@ -68,6 +73,9 @@ export function VoxelTopographyGrid({
       topColorLUT[i] = `rgb(${r},${g},${b})`;
     }
 
+    // Grid geometry depends only on the canvas size, so it is derived on resize, not per frame.
+    const grid = { tileW: 0, tileH: 0, originX: 0, originY: 0, startR: 0, endR: 0, startC: 0, endC: 0 };
+
     // Cap DPR at 1.5 for crisp visuals without the full cost of 2x+ rendering
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
@@ -80,8 +88,33 @@ export function VoxelTopographyGrid({
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
+      // Resizing a canvas resets its context state, so re-apply it here.
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.imageSmoothingEnabled = false;
+      ctx.strokeStyle = wireColor;
+      ctx.lineWidth = 0.6;
+
+      const isMobileViewport = width < 768 || width / height < 1;
+
+      // Dynamic Voxel Sizing: Medium 'sweet spot' (0.78x) on mobile
+      const effectiveTileSize = isMobileViewport ? tileSize * 0.78 : tileSize;
+      grid.tileW = effectiveTileSize * 0.866025;
+      grid.tileH = effectiveTileSize * 0.5;
+
+      // Diagonal Corner Fix: Aggressively oversize the grid by 3x on mobile to push the slanted edges completely out of view
+      const overscanW = isMobileViewport ? 2.8 : 1;
+      const overscanH = isMobileViewport ? 3.0 : 1;
+      const gridCols = Math.ceil((width * overscanW) / grid.tileW) + 4;
+      const gridRows = Math.ceil((height * overscanH) / grid.tileH) + 8;
+
+      grid.originX = width * 0.5;
+      // Center the camera vertically on mobile, preserve desktop high-angle view
+      grid.originY = isMobileViewport ? height * 0.5 : height / 3.2;
+
+      grid.startR = -Math.floor(gridRows / 2);
+      grid.endR = Math.ceil(gridRows / 2);
+      grid.startC = -Math.floor(gridCols / 2);
+      grid.endC = Math.ceil(gridCols / 2);
     };
 
     const resizeObserver = new ResizeObserver(handleResize);
@@ -115,8 +148,8 @@ export function VoxelTopographyGrid({
     container.addEventListener('pointerleave', handlePointerLeave, { passive: true });
 
     // Constants for grid iteration
-    const maxRadiusSq = 220 * 220;
-    const invMaxHeight = 1 / (maxHeight + 90);
+    const maxRadiusSq = HOVER_RADIUS * HOVER_RADIUS;
+    const invMaxHeight = 1 / (maxHeight + HOVER_LIFT);
 
     let isVisible = false;
     let isDrawing = false;
@@ -137,7 +170,7 @@ export function VoxelTopographyGrid({
         animationFrameId = requestAnimationFrame(draw);
         return;
       }
-      
+
       time += speed;
 
       // Responsive, smooth lerping cursor tracking with added weight for buttery deceleration
@@ -146,40 +179,17 @@ export function VoxelTopographyGrid({
 
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
+      const { tileW, tileH, originX, originY, startR, endR, startC, endC } = grid;
 
-      // Dark background clear
-      ctx.fillStyle = '#000000'; // matches slate-950
+      // Black background clear
+      ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, width, height);
-
-      const aspect = width / height;
-      const isMobileViewport = width < 768 || aspect < 1;
-      
-      // Dynamic Voxel Sizing: Medium 'sweet spot' (0.78x) on mobile
-      const effectiveTileSize = isMobileViewport ? tileSize * 0.78 : tileSize;
-      
-      const currentTileW = effectiveTileSize * 0.866025;
-      const currentTileH = effectiveTileSize * 0.5;
-
-      // Diagonal Corner Fix: Aggressively oversize the grid by 3x on mobile to push the slanted edges completely out of view
-      const overscanW = isMobileViewport ? 2.8 : 1;
-      const overscanH = isMobileViewport ? 3.0 : 1;
-      const gridCols = Math.ceil((width * overscanW) / currentTileW) + 4;
-      const gridRows = Math.ceil((height * overscanH) / currentTileH) + 8;
-
-      const originX = width * 0.5;
-      // Center the camera vertically on mobile, preserve desktop high-angle view
-      const originY = isMobileViewport ? height * 0.5 : height / 3.2;
-
-      const startR = -Math.floor(gridRows / 2);
-      const endR = Math.ceil(gridRows / 2);
-      const startC = -Math.floor(gridCols / 2);
-      const endC = Math.ceil(gridCols / 2);
 
       // Render loop with Back-to-Front Painter's Algorithm
       for (let r = startR; r < endR; r++) {
         for (let c = startC; c < endC; c++) {
-          const isoX = originX + (c - r) * currentTileW;
-          const isoY = originY + (c + r) * currentTileH;
+          const isoX = originX + (c - r) * tileW;
+          const isoY = originY + (c + r) * tileH;
 
           // Trigonometric Height Wave
           const wave1 = Math.sin(time * 2 + c * 0.25 + r * 0.25);
@@ -187,9 +197,9 @@ export function VoxelTopographyGrid({
           const baseH = (wave1 + wave2 + 2) * 0.25 * maxHeight;
 
           // Perspective Fix: Calculate distance against the expected elevated top face
-          // rather than the flat floor. This mathematically aligns the peak of the 90px hover wave
+          // rather than the flat floor. This mathematically aligns the peak of the hover wave
           // perfectly with the cursor in isometric space.
-          const projectedY = isoY - baseH - 90;
+          const projectedY = isoY - baseH - HOVER_LIFT;
 
           // Distance check to mouse target
           const dx = isoX - mx;
@@ -199,27 +209,22 @@ export function VoxelTopographyGrid({
           let h = baseH;
           if (distSq < maxRadiusSq) {
             const dist = Math.sqrt(distSq);
-            const influence = 1 - dist / 220;
-            h += influence * influence * 90;
+            const influence = 1 - dist / HOVER_RADIUS;
+            h += influence * influence * HOVER_LIFT;
           }
 
           const py = isoY - h;
 
           // Fast Screen-Space Culling: Skip rendering voxels completely out of bounds
-          if (
-            isoX + currentTileW < 0 ||
-            isoX - currentTileW > width ||
-            py + h + 15 < 0 ||
-            py - currentTileH > height
-          ) {
+          if (isoX + tileW < 0 || isoX - tileW > width || py + h + 15 < 0 || py - tileH > height) {
             continue;
           }
 
           // Top Face Vertices
-          const topP1Y = py - currentTileH;
-          const topP2X = isoX + currentTileW;
-          const topP3Y = py + currentTileH;
-          const topP4X = isoX - currentTileW;
+          const topP1Y = py - tileH;
+          const topP2X = isoX + tileW;
+          const topP3Y = py + tileH;
+          const topP4X = isoX - tileW;
 
           const sideBottomShift = h + 15;
 
@@ -254,14 +259,10 @@ export function VoxelTopographyGrid({
           // Fast LUT Color Lookup
           const rawLight = h * invMaxHeight;
           const lightRatio = rawLight > 1 ? 1 : rawLight < 0.1 ? 0.1 : rawLight;
-          const lutIdx = (lightRatio * 100) | 0;
-
-          ctx.fillStyle = topColorLUT[lutIdx];
+          ctx.fillStyle = topColorLUT[(lightRatio * 100) | 0];
           ctx.fill();
 
-          // Wireframe Overlay
-          ctx.strokeStyle = wireColor;
-          ctx.lineWidth = 0.6;
+          // Wireframe Overlay (stroke style is set once per resize)
           ctx.stroke();
         }
       }
@@ -269,12 +270,16 @@ export function VoxelTopographyGrid({
       animationFrameId = requestAnimationFrame(draw);
     };
 
-    const intersectionObserver = new IntersectionObserver(([entry]) => {
-      isVisible = entry.isIntersecting;
+    const startDrawing = () => {
       if (isVisible && !isDrawing && !isScrolling) {
         isDrawing = true;
         draw();
       }
+    };
+
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      startDrawing();
     });
     intersectionObserver.observe(container);
 
@@ -285,10 +290,7 @@ export function VoxelTopographyGrid({
 
     const handleScrollEnd = () => {
       isScrolling = false;
-      if (isVisible && !isDrawing) {
-        isDrawing = true;
-        draw();
-      }
+      startDrawing();
     };
 
     const handleNativeScroll = () => {
@@ -297,16 +299,17 @@ export function VoxelTopographyGrid({
       scrollTimeout = setTimeout(handleScrollEnd, 150);
     };
 
-    window.addEventListener('scroll-start', handleScrollStart);
-    window.addEventListener('scroll-end', handleScrollEnd);
+    window.addEventListener(SCROLL_START_EVENT, handleScrollStart);
+    window.addEventListener(SCROLL_END_EVENT, handleScrollEnd);
     window.addEventListener('scroll', handleNativeScroll, { passive: true });
 
     return () => {
       resizeObserver.disconnect();
-      window.removeEventListener('scroll-start', handleScrollStart);
-      window.removeEventListener('scroll-end', handleScrollEnd);
-      window.removeEventListener('scroll', handleNativeScroll);
       intersectionObserver.disconnect();
+      clearTimeout(scrollTimeout);
+      window.removeEventListener(SCROLL_START_EVENT, handleScrollStart);
+      window.removeEventListener(SCROLL_END_EVENT, handleScrollEnd);
+      window.removeEventListener('scroll', handleNativeScroll);
       window.removeEventListener('pointermove', handlePointerMove);
       container.removeEventListener('pointerleave', handlePointerLeave);
       cancelAnimationFrame(animationFrameId);
