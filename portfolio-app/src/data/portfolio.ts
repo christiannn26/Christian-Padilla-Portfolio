@@ -19,7 +19,7 @@ export type PortfolioSlide = Omit<CoverflowSlide, 'content'> & { details: SlideD
 
 export const BACKGROUND_SLIDES: PortfolioSlide[] = [
   {
-    src: './img/certs/HLA.png',
+    src: './img/certs/HLA.webp',
     alt: 'HLA Automation Builder Certification',
     title: 'HLA Automation Builder Certification',
     subtitle: 'Official GoHighLevel Certificate',
@@ -43,7 +43,8 @@ export const BACKGROUND_SLIDES: PortfolioSlide[] = [
     },
   },
   {
-    src: './img/certs/11.png',
+    src: './img/certs/11.webp',
+    thumbSrc: './img/certs/11-card.webp',
     alt: 'Certifications & Advanced Training',
     title: 'Certifications & Advanced Training',
     subtitle: 'Professional Credentials',
@@ -52,7 +53,7 @@ export const BACKGROUND_SLIDES: PortfolioSlide[] = [
       { label: 'Type', value: 'Certification' },
       { label: 'Timeline', value: 'Ongoing' },
     ],
-    gallery: ['./img/certs/12.png'],
+    gallery: ['./img/certs/12.webp'],
     details: {
       variant: 'compact',
       intro:
@@ -67,7 +68,8 @@ export const BACKGROUND_SLIDES: PortfolioSlide[] = [
     },
   },
   {
-    src: './img/GHLEvent/IMG_2033.JPG',
+    src: './img/GHLEvent/IMG_2033.webp',
+    thumbSrc: './img/GHLEvent/IMG_2033-card.webp',
     alt: 'HighLevel Manila 2026',
     title: 'HighLevel Manila 2026',
     subtitle: 'GoHighLevel Event',
@@ -76,7 +78,7 @@ export const BACKGROUND_SLIDES: PortfolioSlide[] = [
       { label: 'Type', value: 'Event/Certification' },
       { label: 'Timeline', value: 'July 2026' },
     ],
-    gallery: ['./img/GHLEvent/IMG_2034.JPG', './img/GHLEvent/IMG_2035.JPG', './img/GHLEvent/IMG_2036.JPG', './img/GHLEvent/IMG_2037.JPG'],
+    gallery: ['./img/GHLEvent/IMG_2034.webp', './img/GHLEvent/IMG_2035.webp', './img/GHLEvent/IMG_2036.webp', './img/GHLEvent/IMG_2037.webp'],
     details: {
       variant: 'compact',
       intro:
@@ -85,7 +87,8 @@ export const BACKGROUND_SLIDES: PortfolioSlide[] = [
     },
   },
   {
-    src: './img/bachelors/IMG_1576.JPG',
+    src: './img/bachelors/IMG_1576.webp',
+    thumbSrc: './img/bachelors/IMG_1576-card.webp',
     alt: 'B.S. Computer Engineering',
     title: 'B.S. Computer Engineering',
     subtitle: 'Colegio de Muntinlupa',
@@ -93,7 +96,7 @@ export const BACKGROUND_SLIDES: PortfolioSlide[] = [
       { label: 'Type', value: 'Education' },
       { label: 'Timeline', value: '2022 - 2026' },
     ],
-    gallery: ['./img/bachelors/IMG_1584.JPG', './img/bachelors/IMG_2076.JPG'],
+    gallery: ['./img/bachelors/IMG_1584.webp', './img/bachelors/IMG_2076.webp'],
     details: {
       variant: 'compact',
       intro:
@@ -108,7 +111,8 @@ export const BACKGROUND_SLIDES: PortfolioSlide[] = [
 
 export const PROJECT_SLIDES: PortfolioSlide[] = [
   {
-    src: './img/LC_EA/4.png',
+    src: './img/LC_EA/4.webp',
+    thumbSrc: './img/LC_EA/4-card.webp',
     alt: 'LifeCrafting - Executive Assistant',
     title: 'LifeCrafting - California, USA',
     subtitle: 'Executive Assistant | Lead Generation & Social Media Specialist',
@@ -116,7 +120,7 @@ export const PROJECT_SLIDES: PortfolioSlide[] = [
       { label: 'Role', value: 'Executive Assistant' },
       { label: 'Timeline', value: '2023 - 2025' },
     ],
-    gallery: ['./img/LC_EA/77.png', './img/LC_EA/8.png', './img/LC_EA/9.png'],
+    gallery: ['./img/LC_EA/77.webp', './img/LC_EA/8.webp', './img/LC_EA/9.webp'],
     details: {
       variant: 'detailed',
       intro:
@@ -141,7 +145,8 @@ export const PROJECT_SLIDES: PortfolioSlide[] = [
     },
   },
   {
-    src: './img/LC_WD/5.png',
+    src: './img/LC_WD/5.webp',
+    thumbSrc: './img/LC_WD/5-card.webp',
     alt: 'LifeCrafting - Full Stack Web Developer',
     title: 'LifeCrafting - California, USA',
     subtitle: 'Full Stack Web & Application Developer | UI/UX Designer',
@@ -149,7 +154,7 @@ export const PROJECT_SLIDES: PortfolioSlide[] = [
       { label: 'Role', value: 'Full Stack Developer' },
       { label: 'Timeline', value: '2024 - 2025' },
     ],
-    gallery: ['./img/LC_WD/10.png'],
+    gallery: ['./img/LC_WD/10.webp'],
     details: {
       variant: 'detailed',
       intro:
@@ -169,7 +174,8 @@ export const PROJECT_SLIDES: PortfolioSlide[] = [
     },
   },
   {
-    src: './img/ibex/2024_09_16_10_45_IMG_8527.jpg',
+    src: './img/ibex/2024_09_16_10_45_IMG_8527.webp',
+    thumbSrc: './img/ibex/2024_09_16_10_45_IMG_8527-card.webp',
     alt: 'IBEX GLOBAL - Technical Support',
     title: 'IBEX GLOBAL',
     subtitle: 'Technical Support & Client Retention Specialist – Walmart Logistics',
@@ -178,7 +184,7 @@ export const PROJECT_SLIDES: PortfolioSlide[] = [
       { label: 'Timeline', value: '2022 - 2023' },
     ],
     imagePosition: 'object-center',
-    gallery: ['./img/ibex/IMG_6885.jpg', './img/ibex/IMG_6889.jpg'],
+    gallery: ['./img/ibex/IMG_6885.webp', './img/ibex/IMG_6889.webp'],
     details: {
       variant: 'detailed',
       intro:

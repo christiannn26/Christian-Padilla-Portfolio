@@ -81,7 +81,7 @@ export default function About({ onNavigate }: AboutProps) {
               <div className="absolute inset-0 bg-gradient-to-bl from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
               <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: 'translateZ(30px)' }}>
                 <img
-                  src="./img/abotme.jpg"
+                  src="./img/abotme.webp"
                   alt="About Christian Padilla"
                   className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
                   loading="lazy"
@@ -104,7 +104,13 @@ export default function About({ onNavigate }: AboutProps) {
                 }}
                 aria-label="View HLA Automation Builder Certification"
               >
-                <img src="./img/badge.png" alt="HLA Automation Builder Badge" className="w-full h-full object-contain pointer-events-none" />
+                <img
+                  src="./img/badge.webp"
+                  alt="HLA Automation Builder Badge"
+                  className="w-full h-full object-contain pointer-events-none"
+                  loading="lazy"
+                  decoding="async"
+                />
               </button>
             </div>
           </div>

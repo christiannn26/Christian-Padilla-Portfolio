@@ -11,10 +11,10 @@ function ToolIcon({ tool }: { tool: Tool }) {
       />
     );
   }
-  if ('slug' in tool) {
+  if ('svg' in tool) {
     return (
       <img
-        src={`https://cdn.simpleicons.org/${tool.slug}/white`}
+        src={tool.svg}
         alt={tool.name}
         className="w-6 h-6 opacity-70 group-hover:opacity-100 transition-opacity"
         style={{ imageRendering: 'auto' }}

@@ -41,6 +41,8 @@ export default function SystemsShowcase() {
               <img
                 src={item.image}
                 alt={item.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-top opacity-90 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100"
               />
             </div>

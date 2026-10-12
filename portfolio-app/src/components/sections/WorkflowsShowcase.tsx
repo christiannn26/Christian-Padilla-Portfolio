@@ -73,8 +73,10 @@ export default function WorkflowsShowcase() {
             {!isVideoPlaying ? (
               <>
                 <img
-                  src="./img/coverdemo.jpg"
+                  src="./img/coverdemo.webp"
                   alt="System Demo Cover"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent pointer-events-none" />

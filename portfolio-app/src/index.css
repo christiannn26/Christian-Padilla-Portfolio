@@ -25,8 +25,8 @@
   --color-muted: #151515;
   --color-muted-foreground: rgba(250, 249, 246, 0.6);
   
-  --font-sans: 'Montserrat', sans-serif;
-  --font-heading: 'Cormorant', serif;
+  --font-sans: 'Montserrat Variable', sans-serif;
+  --font-heading: 'Cormorant Variable', serif;
 
   /* Tech-stack logo strip: the track holds two copies, so -50% is one seamless loop */
   --animate-marquee: marquee 25s linear infinite;

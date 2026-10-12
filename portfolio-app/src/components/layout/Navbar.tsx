@@ -20,7 +20,7 @@ export default function Navbar() {
           onClick={(e) => navigate(e, 'top')}
           className="flex items-center gap-3 font-heading font-bold text-2xl tracking-wide text-primary hover:text-accent transition-colors duration-300 cursor-pointer"
         >
-          <img src="./img/CPlogo.png" alt="CP Logo" className="h-8 w-auto object-contain" />
+          <img src="./img/CPlogo.webp" alt="CP Logo" className="h-8 w-auto object-contain" />
           <span>
             Christian Padilla<span className="text-accent">.</span>
           </span>

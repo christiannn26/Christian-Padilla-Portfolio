@@ -4,7 +4,10 @@ import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 export interface CoverflowSlide {
+  /** Full-size image (shown in the details modal). */
   src: string;
+  /** Lighter image for the card itself; falls back to `src`. */
+  thumbSrc?: string;
   alt: string;
   title?: string;
   subtitle?: string;
@@ -330,7 +333,7 @@ export function CoverflowCarousel({
                 style={{ width: "var(--cf-card)" }}
               >
                 <img
-                  src={slide.src}
+                  src={slide.thumbSrc ?? slide.src}
                   alt={slide.alt}
                   draggable={false}
                   className={cn("h-full w-full select-none object-cover", slide.imagePosition || "object-top")}

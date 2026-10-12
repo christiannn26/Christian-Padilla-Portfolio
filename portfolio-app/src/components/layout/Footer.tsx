@@ -18,7 +18,7 @@ export default function Footer() {
         {/* Brand Identity & Description */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-2">
           <div className="flex items-center gap-2 font-heading font-bold text-xl tracking-wide text-primary">
-            <img src="./img/CPlogo.png" alt="CP Logo" className="h-6 w-auto object-contain" />
+            <img src="./img/CPlogo.webp" alt="CP Logo" className="h-6 w-auto object-contain" />
             <span>Christian Padilla<span className="text-accent">.</span></span>
           </div>
           <p className="text-muted-foreground font-light max-w-sm text-xs">

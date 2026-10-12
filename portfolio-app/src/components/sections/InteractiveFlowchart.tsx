@@ -7,6 +7,10 @@ import { SECTION_TITLE } from '../../lib/styles';
 import { cn } from '../../lib/utils';
 import { SectionEyebrow } from '../ui/SectionEyebrow';
 
+// Intrinsic size of Mermaid.svg's viewBox, so the page reserves its space before it loads.
+const FLOWCHART_WIDTH = 2489;
+const FLOWCHART_HEIGHT = 379;
+
 const FlowchartZoomDialog = lazy(() => import('../flowchart/FlowchartZoomDialog'));
 
 interface InteractiveFlowchartProps {
@@ -47,6 +51,10 @@ export default function InteractiveFlowchart({ imageSrc = './img/Mermaid.svg', z
         <img
           src={imageSrc}
           alt="System Flowchart"
+          width={FLOWCHART_WIDTH}
+          height={FLOWCHART_HEIGHT}
+          loading="lazy"
+          decoding="async"
           className={cn(
             'w-full h-auto object-contain transition-all duration-300 drop-shadow-[0_0_3px_rgba(255,255,255,0.9)]',
             isHovered && hasHover ? 'blur-[5px] opacity-40 scale-[0.98]' : 'blur-0 opacity-100 scale-100',

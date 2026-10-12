@@ -17,7 +17,7 @@ export function SlideGrid({ slides, onSelect }: { slides: CoverflowSlide[]; onSe
           )}
         >
           <img
-            src={slide.src}
+            src={slide.thumbSrc ?? slide.src}
             alt={slide.alt}
             loading="lazy"
             decoding="async"

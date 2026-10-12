@@ -1,11 +1,11 @@
 export default function GalaxyBackground() {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none bg-background">
-      {/* High-quality subtle galaxy image, tiled to allow natural flawless scrolling */}
+      {/* Subtle galaxy texture (self-hosted Unsplash photo), tiled to allow natural flawless scrolling */}
       <div 
         className="absolute inset-0 bg-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&q=60&w=1200')`,
+          backgroundImage: `url('./img/galaxy.webp')`,
           backgroundSize: '1200px auto',
           opacity: 0.5,
           transform: 'translateZ(0)',

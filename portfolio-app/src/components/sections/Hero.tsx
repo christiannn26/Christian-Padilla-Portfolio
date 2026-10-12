@@ -138,7 +138,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
                 <div className="absolute inset-0 bg-gradient-to-tr from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
                 <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: 'translateZ(30px)' }}>
                   <img
-                    src="./img/Hero_Face.png"
+                    src="./img/Hero_Face.webp"
                     alt="Christian Padilla"
                     className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
                     decoding="async"
