@@ -1,6 +1,28 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+
+// Preload the Latin subsets of the two web fonts. The page renders client-side, so without this the
+// browser only discovers the fonts after first paint and swaps them in, shifting the hero text.
+function preloadFonts(patterns: RegExp[]): Plugin {
+  let base = '/'
+  return {
+    name: 'preload-fonts',
+    apply: 'build',
+    configResolved(config) {
+      base = config.base
+    },
+    transformIndexHtml(_html, ctx) {
+      return Object.keys(ctx.bundle ?? {})
+        .filter((file) => patterns.some((pattern) => pattern.test(file)))
+        .map((file) => ({
+          tag: 'link',
+          attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: base + file, crossorigin: '' },
+          injectTo: 'head' as const,
+        }))
+    },
+  }
+}
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -8,6 +30,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    preloadFonts([/cormorant-latin-wght-normal-[\w-]+\.woff2$/, /montserrat-latin-wght-normal-[\w-]+\.woff2$/]),
   ],
   build: {
     rolldownOptions: {
