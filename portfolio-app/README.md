@@ -1,32 +1,52 @@
-# React + TypeScript + Vite
+# christianpadilla.online
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal portfolio for Christian Padilla, CRM & automation engineer. Single-page React app, deployed to GitHub Pages on every push to `main` (see `.github/workflows/deploy.yml`).
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + TypeScript 6, built with Vite 8 (Rolldown)
+- Tailwind CSS 4 (theme tokens in `src/index.css`) + `tw-animate-css` for enter/exit animations
+- Motion (`motion/react`) and GSAP (SplitText, ScrollTrigger) for animation
+- Radix UI dialog and tabs, `react-zoom-pan-pinch` for touch zoom
+- Self-hosted Cormorant and Montserrat variable fonts (`@fontsource-variable`)
 
-## React Compiler
+## Scripts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev        # local dev server with HMR
+npm run build      # type-check + production build into dist/
+npm run preview    # serve the production build locally
+npm run lint       # oxlint
+npm run typecheck  # tsc -b
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Requires Node `^20.19` or `>=22.12` (CI uses Node 24).
+
+## Layout
+
+```
+src/
+  App.tsx              page composition
+  data/                all copy and content: portfolio slides, services, workflows, contacts…
+  components/
+    layout/            navbar, custom cursor, backgrounds, footer
+    sections/          one file per page section, in page order
+    portfolio/         slide details, grid view, project modal
+    workflows/         workflow modal with zoom/pan canvases (lazy-loaded)
+    flowchart/         touch zoom dialog for the flowchart (lazy-loaded)
+    ui/                generic building blocks (dialog, tabs, carousel, voxel grid, Tag…)
+    icons/             brand icons not provided by lucide
+  context/             shared portfolio tab/modal state (used by the About badge)
+  hooks/               media queries, GSAP effects, image loading
+  lib/                 smooth scrolling, media-query constants, a11y helpers, cn()
+public/img/            optimized WebP images served as-is
+```
+
+To edit content (experience, certificates, services, links), change the files in `src/data/` — components only handle presentation.
+
+## Images
+
+Page images are WebP sized to how large they are displayed (about 2x for high-DPI screens). Portfolio covers have a light `-card.webp` used in the carousel/grid and a full-size version shown in the modal. The workflow screenshots in `public/img/Workflows/` are intentionally kept at 4000px so they stay sharp when zoomed, and they only download when their modal opens.
+
+When adding an image, export it as WebP at roughly twice its on-screen size (quality 80–88).
