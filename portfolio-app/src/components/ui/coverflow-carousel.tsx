@@ -300,7 +300,7 @@ export function CoverflowCarousel({
             }
           }}
           // Vertical padding keeps the drop shadows clear of the overflow clip.
-          className="cursor-grab overflow-hidden pt-10 pb-16 md:py-10 outline-none ring-ring focus-visible:ring-2 active:cursor-grabbing"
+          className="cursor-grab overflow-hidden rounded-3xl pt-10 pb-16 outline-none focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing md:py-12"
           style={{
             perspective: `calc(var(--cf-card) * ${perspective})`,
             // Horizontal drag is ours; the page keeps vertical scrolling.
@@ -324,10 +324,10 @@ export function CoverflowCarousel({
                 aria-roledescription="slide"
                 aria-label={`${index + 1} of ${count}`}
                 className={cn(
-                  "absolute left-1/2 top-0 aspect-[3/4] md:aspect-square overflow-hidden rounded-3xl bg-slate-900 transition-shadow duration-500 will-change-transform",
+                  "absolute left-1/2 top-0 aspect-3/4 md:aspect-square overflow-hidden rounded-[1.75rem] bg-ink-800 transition-[box-shadow,border-color] duration-500 will-change-transform",
                   index === selected 
-                    ? "shadow-[0_0_70px_-10px_rgba(212,175,55,0.4)] border-2 border-accent/60 cursor-pointer z-20" 
-                    : "shadow-[0_0_40px_-10px_rgba(212,175,55,0.25)] border border-accent/30 z-10",
+                    ? "cursor-pointer border border-gold/60 shadow-[0_40px_80px_-30px_rgb(0_0_0/0.95)] z-20"
+                    : "border border-line-strong shadow-[0_30px_60px_-30px_rgb(0_0_0/0.9)] z-10",
                   cardClassName,
                 )}
                 style={{ width: "var(--cf-card)" }}
@@ -339,12 +339,12 @@ export function CoverflowCarousel({
                   className={cn("h-full w-full select-none object-cover", slide.imagePosition || "object-top")}
                 />
                 
-                <div className="absolute inset-0 bg-black/40 mix-blend-overlay pointer-events-none" />
+                <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-ink-950/55 via-transparent to-transparent" />
                 
                 {index === selected && slide.content && (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-sm">
-                    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-full shadow-[0_0_20px_-5px_rgba(250,249,246,0.2)]">
-                      <Maximize2 className="h-6 w-6 text-white" />
+                  <div className="absolute inset-0 flex items-center justify-center bg-ink-950/45 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 hover:opacity-100">
+                    <div className="grid h-14 w-14 place-items-center rounded-full bg-gold text-ink-950 shadow-[0_18px_40px_-15px_rgb(0_0_0/0.9)]">
+                      <Maximize2 className="h-5 w-5" />
                     </div>
                   </div>
                 )}
@@ -359,7 +359,7 @@ export function CoverflowCarousel({
               type="button"
               aria-label="Previous slide"
               onClick={() => nudge(-1)}
-              className="absolute left-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-white/5 border border-white/10 p-3 text-white backdrop-blur transition hover:bg-white/10 hover:border-accent/30 shadow-[inset_0_1px_0_rgba(250,249,246,0.1)]"
+              className="glass pressable absolute left-2 top-1/2 z-200 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full text-ivory hover:border-gold/40 hover:text-gold md:left-4"
             >
               <ChevronLeft className="size-5" />
             </button>
@@ -367,7 +367,7 @@ export function CoverflowCarousel({
               type="button"
               aria-label="Next slide"
               onClick={() => nudge(1)}
-              className="absolute right-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-white/5 border border-white/10 p-3 text-white backdrop-blur transition hover:bg-white/10 hover:border-accent/30 shadow-[inset_0_1px_0_rgba(250,249,246,0.1)]"
+              className="glass pressable absolute right-2 top-1/2 z-200 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full text-ivory hover:border-gold/40 hover:text-gold md:right-4"
             >
               <ChevronRight className="size-5" />
             </button>
@@ -376,16 +376,17 @@ export function CoverflowCarousel({
       </div>
 
       {showCaption && active && (
-        <div className="mt-8 flex flex-col items-center text-center w-full px-4 z-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <h3 className="text-3xl md:text-4xl font-heading font-bold text-white mb-2 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] tracking-wide">{active.title}</h3>
-          <p className="text-sm md:text-base text-accent mb-6 font-semibold tracking-widest uppercase">{active.subtitle}</p>
+        <div className="z-10 mt-8 flex w-full flex-col items-center px-4 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <h3 className="font-display text-[clamp(1.75rem,1.2rem+1.8vw,2.75rem)] leading-[1.08] tracking-tight text-ivory">{active.title}</h3>
+          <p className="label-caps mb-7 mt-5 max-w-xl leading-[1.6] text-ivory/60">{active.subtitle}</p>
           {active.content && (
-            <button 
+            <button
+              type="button"
               onClick={() => onSlideClick?.(active)}
-              className="group relative inline-flex h-12 items-center justify-center rounded-xl bg-white/5 border border-white/20 px-8 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-accent/50 focus:outline-none backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(212,175,55,0.25)] active:scale-95"
+              className="pressable group inline-flex h-12 items-center justify-center rounded-full border border-line-strong bg-ink-900/60 px-7 text-[0.875rem] font-semibold text-ivory backdrop-blur-md hover:border-gold/50 hover:text-gold-bright"
             >
-              <span className="relative z-10 flex items-center">
-                <Maximize2 className="mr-3 h-4 w-4 text-accent transition-transform group-hover:scale-110" />
+              <span className="relative z-10 flex items-center gap-3">
+                <Maximize2 className="h-4 w-4 text-gold transition-transform duration-300 ease-out-quint group-hover:scale-110" />
                 View Full Details
               </span>
             </button>
@@ -394,7 +395,7 @@ export function CoverflowCarousel({
       )}
 
       {showPagination && (
-        <div className="mt-6 flex items-center justify-center gap-2">
+        <div className="mt-7 flex items-center justify-center gap-1">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -402,11 +403,15 @@ export function CoverflowCarousel({
               aria-label={`Go to slide ${index + 1}`}
               aria-current={index === selected}
               onClick={() => goTo(index)}
-              className={cn(
-                "size-2 rounded-full bg-white transition-opacity",
-                index === selected ? "opacity-100" : "opacity-30",
-              )}
-            />
+              className="group grid h-6 place-items-center px-1"
+            >
+              <span
+                className={cn(
+                  "block h-1.5 rounded-full transition-[width,background-color] duration-500 ease-out-quint",
+                  index === selected ? "w-7 bg-gold" : "w-1.5 bg-ivory/25 group-hover:bg-ivory/50",
+                )}
+              />
+            </button>
           ))}
         </div>
       )}

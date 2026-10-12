@@ -13,7 +13,7 @@ function HudPill({ className, children }: { className: string; children: ReactNo
   return (
     <div
       className={cn(
-        'absolute z-10 px-3 py-1.5 bg-slate-900/80 rounded-full border border-white/10 text-xs font-mono text-white/80 backdrop-blur pointer-events-none shadow-[0_0_15px_rgba(0,0,0,0.5)]',
+        'glass pointer-events-none absolute z-10 rounded-full px-3.5 py-1.5 text-xs font-medium tracking-wide tabular-nums text-ivory/80',
         className,
       )}
     >
@@ -80,7 +80,7 @@ function DesktopInteractiveCanvas({ workflow }: { workflow: Workflow }) {
     <div
       ref={containerRef}
       className={cn(
-        'relative w-full h-full overflow-hidden bg-slate-950 flex items-center justify-center select-none touch-none',
+        'blueprint-grid relative flex h-full w-full select-none items-center justify-center overflow-hidden bg-ink-950 touch-none',
         scale > 1 ? (isDragging ? 'cursor-grabbing' : 'cursor-grab') : 'cursor-default',
       )}
       onPointerDown={handlePointerDown}
@@ -88,7 +88,7 @@ function DesktopInteractiveCanvas({ workflow }: { workflow: Workflow }) {
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
     >
-      <HudPill className="top-4 left-4">Wheel to Zoom • Drag to Pan</HudPill>
+      <HudPill className="top-4 left-4">Workflow Inspection · Wheel to Zoom • Drag to Pan</HudPill>
       <HudPill className="bottom-4 right-4">{Math.round(scale * 100)}%</HudPill>
 
       {/* Layer 1: Blur-Up Thumbnail (Loaded instantly) */}
@@ -117,11 +117,11 @@ function MobileInteractiveCanvas({ workflow }: { workflow: Workflow }) {
   const isHighResLoaded = useImageLoaded(workflow.highResSrc);
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-slate-950 flex items-center justify-center select-none touch-none">
+    <div className="blueprint-grid relative flex h-full w-full select-none items-center justify-center overflow-hidden bg-ink-950 touch-none">
       <TransformWrapper initialScale={1} minScale={MIN_SCALE} maxScale={MAX_SCALE} centerZoomedOut={true} wheel={{ wheelDisabled: true }}>
         {({ state }) => (
           <>
-            <HudPill className="top-4 left-4">Pinch to Zoom • Drag to Pan</HudPill>
+            <HudPill className="top-4 left-4">Workflow Inspection · Pinch to Zoom • Drag to Pan</HudPill>
             <HudPill className="bottom-4 right-4">{Math.round(state.scale * 100)}%</HudPill>
 
             <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full flex items-center justify-center">
@@ -158,17 +158,15 @@ export default function WorkflowModal({ workflow: requested, onClose }: { workfl
 
   return (
     <Dialog open={!!requested} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-[95vw] md:max-w-[90vw] h-[95vh] md:h-[90vh] bg-slate-950/80 backdrop-blur-2xl border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,1)] text-white p-0 overflow-hidden rounded-[2rem] gap-0 flex flex-col md:grid md:grid-cols-2 min-h-0">
+      <DialogContent className="flex h-[94vh] min-h-0 max-w-[96vw] flex-col gap-0 overflow-hidden rounded-4xl border-line-strong bg-ink-900 p-0 text-ivory shadow-[0_60px_120px_-40px_rgb(0_0_0/0.95)] md:grid md:h-[88vh] md:max-w-[min(92vw,1400px)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         {/* Left Column: Details */}
-        <div className="p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/10 bg-slate-950/50 order-2 md:order-1 h-[40vh] md:h-full overflow-y-auto shrink-0 min-h-0">
-          <h2 className="text-accent text-sm font-bold tracking-widest uppercase mb-4">Workflow Inspection</h2>
-          <DialogTitle className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-white mb-6 leading-tight">{workflow.title}</DialogTitle>
-          <div className="w-12 h-1 bg-accent/50 mb-6 rounded-full" />
-          <p className="text-slate-300 text-lg leading-relaxed">{workflow.description}</p>
+        <div className="order-2 flex h-[40vh] min-h-0 shrink-0 flex-col justify-center overflow-y-auto border-b border-line bg-ink-900 p-8 md:order-1 md:h-full md:border-b-0 md:border-r md:p-12 lg:p-14">
+          <DialogTitle className="mb-6 font-display text-[clamp(2rem,1.4rem+1.6vw,3.25rem)] font-medium leading-[1.05] tracking-tight text-ivory">{workflow.title}</DialogTitle>
+          <p className="text-[1.0625rem] leading-relaxed text-ivory/70">{workflow.description}</p>
         </div>
 
         {/* Right Column: Interactive Canvas */}
-        <div className="relative order-1 md:order-2 flex-1 md:h-full min-h-0 bg-slate-950">
+        <div className="relative order-1 min-h-0 flex-1 bg-ink-950 md:order-2 md:h-full">
           {hasHover ? <DesktopInteractiveCanvas workflow={workflow} /> : <MobileInteractiveCanvas workflow={workflow} />}
         </div>
       </DialogContent>

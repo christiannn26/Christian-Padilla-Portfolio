@@ -1,5 +1,6 @@
 import { TOOLS, type Tool } from '../../data/techStack';
-import { SectionEyebrow } from '../ui/SectionEyebrow';
+import { Reveal } from '../ui/Reveal';
+import { useStageNow } from '../../hooks/useActiveStage';
 
 function ToolIcon({ tool }: { tool: Tool }) {
   if ('logo' in tool) {
@@ -7,51 +8,43 @@ function ToolIcon({ tool }: { tool: Tool }) {
       <img
         src={tool.logo}
         alt={tool.name}
-        className="w-6 h-6 object-contain opacity-70 group-hover:opacity-100 transition-opacity brightness-0 invert"
+        className="h-5 w-5 object-contain opacity-60 brightness-0 invert transition-opacity duration-300 group-hover:opacity-100"
       />
     );
   }
   if ('svg' in tool) {
-    return (
-      <img
-        src={tool.svg}
-        alt={tool.name}
-        className="w-6 h-6 opacity-70 group-hover:opacity-100 transition-opacity"
-        style={{ imageRendering: 'auto' }}
-      />
-    );
+    return <img src={tool.svg} alt={tool.name} className="h-5 w-5 opacity-60 transition-opacity duration-300 group-hover:opacity-100" />;
   }
   const Icon = tool.icon;
-  return (
-    <div className="opacity-70 group-hover:opacity-100 transition-opacity">
-      <Icon className="w-6 h-6 text-accent" />
-    </div>
-  );
+  return <Icon className="h-5 w-5 text-ivory/60 transition-colors duration-300 group-hover:text-gold" strokeWidth={1.5} />;
 }
 
 export default function TechStack() {
+  const now = useStageNow('tech-stack');
   return (
-    <section className="py-16 md:py-24 section-overlap pt-16 md:pt-24">
-      <div className="container mx-auto px-4 max-w-7xl mb-16 text-center">
-        <SectionEyebrow>Tech Stack</SectionEyebrow>
-        <h3 className="text-3xl md:text-4xl font-bold text-white font-heading">Powered by industry-leading platforms.</h3>
+    <section id="tech-stack" {...now} className="stage-pad relative">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <Reveal>
+          <h2 className="mb-14 max-w-5xl font-display text-[clamp(1.9rem,1.2rem+2.4vw,3.25rem)] leading-[1.05] tracking-tight text-ivory">
+            Powered by industry-leading platforms.
+          </h2>
+        </Reveal>
       </div>
 
-      <div className="relative flex overflow-x-hidden group py-4">
-        {/* Gradients to fade edges */}
-        <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-20 pointer-events-none" />
-        <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-20 pointer-events-none" />
-
-        <div className="flex whitespace-nowrap items-center animate-marquee">
+      {/* Edges fade through a mask so the chips dissolve rather than hit a wall */}
+      <div className="relative flex overflow-x-hidden py-3 mask-[linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+        <div className="flex items-center whitespace-nowrap animate-marquee">
           {/* Double the array for seamless looping (the copy is hidden from screen readers) */}
           {[...TOOLS, ...TOOLS].map((tool, i) => (
             <div
               key={i}
               aria-hidden={i >= TOOLS.length || undefined}
-              className="group mx-4 flex items-center justify-center gap-3 px-8 py-5 rounded-2xl glass-panel hover:bg-white/10 hover:border-accent/40 transition-all duration-300 cursor-pointer shrink-0 hover:scale-105 hover:shadow-[0_0_20px_-5px_rgba(229,211,179,0.3)]"
+              className="group mx-2 flex shrink-0 items-center gap-3 rounded-full border border-line bg-ink-900/70 py-3.5 pl-4 pr-6 transition-colors duration-300 hover:border-gold/40"
             >
-              <ToolIcon tool={tool} />
-              <span className="text-base font-medium text-white tracking-wide group-hover:text-accent transition-colors">{tool.name}</span>
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-white/5">
+                <ToolIcon tool={tool} />
+              </span>
+              <span className="text-[0.9375rem] font-medium tracking-wide text-ivory/85 transition-colors duration-300 group-hover:text-gold-bright">{tool.name}</span>
             </div>
           ))}
         </div>

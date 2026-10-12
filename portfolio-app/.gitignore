@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Impeccable QA captures (regenerated on each review)
+.impeccable/review/

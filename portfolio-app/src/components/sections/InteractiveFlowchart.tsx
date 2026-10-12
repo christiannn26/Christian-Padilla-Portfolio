@@ -1,30 +1,94 @@
-import { lazy, Suspense, useRef, useState, type MouseEvent } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type MouseEvent, type RefObject } from 'react';
 import { ZoomIn } from 'lucide-react';
 import { SearchIcon } from '../icons';
+import { Reveal } from '../ui/Reveal';
+import { FLOWCHART_ASPECT, flowchartMarkup } from '../flowchart/flowchartMarkup';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
-import { FINE_POINTER } from '../../lib/media';
-import { SECTION_TITLE } from '../../lib/styles';
+import { FINE_POINTER, REDUCED_MOTION, matches } from '../../lib/media';
 import { cn } from '../../lib/utils';
-import { SectionEyebrow } from '../ui/SectionEyebrow';
-
-// Intrinsic size of Mermaid.svg's viewBox, so the page reserves its space before it loads.
-const FLOWCHART_WIDTH = 2489;
-const FLOWCHART_HEIGHT = 379;
+import { useStageNow } from '../../hooks/useActiveStage';
 
 const FlowchartZoomDialog = lazy(() => import('../flowchart/FlowchartZoomDialog'));
 
+const STAGE_SVG = flowchartMarkup('stage');
+const LENS_SVG = flowchartMarkup('lens');
+
+// One wave of gold pulses sweeps the diagram left to right, then rests.
+const WAVE_MS = 5200;
+const SWEEP_MS = 2600;
+
+/**
+ * Send a gold "lead" along every connector of the inline diagram, staggered by where
+ * each connector starts, so signals visibly travel the system. Paused off-screen,
+ * skipped entirely for reduced motion.
+ */
+function useFlowPulses(rootRef: RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const root = rootRef.current;
+    const svg = root?.querySelector('svg');
+    if (!root || !svg || matches(REDUCED_MOTION)) return;
+
+    const width = svg.viewBox.baseVal.width || 1;
+    const animations: Animation[] = [];
+    const pulses: SVGPathElement[] = [];
+
+    svg.querySelectorAll<SVGPathElement>('path.flowchart-link').forEach((link) => {
+      const length = link.getTotalLength();
+      if (!length) return;
+
+      const pulse = link.cloneNode() as SVGPathElement;
+      pulse.removeAttribute('id');
+      pulse.removeAttribute('marker-end');
+      pulse.removeAttribute('marker-start');
+      pulse.removeAttribute('style');
+      pulse.setAttribute('class', 'flow-pulse');
+      const dash = Math.min(26, length * 0.4);
+      pulse.style.strokeDasharray = `${dash} ${length + dash}`;
+      pulse.style.strokeDashoffset = `${dash}`;
+      link.after(pulse);
+      pulses.push(pulse);
+
+      animations.push(
+        pulse.animate(
+          [
+            { strokeDashoffset: dash, opacity: 0, offset: 0 },
+            { strokeDashoffset: dash, opacity: 1, offset: 0.03, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' },
+            { strokeDashoffset: -length, opacity: 1, offset: 0.4 },
+            { strokeDashoffset: -length, opacity: 0, offset: 0.44 },
+            { strokeDashoffset: -length, opacity: 0, offset: 1 },
+          ],
+          { duration: WAVE_MS, delay: (link.getBBox().x / width) * SWEEP_MS, iterations: Infinity },
+        ),
+      );
+    });
+
+    const observer = new IntersectionObserver(([entry]) => {
+      animations.forEach((animation) => (entry.isIntersecting ? animation.play() : animation.pause()));
+    });
+    observer.observe(root);
+
+    return () => {
+      observer.disconnect();
+      animations.forEach((animation) => animation.cancel());
+      pulses.forEach((pulse) => pulse.remove());
+    };
+  }, [rootRef]);
+}
+
 interface InteractiveFlowchartProps {
-  imageSrc?: string;
   zoomLevel?: number;
   lensSize?: number;
 }
 
-export default function InteractiveFlowchart({ imageSrc = './img/Mermaid.svg', zoomLevel = 1.7, lensSize = 250 }: InteractiveFlowchartProps) {
+export default function InteractiveFlowchart({ zoomLevel = 1.9, lensSize = 240 }: InteractiveFlowchartProps) {
+  const now = useStageNow('architecture');
   const hasHover = useMediaQuery(FINE_POINTER);
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const artRef = useRef<HTMLDivElement>(null);
+  useFlowPulses(artRef);
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -36,56 +100,50 @@ export default function InteractiveFlowchart({ imageSrc = './img/Mermaid.svg', z
   };
 
   const R = lensSize / 2;
+  const inspecting = isHovered && hasHover;
 
-  // Desktop: hover magnifier. Touch: tap opens a pinch-zoom dialog (see below).
+  // Desktop: hover loupe. Touch: tap opens a pinch-zoom dialog (see below).
   const viewer = (
     <div
       ref={containerRef}
-      className={cn('relative w-full overflow-hidden bg-transparent rounded-xl', hasHover ? 'cursor-crosshair touch-none' : 'cursor-pointer')}
+      className={cn('relative w-full rounded-2xl', hasHover ? 'cursor-crosshair' : 'cursor-pointer')}
       onMouseEnter={() => hasHover && setIsHovered(true)}
       onMouseLeave={() => hasHover && setIsHovered(false)}
       onMouseMove={hasHover ? handleMouseMove : undefined}
     >
-      {/* Base Image */}
-      <div className="w-full relative group">
-        <img
-          src={imageSrc}
-          alt="System Flowchart"
-          width={FLOWCHART_WIDTH}
-          height={FLOWCHART_HEIGHT}
-          loading="lazy"
-          decoding="async"
-          className={cn(
-            'w-full h-auto object-contain transition-all duration-300 drop-shadow-[0_0_3px_rgba(255,255,255,0.9)]',
-            isHovered && hasHover ? 'blur-[5px] opacity-40 scale-[0.98]' : 'blur-0 opacity-100 scale-100',
-          )}
-        />
-
-        {/* Mobile Tap overlay */}
-        {!hasHover && (
-          <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="bg-background/80 backdrop-blur-md rounded-full p-4 border border-white/10 shadow-xl">
-              <ZoomIn className="w-6 h-6 text-accent" />
-            </div>
-          </div>
+      <div
+        ref={artRef}
+        role="img"
+        aria-label="System Flowchart"
+        className={cn(
+          'flowchart-art transition-[filter,opacity,transform] duration-500 ease-out-quint',
+          inspecting && 'scale-[0.985] opacity-35 blur-[3px]',
         )}
-      </div>
+        style={{ aspectRatio: FLOWCHART_ASPECT }}
+        dangerouslySetInnerHTML={{ __html: STAGE_SVG }}
+      />
 
-      {/* Magnifying Glass Lens (Desktop Only) */}
-      {/* Outer layer follows the cursor; inner layer owns the pop-in so the
-          enter animation's transform never fights the positioning transform. */}
-      {isHovered && hasHover && containerSize.w > 0 && (
+      {/* Touch hint: tap to open the zoomable view */}
+      {!hasHover && (
+        <span className="glass pointer-events-none absolute bottom-2 right-2 grid h-10 w-10 place-items-center rounded-full">
+          <ZoomIn className="h-4 w-4 text-gold" />
+        </span>
+      )}
+
+      {/* The loupe (desktop only). Outer layer follows the cursor; inner layer owns the
+          pop-in so the enter animation's transform never fights the positioning transform. */}
+      {inspecting && containerSize.w > 0 && (
         <div
-          className="absolute top-0 left-0 pointer-events-none z-20"
+          className="pointer-events-none absolute left-0 top-0 z-20"
           style={{
             width: lensSize,
             height: lensSize,
             transform: `translate(${mousePos.x - R}px, ${mousePos.y - R}px)`,
           }}
         >
-          <div className="relative w-full h-full overflow-hidden rounded-full border-2 border-accent bg-slate-900 shadow-[0_0_30px_rgba(212,175,55,0.5)] animate-in zoom-in-50 fade-in duration-200 ease-out">
+          <div className="relative h-full w-full overflow-hidden rounded-full border border-gold/70 bg-ink-900 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.95)] animate-in fade-in zoom-in-85 duration-200 ease-out">
             <div
-              className="absolute top-0 left-0 flex items-center justify-center"
+              className="absolute left-0 top-0"
               style={{
                 width: containerSize.w,
                 height: containerSize.h,
@@ -93,9 +151,14 @@ export default function InteractiveFlowchart({ imageSrc = './img/Mermaid.svg', z
                 transformOrigin: `${mousePos.x}px ${mousePos.y}px`,
               }}
             >
-              <img src={imageSrc} alt="Zoomed Flowchart" className="w-full h-full object-contain drop-shadow-[0_0_3px_rgba(255,255,255,0.9)]" />
+              <div className="flowchart-art" aria-hidden dangerouslySetInnerHTML={{ __html: LENS_SVG }} />
             </div>
-            <div className="absolute inset-0 rounded-full shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] pointer-events-none mix-blend-overlay" />
+            {/* Reticle ticks and a soft inner falloff, like a jeweller's loupe */}
+            <span aria-hidden className="absolute left-1/2 top-0 h-2.5 w-px -translate-x-1/2 bg-gold/70" />
+            <span aria-hidden className="absolute bottom-0 left-1/2 h-2.5 w-px -translate-x-1/2 bg-gold/70" />
+            <span aria-hidden className="absolute left-0 top-1/2 h-px w-2.5 -translate-y-1/2 bg-gold/70" />
+            <span aria-hidden className="absolute right-0 top-1/2 h-px w-2.5 -translate-y-1/2 bg-gold/70" />
+            <span aria-hidden className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgb(0_0_0/0.55)]" />
           </div>
         </div>
       )}
@@ -103,39 +166,46 @@ export default function InteractiveFlowchart({ imageSrc = './img/Mermaid.svg', z
   );
 
   return (
-    <section className="py-24 relative z-10 w-full">
-      <div className="container mx-auto px-4 max-w-7xl text-center mb-16 relative z-10">
-        <SectionEyebrow>Architecture</SectionEyebrow>
-        <h3 className={cn(SECTION_TITLE, 'mb-6')}>
-          System <span className="text-accent drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]">Flowchart</span>
-        </h3>
-        <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-          Every step is mapped, every action triggers automation, and every lead moves forward with intention.
-        </p>
+    <section id="architecture" {...now} className="stage-pad relative">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="grid items-end gap-8 lg:grid-cols-12">
+          <Reveal className="lg:col-span-7">
+            <h2 className="font-display text-[clamp(2.1rem,1.2rem+3.2vw,4.25rem)] leading-[1.02] tracking-tight text-ivory">
+              System <span className="now-gold">Flowchart</span>
+            </h2>
+          </Reveal>
+          <Reveal className="lg:col-span-5" delay={0.08}>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              Every step is mapped, every action triggers automation, and every lead moves forward with intention.
+            </p>
+          </Reveal>
+        </div>
       </div>
 
-      <div className="w-full px-2 md:px-4">
-        <p className="text-center text-xs text-white/40 mb-3 tracking-wide flex items-center justify-center gap-2">
-          {hasHover ? (
-            <>
-              <SearchIcon className="opacity-70" />
-              Hover over the diagram to closely inspect the workflow logic.
-            </>
-          ) : (
-            <>
-              <ZoomIn className="w-3.5 h-3.5 opacity-70" />
-              Tap on the diagram to expand and zoom.
-            </>
-          )}
-        </p>
+      <div className="mx-auto mt-14 max-w-[1600px] px-3 md:px-6 lg:px-10">
+        <div className="blueprint-grid relative rounded-4xl border border-line bg-ink-900/50 p-3 md:p-8 lg:p-10">
+          <p className="mb-5 flex items-center justify-center gap-2.5 text-[0.8125rem] tracking-wide text-ivory/60 md:mb-8">
+            {hasHover ? (
+              <>
+                <SearchIcon className="text-gold" />
+                Hover over the diagram to closely inspect the workflow logic.
+              </>
+            ) : (
+              <>
+                <ZoomIn className="h-3.5 w-3.5 text-gold" />
+                Tap on the diagram to expand and zoom.
+              </>
+            )}
+          </p>
 
-        {hasHover ? (
-          viewer
-        ) : (
-          <Suspense fallback={viewer}>
-            <FlowchartZoomDialog trigger={viewer} imageSrc={imageSrc} />
-          </Suspense>
-        )}
+          {hasHover ? (
+            viewer
+          ) : (
+            <Suspense fallback={viewer}>
+              <FlowchartZoomDialog trigger={viewer} />
+            </Suspense>
+          )}
+        </div>
       </div>
     </section>
   );

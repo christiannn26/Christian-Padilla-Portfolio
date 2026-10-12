@@ -1,57 +1,25 @@
-import { useRef, type ComponentProps } from 'react';
-import { motion } from 'motion/react';
-import { ArrowRight, FileText, Sparkles } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
+import { ArrowRight, FileText } from 'lucide-react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { useGSAP } from '@gsap/react';
 import { useMagnetic, use3DTilt } from '../../hooks/gsapEffects';
+import { useStageNow } from '../../hooks/useActiveStage';
 import { REDUCED_MOTION, matches } from '../../lib/media';
-import { cn } from '../../lib/utils';
 import VoxelTopographyGrid from '../ui/voxel-topography-grid';
 
 gsap.registerPlugin(SplitText, useGSAP);
 
-function ContactButton({ className, ...props }: ComponentProps<'button'>) {
-  return (
-    <button
-      className={cn(
-        'group relative inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-5px_rgba(250,249,246,0.4)] transition-all hover:bg-primary/90 hover:shadow-[0_0_50px_-5px_rgba(250,249,246,0.6)] focus:outline-none',
-        className,
-      )}
-      {...props}
-    >
-      <span className="relative z-10 flex items-center pointer-events-none">
-        Contact Now
-        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-      </span>
-    </button>
-  );
-}
-
-function DownloadCvLink({ className, ...props }: ComponentProps<'a'>) {
-  return (
-    <a
-      href="/Christian_Padilla_CV.pdf"
-      download
-      className={cn(
-        'group inline-flex h-14 items-center justify-center rounded-xl glass-panel px-8 text-sm font-medium text-white transition-all hover:bg-white/5 focus:outline-none',
-        className,
-      )}
-      {...props}
-    >
-      <span className="relative z-10 flex items-center pointer-events-none">
-        Download CV
-        <FileText className="ml-2 h-4 w-4 text-muted-foreground group-hover:text-white transition-colors" />
-      </span>
-    </a>
-  );
-}
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void }) {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const contactRef = useMagnetic<HTMLButtonElement>();
   const cvRef = useMagnetic<HTMLAnchorElement>();
   const cardRef = use3DTilt<HTMLDivElement>();
+  const reduce = useReducedMotion();
+  const now = useStageNow('top');
 
   // Character-by-character headline reveal. SplitText and its tween are reverted with the component.
   useGSAP(() => {
@@ -66,116 +34,139 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
     const split = new SplitText(headline, { type: 'chars,words' });
     gsap.from(split.chars, {
       opacity: 0,
-      y: 20,
-      rotateX: -40,
-      duration: 0.8,
-      stagger: 0.02,
+      y: 24,
+      rotateX: -50,
+      filter: 'blur(6px)',
+      duration: 1,
+      stagger: 0.018,
       ease: 'expo.out',
-      delay: 0.2,
+      delay: 0.25,
     });
   });
 
-  const goToContact = () => onNavigate?.('contact');
+  const rise = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 16, filter: 'blur(6px)' },
+          animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+          transition: { duration: 0.9, ease: EASE, delay },
+        };
 
   return (
-    <section className="relative w-full min-h-screen bg-transparent flex items-center justify-center overflow-hidden">
-      <VoxelTopographyGrid primaryColor="#1a1a1a" tileSize={60} wireColor="rgba(253, 251, 247, 0.3)" />
+    <section id="top" {...now} className="relative flex min-h-svh w-full items-center overflow-hidden bg-ink-950">
+      <VoxelTopographyGrid primaryColor="#26221b" peakColor="#e2c58a" tileSize={60} wireColor="rgba(214, 185, 124, 0.28)" />
 
-      <div className="container mx-auto px-4 max-w-6xl relative z-10 pointer-events-none pt-32 lg:pt-20 pb-32 lg:pb-0">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-          <motion.div
-            className="flex-1 text-center lg:text-left"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="space-y-4 lg:space-y-8">
-              <motion.div
-                className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] md:text-xs font-medium text-white backdrop-blur-sm shadow-[inset_0_1px_0_rgba(250,249,246,0.1)] pointer-events-auto"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
+      {/* Key light: a warm pool behind the portrait so the terrain catches gold even at rest */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-1 bg-[radial-gradient(ellipse_45%_55%_at_72%_48%,rgb(214_185_124/0.16),transparent_70%)] mix-blend-screen"
+      />
+
+      {/* Stage vignette: the terrain fades into black at the edges and toward the sheet below */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-1 bg-[radial-gradient(ellipse_80%_70%_at_62%_45%,transparent_0%,rgb(6_6_7/0.35)_55%,rgb(6_6_7/0.85)_100%)]"
+      />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-48 bg-linear-to-t from-ink-950 to-transparent" />
+
+      <div className="pointer-events-none relative z-10 mx-auto w-full max-w-7xl px-6 pb-28 pt-32 lg:px-10 lg:pb-20 lg:pt-28">
+        <div className="grid items-center gap-16 lg:grid-cols-12 lg:gap-12">
+          <div className="text-center lg:col-span-7 lg:text-left">
+            <h1
+              ref={headlineRef}
+              className="font-display text-[clamp(2.5rem,1.4rem+4.2vw,4.75rem)] font-medium leading-[1.06] tracking-[-0.03em] text-ivory"
+              style={{ perspective: '1000px' }}
+            >
+              <span>Automating Success Through AI</span> <br />
+              <span className="now-gold">and Your GHL CRM.</span>
+            </h1>
+
+            <motion.p
+              {...rise(0.45)}
+              className="mx-auto mt-10 max-w-136 text-[1.0625rem] md:mt-12 leading-relaxed text-muted-foreground lg:mx-0 lg:text-lg"
+            >
+              I help service-based businesses turn leads into booked appointments through conversion-focused funnels, CRM
+              architecture, and automated follow-up systems built inside GoHighLevel.
+            </motion.p>
+
+            <motion.div
+              {...rise(0.6)}
+              className="pointer-events-auto mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
+            >
+              <button
+                ref={contactRef}
+                type="button"
+                onClick={() => onNavigate?.('contact')}
+                className="pressable group inline-flex h-13 w-full max-w-68 items-center justify-center gap-3 rounded-full bg-gold pl-7 pr-2 text-[0.9375rem] font-semibold text-ink-950 shadow-[0_18px_40px_-18px_rgb(0_0_0/0.9)] hover:bg-gold-bright sm:w-auto"
               >
-                <Sparkles className="mr-2 h-3 w-3 text-accent" />
-                Elevating Operational Efficiency
-              </motion.div>
+                <span className="pointer-events-none">Contact Now</span>
+                <span className="pointer-events-none grid h-9 w-9 place-items-center rounded-full bg-ink-950/90 text-gold transition-transform duration-300 ease-out-quint group-hover:translate-x-0.5">
+                  <ArrowRight className="h-4 w-4" />
+                </span>
+              </button>
 
-              <h1
-                ref={headlineRef}
-                className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.1] font-heading"
-                style={{ perspective: '1000px' }}
+              <a
+                ref={cvRef}
+                href="/Christian_Padilla_CV.pdf"
+                download
+                className="pressable group inline-flex h-13 w-full max-w-68 items-center justify-center gap-2.5 rounded-full border border-line-strong bg-ink-950/40 px-7 text-[0.9375rem] font-medium text-ivory backdrop-blur-sm hover:border-gold/50 hover:text-gold-bright sm:w-auto"
               >
-                <span className="text-white">Automating Success Through AI</span> <br />
-                <span className="gsap-gradient-text">and Your GHL CRM.</span>
-              </h1>
+                <span className="pointer-events-none">Download CV</span>
+                <FileText className="pointer-events-none h-4 w-4 text-ivory/50 transition-colors group-hover:text-gold" />
+              </a>
+            </motion.div>
+          </div>
 
-              <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed mt-8">
-                I help service-based businesses turn leads into booked appointments through conversion-focused funnels, CRM
-                architecture, and automated follow-up systems built inside GoHighLevel.
-              </p>
-            </div>
-
-            {/* Action buttons (Desktop only) */}
-            <div className="hidden lg:flex flex-row items-center justify-start gap-6 pt-12 pointer-events-auto">
-              <ContactButton ref={contactRef} onClick={goToContact} />
-              <DownloadCvLink ref={cvRef} />
-            </div>
-          </motion.div>
-
+          {/* The portrait as a pipeline record card */}
           <motion.div
-            className="flex-1 w-full max-w-md lg:max-w-none pointer-events-auto"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-auto mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none"
+            initial={reduce ? false : { opacity: 0, scale: 0.94, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1.3, ease: EASE, delay: 0.3 }}
           >
-            {/* Dedicated Wrapper for Picture and Badge to act as a single unit */}
-            <div className="relative flex flex-col items-center lg:items-start w-full">
+            <div className="relative" style={{ perspective: '1200px' }}>
               <div
                 ref={cardRef}
-                className="glass-panel w-full aspect-[4/5] lg:aspect-square rounded-3xl overflow-hidden relative group p-2 cursor-pointer"
+                className="relative rounded-4xl border border-gold/40 bg-ink-900/80 p-2.5 shadow-[0_40px_80px_-30px_rgb(0_0_0/0.95)] backdrop-blur-sm"
                 style={{ transformStyle: 'preserve-3d' }}
               >
-                <div className="absolute inset-0 bg-gradient-to-tr from-accent/10 to-transparent opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
-                <div className="w-full h-full rounded-2xl overflow-hidden bg-black/50 relative border border-white/5" style={{ transform: 'translateZ(30px)' }}>
+                {/* Record header: live status */}
+                <p className="label-caps flex items-center gap-3 px-3.5 pb-3.5 pt-2 text-ivory/80">
+                  <span className="relative flex h-1.5 w-1.5 shrink-0">
+                    <span className="absolute inset-0 rounded-full bg-gold animate-signal" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-gold" />
+                  </span>
+                  Elevating Operational Efficiency
+                </p>
+                <div className="relative aspect-4/5 overflow-hidden rounded-3xl bg-ink-800 lg:aspect-[5/5.4]" style={{ transform: 'translateZ(30px)' }}>
                   <img
                     src="./img/Hero_Face.webp"
                     alt="Christian Padilla"
-                    className="w-full h-full object-cover transition-all duration-700 pointer-events-none"
+                    className="h-full w-full object-cover"
                     decoding="async"
                     fetchPriority="high"
                   />
+                  <div aria-hidden className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-gold/25" />
+                </div>
+                {/* Record footer field */}
+                <div className="flex items-center gap-4 px-3.5 pb-1.5 pt-4">
+                  <span className="font-display text-[2.25rem] font-medium leading-none tabular-nums text-gold">10+</span>
+                  <span className="h-9 w-px bg-line-strong" aria-hidden />
+                  <span>
+                    <span className="block text-sm font-semibold text-ivory">Systems Built</span>
+                    <span className="block text-xs text-muted-foreground">Automated perfectly</span>
+                  </span>
                 </div>
               </div>
-
-              {/* Decorative floating glass elements - absolute positioned relative to the new wrapper */}
-              <motion.div
-                className="absolute -bottom-4 left-0 sm:-bottom-8 sm:-left-8 glass-panel rounded-2xl p-4 sm:p-5 flex items-center gap-4 sm:gap-5 cursor-default scale-90 sm:scale-100 origin-bottom-left z-10"
-                animate={{ y: [0, -15, 0] }}
-                transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-                style={{ transform: 'translateZ(50px)' }}
-              >
-                <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold font-heading text-xl shadow-[0_0_20px_-5px_rgba(229,211,179,0.4)] border border-accent/30">
-                  10+
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-white tracking-wide">Systems Built</p>
-                  <p className="text-xs text-muted-foreground">Automated perfectly</p>
-                </div>
-              </motion.div>
             </div>
-
-            {/* Action buttons (Mobile only: separated from the picture wrapper) */}
-            <motion.div
-              className="flex lg:hidden flex-col sm:flex-row items-center justify-center gap-6 pt-16 pointer-events-auto relative z-20"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-            >
-              <ContactButton onClick={goToContact} className="w-full max-w-[240px] sm:max-w-none sm:w-auto" />
-              <DownloadCvLink className="w-full max-w-[240px] sm:max-w-none sm:w-auto" />
-            </motion.div>
           </motion.div>
         </div>
+      </div>
+
+      {/* Scroll cue: one light running down a hairline */}
+      <div aria-hidden className="absolute bottom-16 left-1/2 z-10 hidden h-14 w-px -translate-x-1/2 overflow-hidden bg-line-strong lg:block">
+        <span className="absolute inset-x-0 top-0 h-3.5 bg-gold animate-chase" />
       </div>
     </section>
   );

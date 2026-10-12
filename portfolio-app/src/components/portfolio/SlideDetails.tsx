@@ -6,11 +6,11 @@ import { Tag } from '../ui/Tag';
 export function SlideDetails({ variant, intro, bullets, outro }: SlideDetailsData) {
   return (
     <>
-      <p>{intro}</p>
-      <ul className={cn('list-disc pl-6 text-white/80 marker:text-accent', variant === 'compact' ? 'mt-4 space-y-3' : 'mt-6 space-y-6')}>
+      <p className="text-[1rem] leading-[1.75] text-ivory/75">{intro}</p>
+      <ul className={cn('list-disc pl-5 text-[0.9375rem] leading-[1.7] text-ivory/70 marker:text-gold', variant === 'compact' ? 'mt-5 space-y-3' : 'mt-7 space-y-6')}>
         {bullets.map(({ title, text, tags }) => (
           <li key={title} className="pl-2">
-            <strong>{title}</strong>
+            <strong className="font-semibold text-ivory">{title}</strong>
             {text && ` ${text}`}
             {tags && (
               <div className="flex flex-wrap gap-2 pt-3">
@@ -22,7 +22,7 @@ export function SlideDetails({ variant, intro, bullets, outro }: SlideDetailsDat
           </li>
         ))}
       </ul>
-      {outro && <p className="mt-4">{outro}</p>}
+      {outro && <p className="mt-5 text-[1rem] leading-[1.75] text-ivory/75">{outro}</p>}
     </>
   );
 }

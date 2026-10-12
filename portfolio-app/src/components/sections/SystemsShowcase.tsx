@@ -1,77 +1,85 @@
+import { ArrowUpRight } from 'lucide-react';
 import { FUNNEL_DEMOS } from '../../data/funnels';
-import { SECTION_TITLE } from '../../lib/styles';
 import { cn } from '../../lib/utils';
+import { Reveal } from '../ui/Reveal';
+import { useStageNow } from '../../hooks/useActiveStage';
 
-const ACCENT_GLOW = 'text-accent drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]';
+// Checkerboard bento: wide, narrow / narrow, wide.
+const SPANS = ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-5', 'lg:col-span-7'];
 
 export default function SystemsShowcase() {
+  const now = useStageNow('systems');
   return (
-    <div className="mt-16 md:mt-40 w-full relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-      <div className="text-center mb-10 md:mb-20 space-y-8 px-4">
-        <div>
-          <h3 className={cn(SECTION_TITLE, 'mb-4')}>
-            <span className={ACCENT_GLOW}>The System</span> Behind Every Funnel
-          </h3>
-          <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
-            Funnels capture the lead. Pipelines track the opportunity. Segmentation organizes contacts. Automation drives the process.
-          </p>
+    <section id="systems" {...now} className="stage-pad relative">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+
+        <div className="grid items-end gap-8 lg:grid-cols-12">
+          <Reveal className="lg:col-span-7">
+            <h2 className="font-display text-[clamp(2.1rem,1.2rem+3.2vw,4.25rem)] leading-[1.02] tracking-tight text-ivory">
+              <span className="now-gold">The System</span> Behind Every Funnel
+            </h2>
+          </Reveal>
+          <Reveal className="lg:col-span-5" delay={0.08}>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              Funnels capture the lead. Pipelines track the opportunity. Segmentation organizes contacts. Automation drives the process.
+            </p>
+          </Reveal>
         </div>
 
-        <div className="pt-8 relative">
-          {/* Subtle separator */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
-
-          <h4 className="text-3xl md:text-4xl font-bold text-white tracking-tight font-heading mb-4 pt-4">
-            Designed To <span className={ACCENT_GLOW}>Convert.</span> Built To <span className={ACCENT_GLOW}>Track.</span>
-          </h4>
-          <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
+        <Reveal className="mt-16 grid gap-6 border-t border-line pt-10 md:grid-cols-12 md:gap-8">
+          <h3 className="font-display text-[clamp(1.6rem,1.1rem+1.6vw,2.4rem)] leading-[1.1] tracking-tight text-ivory md:col-span-6">
+            Designed To <span className="now-gold">Convert.</span> Built To <span className="now-gold">Track.</span>
+          </h3>
+          <p className="max-w-xl text-base leading-relaxed text-muted-foreground md:col-span-6">
             Every page is mapped to a workflow, every action triggers automation, and every lead is tracked from first click to closed deal.
           </p>
+        </Reveal>
+
+        <div className="mt-14 grid gap-4 lg:grid-cols-12">
+          {FUNNEL_DEMOS.map((item, i) => (
+            <Reveal key={item.title} className={SPANS[i]} delay={(i % 2) * 0.06}>
+              <article className="group record flex h-full flex-col rounded-4xl p-2.5 transition-colors duration-500 hover:border-gold/30">
+                <div className="relative h-64 overflow-hidden rounded-3xl bg-ink-800 md:h-80 lg:h-88">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover object-top opacity-90 transition-[transform,opacity] duration-1400 ease-out-quint group-hover:scale-[1.035] group-hover:opacity-100"
+                  />
+                  <div aria-hidden className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/5" />
+                </div>
+
+                <div className="flex flex-1 flex-col gap-6 px-4 pb-4 pt-7 md:px-6">
+                  <h4 className="font-display text-[1.75rem] leading-tight tracking-tight text-ivory">{item.title}</h4>
+
+                  <dl className="grid grid-cols-[auto_1fr] items-baseline gap-x-6 gap-y-3 border-t border-line pt-5 text-[0.9375rem]">
+                    <dt className="label-caps text-ivory/50">Type :</dt>
+                    <dd className="text-ivory/85">{item.type}</dd>
+                    <dt className="label-caps text-ivory/50">Industry :</dt>
+                    <dd className="text-ivory/85">{item.industry}</dd>
+                  </dl>
+
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      'pressable group/link mt-auto inline-flex w-fit items-center gap-2 rounded-full border border-line-strong py-2.5 pl-5 pr-3',
+                      'text-[0.8125rem] font-semibold text-ivory hover:border-gold hover:bg-gold hover:text-ink-950',
+                    )}
+                  >
+                    View Live Demo
+                    <span className="grid h-6 w-6 place-items-center rounded-full bg-white/6 transition-colors group-hover/link:bg-ink-950/15">
+                      <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 ease-out-quint group-hover/link:-translate-y-px group-hover/link:translate-x-px" />
+                    </span>
+                  </a>
+                </div>
+              </article>
+            </Reveal>
+          ))}
         </div>
       </div>
-
-      <div className="w-full px-2 md:px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {FUNNEL_DEMOS.map((item) => (
-          <div
-            key={item.title}
-            className="group bg-slate-900/60 border border-slate-800 rounded-xl overflow-hidden h-full flex flex-col backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-accent/40 hover:shadow-[0_0_40px_-10px_rgba(212,175,55,0.3)] hover:z-10 relative"
-          >
-            {/* Top Half (Image) - Increased height */}
-            <div className="w-full aspect-square bg-slate-800 relative overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.title}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover object-top opacity-90 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100"
-              />
-            </div>
-
-            {/* Bottom Half (Content) */}
-            <div className="p-5 flex flex-col flex-grow relative z-10 bg-slate-900/60">
-              <h5 className="text-xl font-bold text-white mb-4 uppercase tracking-wide drop-shadow-md">{item.title}</h5>
-
-              <div className="space-y-2 mb-6 flex-grow">
-                <p className="text-sm text-slate-300 bg-white/5 px-3 py-2 rounded-lg border border-white/5">
-                  <span className="font-bold text-white mr-2">Type :</span> {item.type}
-                </p>
-                <p className="text-sm text-slate-300 bg-white/5 px-3 py-2 rounded-lg border border-white/5">
-                  <span className="font-bold text-white mr-2">Industry :</span> {item.industry}
-                </p>
-              </div>
-
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 px-4 bg-accent/10 hover:bg-accent hover:text-accent-foreground text-accent font-bold rounded-lg transition-all duration-300 border border-accent/20 hover:shadow-[0_0_20px_-5px_rgba(212,175,55,0.4)] tracking-wider text-xs uppercase text-center flex items-center justify-center"
-              >
-                View Live Demo
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    </section>
   );
 }

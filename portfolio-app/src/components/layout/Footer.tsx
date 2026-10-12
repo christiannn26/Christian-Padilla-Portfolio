@@ -8,41 +8,31 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative w-full border-t border-white/10 bg-[#020202] py-8 overflow-hidden z-20 mt-10">
-      {/* Subtle Volumetric Glow at the Top Edge */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[80px] bg-accent/10 blur-[80px] rounded-full pointer-events-none"></div>
-
-      <div className="container mx-auto px-4 max-w-6xl relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-        
-        {/* Brand Identity & Description */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-2">
-          <div className="flex items-center gap-2 font-heading font-bold text-xl tracking-wide text-primary">
-            <img src="./img/CPlogo.webp" alt="CP Logo" className="h-6 w-auto object-contain" />
-            <span>Christian Padilla<span className="text-accent">.</span></span>
+    <footer className="relative border-t border-line">
+      <div className="mx-auto flex max-w-7xl flex-col justify-between gap-10 px-6 py-12 md:flex-row md:items-end lg:px-10">
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <img src="./img/CPlogo.webp" alt="CP Logo" className="h-7 w-auto object-contain" />
+            <span className="font-display text-xl font-medium tracking-[-0.01em] text-ivory">
+              Christian Padilla<span className="text-gold">.</span>
+            </span>
           </div>
-          <p className="text-muted-foreground font-light max-w-sm text-xs">
-            Transforming complex workflows into intelligent, automated systems.
-          </p>
+          <p className="max-w-sm text-sm text-muted-foreground">Transforming complex workflows into intelligent, automated systems.</p>
         </div>
 
-        {/* Right Side: Back to Top & Copyright */}
-        <div className="flex flex-col items-center md:items-end gap-4 mt-4 md:mt-0">
-          <button 
+        <div className="flex flex-col items-start gap-5 md:items-end">
+          <button
+            type="button"
             onClick={scrollToTop}
-            className="flex items-center gap-2 text-xs text-white/60 hover:text-accent transition-colors uppercase tracking-widest group"
+            className="pressable group inline-flex items-center gap-3 rounded-full text-ivory/70 hover:text-gold"
           >
-            <span>Back to top</span>
-            <div className="h-8 w-8 rounded-full glass-panel flex items-center justify-center border border-white/5 group-hover:border-accent/40 group-hover:bg-accent/10 transition-all duration-300">
-              <ArrowUp className="w-3 h-3 group-hover:-translate-y-1 transition-transform duration-300" />
-            </div>
+            <span className="label-caps">Back to top</span>
+            <span className="grid h-10 w-10 place-items-center rounded-full border border-line-strong transition-colors duration-300 group-hover:border-gold/50">
+              <ArrowUp className="h-4 w-4 transition-transform duration-300 ease-out-quint group-hover:-translate-y-0.5" />
+            </span>
           </button>
-          
-          <p className="text-[10px] md:text-xs text-white/70 font-medium tracking-wider uppercase text-center md:text-right">
-            © 2026 Padilla. All rights reserved.
-          </p>
+          <p className="text-xs tracking-wide text-ivory/55">© 2026 Padilla. All rights reserved.</p>
         </div>
-
       </div>
     </footer>
   );

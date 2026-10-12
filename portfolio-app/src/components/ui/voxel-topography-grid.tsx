@@ -6,6 +6,8 @@ export interface VoxelTopographyGridProps {
   maxHeight?: number;
   primaryColor?: string; // Hex color (e.g., #6366f1)
   wireColor?: string;
+  /** Optional light that catches the highest (cursor-lifted) peaks. */
+  peakColor?: string;
   speed?: number;
 }
 
@@ -36,6 +38,7 @@ export function VoxelTopographyGrid({
   maxHeight = 70,
   primaryColor = '#6366f1',
   wireColor = 'rgba(129, 140, 248, 0.4)',
+  peakColor,
   speed = 0.015,
 }: VoxelTopographyGridProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -63,14 +66,16 @@ export function VoxelTopographyGrid({
     const leftFaceColor = `rgba(${Math.floor(baseRgb.r * 0.45)}, ${Math.floor(baseRgb.g * 0.45)}, ${Math.floor(baseRgb.b * 0.45)}, 0.85)`;
     const rightFaceColor = `rgba(${Math.floor(baseRgb.r * 0.65)}, ${Math.floor(baseRgb.g * 0.65)}, ${Math.floor(baseRgb.b * 0.65)}, 0.85)`;
 
-    // Pre-computed Lookup Table (LUT) for Top Face elevation lighting
+    // Pre-computed Lookup Table (LUT) for Top Face elevation lighting. With a peak colour,
+    // only the tallest faces (the ones the cursor lifts) blend toward it.
+    const peakRgb = peakColor ? hexToRgb(peakColor) : null;
     const topColorLUT: string[] = new Array(101);
     for (let i = 0; i <= 100; i++) {
       const ratio = i / 100;
-      const r = Math.floor(baseRgb.r * (0.55 + ratio * 0.45));
-      const g = Math.floor(baseRgb.g * (0.55 + ratio * 0.45));
-      const b = Math.floor(baseRgb.b * (0.55 + ratio * 0.45));
-      topColorLUT[i] = `rgb(${r},${g},${b})`;
+      const shade = 0.55 + ratio * 0.45;
+      const lit = peakRgb ? Math.pow(ratio, 2.2) * 0.75 : 0;
+      const mix = (base: number, peak: number) => Math.floor(base * shade * (1 - lit) + peak * lit);
+      topColorLUT[i] = `rgb(${mix(baseRgb.r, peakRgb?.r ?? 0)},${mix(baseRgb.g, peakRgb?.g ?? 0)},${mix(baseRgb.b, peakRgb?.b ?? 0)})`;
     }
 
     // Grid geometry depends only on the canvas size, so it is derived on resize, not per frame.
@@ -314,12 +319,12 @@ export function VoxelTopographyGrid({
       container.removeEventListener('pointerleave', handlePointerLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [tileSize, maxHeight, primaryColor, wireColor, speed]);
+  }, [tileSize, maxHeight, primaryColor, wireColor, peakColor, speed]);
 
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full z-0 overflow-hidden opacity-60 cursor-pointer touch-pan-y will-change-transform"
+      className="absolute inset-0 w-full h-full z-0 overflow-hidden opacity-90 cursor-pointer touch-pan-y will-change-transform"
       style={{ transform: 'translateZ(0)' }}
     >
       <canvas ref={canvasRef} className="block w-full h-full" />

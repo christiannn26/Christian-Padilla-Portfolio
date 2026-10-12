@@ -1,125 +1,276 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* ─────────────────────────────────────────────────────────────
+   The Pipeline: keynote-black stage, ivory type, champagne gold
+   reserved for whatever is "now" (active stage, primary action,
+   live signal). Hairlines and black shadows only, never glow.
+   ───────────────────────────────────────────────────────────── */
 @theme {
-  /* Volumetric Dark Glass Aesthetic */
-  --color-primary: #FAF9F6; /* Cream */
-  --color-primary-foreground: #0A0A0A;
-  
-  --color-secondary: #121212;
-  --color-secondary-foreground: #FAF9F6;
-  
-  --color-accent: #D4AF37; /* Champagne Gold */
-  --color-accent-foreground: #050505;
+  /* Stage: near-black stepping up to raised graphite */
+  --color-ink-950: #060607;
+  --color-ink-900: #0b0b0d;
+  --color-ink-850: #101013;
+  --color-ink-800: #16161a;
+  --color-ink-700: #1f1f25;
+  --color-ink-600: #2b2b32;
 
-  --color-ring: #D4AF37; /* Focus rings use the accent gold */
-  
-  --color-background: #050505; /* Deep cinematic obsidian */
-  --color-foreground: #FAF9F6; /* Cream text */
-  
-  --color-card: rgba(15, 15, 18, 0.6); /* Dark translucent base */
-  --color-card-foreground: #FAF9F6;
-  
-  --color-border: rgba(255, 255, 255, 0.1); 
-  
-  --color-muted: #151515;
-  --color-muted-foreground: rgba(250, 249, 246, 0.6);
-  
-  --font-sans: 'Montserrat Variable', sans-serif;
-  --font-heading: 'Cormorant Variable', serif;
+  --color-ivory: #f4efe6;
+
+  /* Champagne gold, desaturated from the old metallic yellow */
+  --color-gold: #d6b97c;
+  --color-gold-bright: #efdcae;
+  --color-gold-deep: #a48748;
+
+  --color-line: rgb(244 239 230 / 0.09);
+  --color-line-strong: rgb(244 239 230 / 0.16);
+
+  /* Semantic aliases */
+  --color-background: #060607;
+  --color-foreground: #f4efe6;
+  --color-primary: #f4efe6;
+  --color-primary-foreground: #0b0b0d;
+  --color-accent: #d6b97c;
+  --color-accent-foreground: #0b0a07;
+  --color-muted-foreground: rgb(244 239 230 / 0.64);
+  --color-border: rgb(244 239 230 / 0.09);
+  --color-ring: #d6b97c;
+
+  --font-sans: 'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Bodoni Moda Variable', 'Bodoni 72', Didot, serif;
+  --font-heading: var(--font-display);
+
+  /* Motion: strong custom curves (no built-in ease-in anywhere) */
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
   /* Tech-stack logo strip: the track holds two copies, so -50% is one seamless loop */
-  --animate-marquee: marquee 25s linear infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  /* Live status dot: a ring that leaves the dot and fades */
+  --animate-signal: signal 2.4s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+  /* Scroll cue: one light travelling down a hairline */
+  --animate-chase: chase 2.2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
 
   @keyframes marquee {
     from { transform: translateX(0%); }
     to { transform: translateX(-50%); }
   }
+  @keyframes signal {
+    0% { transform: scale(1); opacity: 0.55; }
+    100% { transform: scale(3.2); opacity: 0; }
+  }
+  @keyframes chase {
+    0% { transform: translateY(-100%); opacity: 0; }
+    30% { opacity: 1; }
+    100% { transform: translateY(400%); opacity: 0; }
+  }
 }
 
-@layer utilities {
-  /* Fix for GSAP SplitText breaking gradient backgrounds (relies on SplitText's word > char div nesting) */
-  .gsap-gradient-text div div {
-    background-image: linear-gradient(135deg, #FAF9F6 0%, #D4AF37 50%, #B8860B 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+/* ── Reusable vocabulary ─────────────────────────────────────── */
+
+/* Wide-tracked caps for stage names and record field labels */
+@utility label-caps {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Floating layers only: nav, dialogs, HUD */
+@utility glass {
+  background-color: rgb(16 16 19 / 0.68);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgb(244 239 230 / 0.1);
+  box-shadow:
+    inset 0 1px 0 rgb(244 239 230 / 0.06),
+    0 18px 40px -18px rgb(0 0 0 / 0.85);
+}
+
+/* Raised record surface (cards, tiles) */
+@utility record {
+  background-color: rgb(16 16 19 / 0.72);
+  border: 1px solid var(--color-line);
+  box-shadow: inset 0 1px 0 rgb(244 239 230 / 0.03), 0 24px 48px -32px rgb(0 0 0 / 0.9);
+}
+
+/* Shared section rhythm: one spacing scale for the whole page */
+@utility stage-pad {
+  padding-block: clamp(4.5rem, 3rem + 4.5vw, 7.5rem);
+}
+
+/* Press feedback for every pressable thing */
+@utility pressable {
+  transition-property: transform, background-color, border-color, color, box-shadow, opacity;
+  transition-duration: 180ms;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  &:active {
+    transform: scale(0.97);
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  html {
+    color-scheme: dark;
+    scrollbar-color: var(--color-ink-600) var(--color-ink-950);
+    scrollbar-width: thin;
+    -webkit-tap-highlight-color: transparent;
   }
+
+  * {
+    border-color: var(--color-line);
+  }
+
   body {
-    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
+    background-color: var(--color-ink-950);
+    color: var(--color-ivory);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading tracking-tight;
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+
+  input, textarea {
+    caret-color: var(--color-gold);
+  }
+
+  a {
+    text-underline-offset: 0.22em;
   }
 }
 
-/* Custom utility for glassmorphism panels to be reused */
-@layer utilities {
-  .glass-panel {
-    background: linear-gradient(135deg, rgba(255,255,255, 0.1) 0%, rgba(255,255,255, 0) 40%), rgba(15, 15, 18, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-    border-right: 1px solid rgba(0, 0, 0, 0.8);
-    box-shadow: 
-      inset 0 2px 4px rgba(255, 255, 255, 0.05),
-      0 15px 35px rgba(0, 0, 0, 0.6);
-  }
-
-  /* Section overlap: visual page break on all sizes, negative pull-up only on md+ */
-  .section-overlap {
-    position: relative;
-    z-index: 10;
-    background-color: transparent;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 -20px 50px rgba(0,0,0,0.9), 0 -5px 20px rgba(255,255,255,0.04);
-  }
-
-  @media (min-width: 768px) {
-    .section-overlap {
-      margin-top: -2rem;
-    }
-  }
+/* Gold is reserved for "now": accent words rest in ivory and light up while their
+   section is the stage being read (see useStageNow). */
+.now-gold {
+  color: var(--color-ivory);
+  transition: color 700ms cubic-bezier(0.23, 1, 0.32, 1);
 }
+[data-now] .now-gold {
+  color: var(--color-gold);
+}
+
+/* ── Living flowchart: Mermaid export re-lit for the stage ───── */
+.flowchart-art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none !important;
+  background: transparent !important;
+}
+.flowchart-art .node rect,
+.flowchart-art .node polygon,
+.flowchart-art .node circle,
+.flowchart-art .node ellipse,
+.flowchart-art .node path {
+  fill: #141418 !important;
+  stroke: rgb(214 185 124 / 0.42) !important;
+  stroke-width: 1px !important;
+}
+.flowchart-art .node [data-tone='action'] {
+  fill: #221d13 !important;
+  stroke: rgb(214 185 124 / 0.7) !important;
+}
+.flowchart-art .node [data-tone='recovery'] {
+  fill: #1b1b21 !important;
+  stroke: rgb(244 239 230 / 0.28) !important;
+}
+.flowchart-art .nodeLabel,
+.flowchart-art .nodeLabel p,
+.flowchart-art .label,
+.flowchart-art foreignObject span,
+.flowchart-art foreignObject div {
+  color: #f4efe6 !important;
+  fill: #f4efe6 !important;
+}
+.flowchart-art .flowchart-link {
+  stroke: rgb(244 239 230 / 0.3) !important;
+}
+.flowchart-art .marker,
+.flowchart-art marker path {
+  fill: rgb(244 239 230 / 0.45) !important;
+  stroke: rgb(244 239 230 / 0.45) !important;
+}
+.flowchart-art .edgeLabel,
+.flowchart-art .edgeLabel p,
+.flowchart-art .edgeLabel rect,
+.flowchart-art .labelBkg {
+  background-color: #0b0b0d !important;
+  fill: #0b0b0d !important;
+  color: rgb(244 239 230 / 0.75) !important;
+}
+.flowchart-art .cluster rect {
+  fill: transparent !important;
+  stroke: rgb(244 239 230 / 0.12) !important;
+}
+.flowchart-art .flow-pulse {
+  fill: none;
+  stroke: var(--color-gold-bright);
+  stroke-width: 2.25px;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+/* Blueprint plate behind the flowchart */
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgb(244 239 230 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(244 239 230 / 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Film grain over the stage, kept below content */
+.stage-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.045;
+}
+
+/* Slow drift for the two stage lights */
+@keyframes lightDrift1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6vw, 4vh, 0) scale(1.08); }
+}
+@keyframes lightDrift2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-5vw, -6vh, 0) scale(0.94); }
+}
+.stage-light-1 { animation: lightDrift1 28s ease-in-out infinite; }
+.stage-light-2 { animation: lightDrift2 34s ease-in-out infinite; }
 
 @keyframes badgeFloat {
   0%, 100% { transform: translateY(0) translateZ(50px); }
   50% { transform: translateY(-8px) translateZ(50px); }
 }
 
-/* GPU-composited spotlight drift — replaces Framer Motion infinite JS animations */
-@keyframes spotlightDrift1 {
-  0%   { transform: translate3d(0, 0, 0) scale(1); }
-  33%  { transform: translate3d(40px, -40px, 0) scale(1.05); }
-  66%  { transform: translate3d(-40px, 40px, 0) scale(0.95); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
-}
-
-@keyframes spotlightDrift2 {
-  0%   { transform: translate3d(0, 0, 0) scale(1); }
-  33%  { transform: translate3d(-50px, 50px, 0) scale(0.9); }
-  66%  { transform: translate3d(50px, -50px, 0) scale(1.1); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
-}
-
-.spotlight-drift-1 {
-  animation: spotlightDrift1 25s linear infinite;
-  will-change: transform;
-}
-
-.spotlight-drift-2 {
-  animation: spotlightDrift2 30s linear infinite;
-  will-change: transform;
+@media (prefers-reduced-motion: reduce) {
+  .stage-light-1,
+  .stage-light-2 {
+    animation: none;
+  }
 }

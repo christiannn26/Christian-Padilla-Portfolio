@@ -1,13 +1,14 @@
 import { motion, type Variants } from 'motion/react';
 import { SERVICES, type Service } from '../../data/services';
-import { SECTION_TITLE } from '../../lib/styles';
-import { SectionEyebrow } from '../ui/SectionEyebrow';
+import { cn } from '../../lib/utils';
+import { Reveal } from '../ui/Reveal';
+import { useStageNow } from '../../hooks/useActiveStage';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 },
+    transition: { staggerChildren: 0.08 },
   },
 };
 
@@ -20,47 +21,48 @@ const itemVariants: Variants = {
   },
 };
 
-// On mobile the cards stack as sticky sheets (each offset 20px lower); on md+ they sit in a grid.
+// Bento: two wide, three narrow, then one full-width row to close the set.
+const SPANS = ['md:col-span-3', 'md:col-span-3', 'md:col-span-2', 'md:col-span-2', 'md:col-span-2', 'md:col-span-6'];
+
+// On mobile the cards stack as sticky sheets (each offset 20px lower); on md+ they sit in the bento.
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   const Icon = service.icon;
+  const wide = index === SERVICES.length - 1;
+
   return (
     <motion.div
       variants={itemVariants}
-      className="group relative p-8 h-full rounded-3xl glass-panel transition-all duration-300 overflow-hidden md:hover:-translate-y-2 sticky md:static"
+      className={cn(
+        'group sticky flex flex-col overflow-hidden rounded-[1.75rem] border border-line bg-ink-900 p-7 shadow-[0_-20px_40px_-20px_rgb(0_0_0/0.9)] md:static md:bg-ink-900/60 md:p-9 md:shadow-none',
+        'transition-[border-color,translate] duration-500 ease-out-quint md:hover:-translate-y-1 md:hover:border-gold/30',
+        wide && 'md:flex-row md:items-center md:gap-12',
+        SPANS[index],
+      )}
       style={{
         top: `calc(var(--card-base-top) + ${index * 20}px)`,
         zIndex: (index + 1) * 10,
       }}
     >
-      {/* Mobile background blocker for Android to prevent stacked cards from bleeding text */}
-      <div className="absolute inset-0 bg-[#0a0a0c] md:hidden pointer-events-none" />
-
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-      {/* Soft ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent/20 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-      {/* NOTE: the translateZ styles below are load-bearing. They create stacking contexts that keep
-          this content above the absolutely-positioned mobile background blocker. Do not remove. */}
-      <div
-        className="h-14 w-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 group-hover:border-accent/40 transition-all duration-300 shadow-[0_0_15px_-3px_rgba(255,255,255,0.05)] group-hover:shadow-[0_0_20px_-3px_rgba(229,211,179,0.4)]"
-        style={{ transform: 'translateZ(20px)' }}
-      >
-        <Icon className="h-6 w-6 text-white/80 group-hover:text-accent transition-colors" />
+      <div className={cn('flex items-center gap-4', wide && 'md:w-[34%] md:shrink-0')}>
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-line-strong text-ivory/75 transition-colors duration-500 group-hover:border-gold/60 group-hover:text-gold">
+          <Icon className="h-5 w-5" strokeWidth={1.5} />
+        </span>
+        {wide && <h4 className="hidden font-display text-[1.75rem] leading-tight tracking-tight text-ivory md:block">{service.title}</h4>}
       </div>
 
-      <h4 className="text-xl font-bold text-white mb-3 font-heading tracking-wide" style={{ transform: 'translateZ(30px)' }}>
-        {service.title}
-      </h4>
-      <p className="text-muted-foreground leading-relaxed text-sm font-light" style={{ transform: 'translateZ(20px)' }}>
+      <h4 className={cn('mt-8 font-display text-[1.75rem] leading-tight tracking-tight text-ivory', wide && 'md:hidden')}>{service.title}</h4>
+      <p className={cn('mt-3 max-w-[46ch] text-[0.9375rem] leading-relaxed text-muted-foreground', wide && 'md:mt-0 md:flex-1')}>
         {service.description}
       </p>
 
-      <div className="mt-5 pt-4 border-t border-white/5" style={{ transform: 'translateZ(25px)' }}>
-        <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.15em] mb-2.5">Powered By</p>
+      <div className={cn('mt-auto pt-8', wide && 'md:w-[30%] md:shrink-0 md:pt-0')}>
+        <p className="label-caps mb-3 text-ivory/45">Powered By</p>
         <div className="flex flex-wrap gap-2">
           {service.poweredBy.map((tech) => (
-            <span key={tech} className="px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-medium border border-accent/20">
+            <span
+              key={tech}
+              className="rounded-full border border-line-strong px-3 py-1 text-xs font-medium text-ivory/80 transition-colors duration-500 group-hover:border-gold/30"
+            >
               {tech}
             </span>
           ))}
@@ -71,21 +73,24 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 }
 
 export default function Services() {
+  const now = useStageNow('services');
   return (
-    <section id="services" className="py-16 md:py-32 section-overlap pt-16 md:pt-24">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center mb-8 md:mb-20 sticky top-20 md:relative z-50 bg-background md:bg-transparent pt-2 pb-1 md:py-0 -mx-4 px-4 md:mx-0">
-          <SectionEyebrow>Services</SectionEyebrow>
-          <h3 className={SECTION_TITLE}>How I can help you scale</h3>
+    <section id="services" {...now} className="stage-pad relative">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="sticky top-20 z-50 -mx-6 bg-ink-950 px-6 pb-2 pt-3 md:static md:mx-0 md:bg-transparent md:px-0 md:py-0">
+          <Reveal>
+            <h2 className="mb-8 font-display text-[clamp(2.1rem,1.2rem+3.2vw,4.25rem)] leading-[1.02] tracking-tight text-ivory md:mb-16">
+              How I can help you scale
+            </h2>
+          </Reveal>
         </div>
 
         <motion.div
-          className="flex flex-col gap-6 pb-32 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8 [--card-base-top:220px] min-[400px]:[--card-base-top:190px]"
+          className="flex flex-col gap-6 pb-32 [--card-base-top:200px] min-[400px]:[--card-base-top:184px] md:grid md:grid-cols-6 md:gap-4 md:pb-0"
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-100px' }}
-          style={{ perspective: '1000px' }}
         >
           {SERVICES.map((service, i) => (
             <ServiceCard key={service.title} service={service} index={i} />

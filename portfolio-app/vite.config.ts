@@ -30,7 +30,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    preloadFonts([/cormorant-latin-wght-normal-[\w-]+\.woff2$/, /montserrat-latin-wght-normal-[\w-]+\.woff2$/]),
+    preloadFonts([/bodoni-moda-latin-opsz-normal-[\w-]+\.woff2$/, /mona-sans-latin-wght-normal-[\w-]+\.woff2$/]),
   ],
   build: {
     rolldownOptions: {

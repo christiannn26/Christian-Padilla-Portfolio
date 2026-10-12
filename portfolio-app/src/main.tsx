@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-// Self-hosted variable fonts (byte-identical to the files Google Fonts serves)
-import '@fontsource-variable/cormorant';
-import '@fontsource-variable/montserrat';
+// Self-hosted variable fonts: Bodoni Moda with optical sizing for display, Mona Sans for text
+import '@fontsource-variable/bodoni-moda/opsz.css';
+import '@fontsource-variable/mona-sans';
 import './index.css'
 import App from './App.tsx'
 

@@ -70,18 +70,17 @@ function GalleryScrollColumn({ slide }: { slide: CoverflowSlide }) {
   const images = [slide.src, ...(slide.gallery ?? [])];
 
   return (
-    <div ref={scrollContainerRef} className="flex-1 h-[45%] md:h-full overflow-y-auto bg-[#050505] min-h-0">
-      <div className="flex flex-col gap-px pb-20">
+    <div ref={scrollContainerRef} className="h-[45%] min-h-0 flex-1 overflow-y-auto bg-ink-950 md:h-full">
+      <div className="flex flex-col gap-1 p-1 pb-20">
         {images.map((src, idx) => (
-          <div key={src} className="w-full relative bg-slate-900 group">
+          <div key={src} className="relative w-full overflow-hidden rounded-[1.25rem] bg-ink-800">
             <img src={src} alt={idx === 0 ? slide.alt : `${slide.title} gallery image ${idx}`} className="w-full h-auto object-cover" />
-            <div className="absolute inset-0 bg-black/20 mix-blend-overlay pointer-events-none" />
-          </div>
+                      </div>
         ))}
 
-        <div className="w-full py-12 flex flex-col items-center justify-center opacity-30">
-          <div className="w-12 h-1 bg-white/30 rounded-full mb-4"></div>
-          <p className="text-xs uppercase tracking-widest text-white font-bold">End of Gallery</p>
+        <div className="flex w-full flex-col items-center justify-center py-14">
+          <div className="mb-4 h-px w-12 bg-gold/50"></div>
+          <p className="label-caps text-ivory/45">End of Gallery</p>
         </div>
       </div>
     </div>
@@ -99,38 +98,38 @@ export default function ProjectDetailsModal({ slide: requestedSlide, onClose }: 
 
   return (
     <Dialog open={!!requestedSlide} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-[95vw] md:max-w-[90vw] h-[95vh] md:h-[90vh] bg-slate-950/80 backdrop-blur-2xl border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,1)] text-white p-0 overflow-hidden rounded-[2rem] gap-0 flex flex-col min-h-0">
+      <DialogContent className="flex h-[94vh] min-h-0 max-w-[96vw] flex-col gap-0 overflow-hidden rounded-4xl border-line-strong bg-ink-900 p-0 text-ivory shadow-[0_60px_120px_-40px_rgb(0_0_0/0.95)] md:h-[88vh] md:max-w-[min(92vw,1400px)]">
         <div className="flex flex-col md:flex-row h-full w-full flex-1 min-h-0">
           {/* Left Column: Sticky Content Section */}
-          <div className="w-full md:w-1/3 flex flex-col h-[55%] md:h-full border-b md:border-b-0 md:border-r border-white/10 bg-slate-950/50 shrink-0 min-h-0">
-            <div className="flex-1 p-6 md:p-10 lg:p-12 overflow-y-auto">
+          <div className="flex h-[55%] min-h-0 w-full shrink-0 flex-col border-b border-line bg-ink-900 md:h-full md:w-[40%] md:border-b-0 md:border-r lg:w-[36%]">
+            <div className="flex-1 overflow-y-auto p-7 md:p-10 lg:p-12">
               <div className="mb-8">
-                <DialogTitle className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 leading-tight">{slide?.title}</DialogTitle>
-                {slide?.subtitle && <p className="text-accent text-sm tracking-[0.2em] uppercase font-bold">{slide.subtitle}</p>}
+                <DialogTitle className="mb-4 pr-12 font-display text-[clamp(2rem,1.4rem+1.6vw,3rem)] font-medium leading-[1.05] tracking-tight text-ivory">{slide?.title}</DialogTitle>
+                {slide?.subtitle && <p className="label-caps leading-relaxed text-ivory/60">{slide.subtitle}</p>}
               </div>
 
               {/* Metadata Tags */}
               {slide?.meta && slide.meta.length > 0 && (
-                <div className="flex flex-wrap gap-4 mb-10">
+                <dl className="mb-10 grid grid-cols-2 gap-6 border-y border-line py-5">
                   {slide.meta.map((item) => (
-                    <div key={item.label} className="flex flex-col">
-                      <span className="text-xs text-white/40 uppercase tracking-widest mb-1">{item.label}</span>
-                      <span className="text-sm font-semibold text-white/90">{item.value}</span>
+                    <div key={item.label} className="flex flex-col gap-1.5">
+                      <dt className="label-caps text-ivory/45">{item.label}</dt>
+                      <dd className="text-[0.9375rem] font-medium text-ivory/90">{item.value}</dd>
                     </div>
                   ))}
-                </div>
+                </dl>
               )}
 
               <div className="max-w-none">{slide?.content}</div>
             </div>
 
             {slide?.link && (
-              <div className="p-6 md:p-10 border-t border-white/10 bg-black/20">
+              <div className="border-t border-line p-6 md:p-10">
                 <a
                   href={slide.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center w-full py-4 px-6 rounded-xl bg-accent text-accent-foreground font-bold hover:bg-accent/90 transition-colors gap-2"
+                  className="pressable flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 font-semibold text-ink-950 hover:bg-gold-bright"
                 >
                   <ExternalLink className="w-5 h-5" />
                   Visit Live Project
