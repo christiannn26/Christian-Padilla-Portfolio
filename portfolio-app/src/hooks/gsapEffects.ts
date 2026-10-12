@@ -59,8 +59,9 @@ export const useMagnetic = <T extends HTMLElement>() =>
 /** Card tilts in 3D to face the cursor. */
 export const use3DTilt = <T extends HTMLElement>() =>
   usePointerEffect<T>((el) => {
-    const xTo = gsap.quickTo(el, 'rotateX', { duration: 0.6, ease: 'power2.out' });
-    const yTo = gsap.quickTo(el, 'rotateY', { duration: 0.6, ease: 'power2.out' });
+    // quickTo needs GSAP's canonical names; the CSS-style 'rotateX' alias silently never animates.
+    const xTo = gsap.quickTo(el, 'rotationX', { duration: 0.6, ease: 'power2.out' });
+    const yTo = gsap.quickTo(el, 'rotationY', { duration: 0.6, ease: 'power2.out' });
     gsap.set(el, { transformPerspective: 1000, transformStyle: 'preserve-3d' });
 
     return {
