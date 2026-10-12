@@ -101,7 +101,7 @@ export default function Portfolio() {
         <Tabs value={tab} onValueChange={(value) => setTab(value as PortfolioTab)} className="relative z-10 w-full">
           <div className="mb-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <Reveal>
-              <h2 className="font-display text-[clamp(2.1rem,1.2rem+3.2vw,4.25rem)] leading-[1.02] tracking-tight text-ivory">My Portfolio</h2>
+              <h2 className="type-section text-ivory">My Portfolio</h2>
             </Reveal>
 
             <div className="flex w-full flex-col items-start gap-3 sm:w-auto sm:flex-row sm:items-center">

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-12T13:10:52+00:00",
+  "generatedAt": "2026-10-12T00:00:00+00:00",
   "title": "Design System: Christian Padilla, The Pipeline",
   "extensions": {
     "colorMeta": {
@@ -198,6 +198,66 @@
           "#f4efe6",
           "#faf8f3"
         ]
+      },
+      "flow-node": {
+        "role": "neutral",
+        "displayName": "Flow Node",
+        "canonical": "#141418",
+        "tonalRamp": [
+          "#0a0a0c",
+          "#141418",
+          "#1e1e24",
+          "#2a2a32",
+          "#3b3b45",
+          "#55555f",
+          "#7a7a85",
+          "#a8a8b2"
+        ]
+      },
+      "flow-action": {
+        "role": "tertiary",
+        "displayName": "Flow Action",
+        "canonical": "#221d13",
+        "tonalRamp": [
+          "#110e09",
+          "#221d13",
+          "#3a3120",
+          "#544730",
+          "#7a6744",
+          "#a48748",
+          "#d6b97c",
+          "#efdcae"
+        ]
+      },
+      "flow-recovery": {
+        "role": "neutral",
+        "displayName": "Flow Recovery",
+        "canonical": "#1b1b21",
+        "tonalRamp": [
+          "#0d0d10",
+          "#1b1b21",
+          "#2a2a33",
+          "#3c3c47",
+          "#55555f",
+          "#76767f",
+          "#a0a0a8",
+          "#cdcdd3"
+        ]
+      },
+      "mesh-slate": {
+        "role": "secondary",
+        "displayName": "Mesh Slate",
+        "canonical": "rgb(112 126 162 / 0.065)",
+        "tonalRamp": [
+          "#1c2029",
+          "#2c3241",
+          "#3f475c",
+          "#555f7a",
+          "#707ea2",
+          "#8e9ab9",
+          "#b0b9d0",
+          "#d3d9e6"
+        ]
       }
     },
     "typographyMeta": {
@@ -209,25 +269,53 @@
         "displayName": "Headline",
         "purpose": "Section headings; one accent phrase may carry now-gold."
       },
+      "statement": {
+        "displayName": "Statement",
+        "purpose": "Long sentence-headings (About, Tech Stack)."
+      },
+      "subsection": {
+        "displayName": "Subsection",
+        "purpose": "Subsection and showcase headings."
+      },
+      "menu": {
+        "displayName": "Menu",
+        "purpose": "Mobile menu entries."
+      },
       "title": {
         "displayName": "Title",
-        "purpose": "Subsection, showcase and modal headings."
+        "purpose": "Card, record and flip-card titles."
       },
-      "title-sm": {
-        "displayName": "Title Small",
-        "purpose": "Card and record titles; mobile menu entries at 28px. Display floor is 24px."
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "A record value set as a number (hero 10+), tabular numerals."
+      },
+      "body-lg": {
+        "displayName": "Body Large",
+        "purpose": "Header ledes beside section headings; hero lede from 1024px."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Ledes and paragraphs in Quiet Ivory."
+        "purpose": "Ledes and long paragraphs in Quiet Ivory."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Card and flip-card body, record and contact values."
       },
       "ui": {
         "displayName": "UI",
-        "purpose": "Buttons, nav links, contact values (13 to 15px)."
+        "purpose": "Primary and secondary buttons; nav wordmark."
+      },
+      "ui-sm": {
+        "displayName": "UI Small",
+        "purpose": "Nav links, nav Contact pill, demo pills, captions and hints."
       },
       "label": {
         "displayName": "Label Caps",
         "purpose": "Record field labels and stage names, followed by a value; never an eyebrow above a heading."
+      },
+      "label-micro": {
+        "displayName": "Label Micro",
+        "purpose": "Stage line under the wordmark on phones and tablets only."
       }
     },
     "shadows": [
@@ -250,6 +338,16 @@
         "name": "hero-record",
         "value": "0 40px 80px -30px rgb(0 0 0 / 0.95)",
         "purpose": "Hero portrait record and showcase frames."
+      },
+      {
+        "name": "sheet-edge",
+        "value": "0 -30px 60px -20px rgb(0 0 0 / 0.9)",
+        "purpose": "Content sheet's upward shadow onto the hero."
+      },
+      {
+        "name": "loupe",
+        "value": "0 30px 60px -20px rgb(0 0 0 / 0.95), inset 0 0 40px rgb(0 0 0 / 0.55)",
+        "purpose": "Flowchart magnifier (outer drop plus inner falloff)."
       },
       {
         "name": "stage-modal",
@@ -307,6 +405,26 @@
         "name": "now-gold",
         "value": "color 700ms cubic-bezier(0.23, 1, 0.32, 1)",
         "purpose": "Heading accent turns gold while its section is active."
+      },
+      {
+        "name": "mesh-drift",
+        "value": "meshDrift1 46s / meshDrift2 58s / meshDrift3 52s ease-in-out infinite",
+        "purpose": "Background mesh fields; stopped under reduced motion."
+      },
+      {
+        "name": "loupe-track",
+        "value": "spring stiffness 1000, damping 38, mass 0.3 on motion values",
+        "purpose": "Flowchart loupe follows the pointer without re-rendering."
+      },
+      {
+        "name": "loupe-enter",
+        "value": "200ms cubic-bezier(0.23, 1, 0.32, 1), scale 0.9 to 1 with fade; exit 150ms",
+        "purpose": "Loupe appear/disappear; fade only under reduced motion."
+      },
+      {
+        "name": "stage-dim",
+        "value": "opacity 0.3, 300ms cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Flowchart stage dims (never blurs) while the loupe inspects."
       }
     ],
     "breakpoints": [
@@ -339,7 +457,7 @@
       "refersTo": "button-primary",
       "description": "Gold pill for the one primary action; ends in a black disc holding a gold arrow.",
       "html": "<button class=\"ds-btn-primary\">Contact Now<span class=\"ds-btn-primary-disc\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span></button>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-btn-primary{display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 8px 0 28px;border:0;border-radius:9999px;background:var(--color-gold);color:var(--color-ink-950);font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;font-size:0.9375rem;font-weight:600;box-shadow:0 18px 40px -18px rgb(0 0 0 / 0.9);cursor:pointer;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-btn-primary-disc{display:grid;place-items:center;width:36px;height:36px;border-radius:9999px;background:rgb(6 6 7 / 0.9);color:var(--color-gold);transition:transform 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-btn-primary:hover{background:var(--color-gold-bright);}.ds-btn-primary:hover .ds-btn-primary-disc{transform:translateX(2px);}.ds-btn-primary:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-btn-primary:active{transform:scale(0.97);}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-btn-primary{display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 8px 0 28px;border:0;border-radius:9999px;background:var(--color-gold);color:var(--color-ink-950);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.9375rem;font-weight:600;box-shadow:0 18px 40px -18px rgb(0 0 0 / 0.9);cursor:pointer;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-btn-primary-disc{display:grid;place-items:center;width:36px;height:36px;border-radius:9999px;background:rgb(6 6 7 / 0.9);color:var(--color-gold);transition:transform 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-btn-primary:hover{background:var(--color-gold-bright);}.ds-btn-primary:hover .ds-btn-primary-disc{transform:translateX(2px);}.ds-btn-primary:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-btn-primary:active{transform:scale(0.97);}"
     },
     {
       "name": "Secondary Button",
@@ -347,7 +465,15 @@
       "refersTo": "button-secondary",
       "description": "Quiet hairline pill beside the primary action (Download CV).",
       "html": "<a class=\"ds-btn-secondary\" href=\"#\">Download CV</a>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-btn-secondary{display:inline-flex;align-items:center;height:52px;padding:0 28px;border:1px solid var(--color-line-strong);border-radius:9999px;background:rgb(6 6 7 / 0.4);backdrop-filter:blur(4px);color:var(--color-ivory);font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;font-size:0.9375rem;font-weight:500;text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-btn-secondary:hover{border-color:rgb(214 185 124 / 0.5);color:var(--color-gold-bright);}.ds-btn-secondary:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-btn-secondary:active{transform:scale(0.97);}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-btn-secondary{display:inline-flex;align-items:center;height:52px;padding:0 28px;border:1px solid var(--color-line-strong);border-radius:9999px;background:rgb(6 6 7 / 0.4);backdrop-filter:blur(4px);color:var(--color-ivory);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.9375rem;font-weight:500;text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-btn-secondary:hover{border-color:rgb(214 185 124 / 0.5);color:var(--color-gold-bright);}.ds-btn-secondary:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-btn-secondary:active{transform:scale(0.97);}"
+    },
+    {
+      "name": "Demo Pill",
+      "kind": "button",
+      "refersTo": "button-demo",
+      "description": "Hairline pill linking to a live demo; 44px minimum, fills gold on hover.",
+      "html": "<a class=\"ds-demo\" href=\"#\">View Live Demo<span class=\"ds-demo-disc\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></span></a>",
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-demo{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 12px 10px 20px;border:1px solid var(--color-line-strong);border-radius:9999px;color:var(--color-ivory);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.8125rem;font-weight:600;text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-demo-disc{display:grid;place-items:center;width:24px;height:24px;border-radius:9999px;background:rgb(255 255 255 / 0.06);transition:background-color 180ms;}.ds-demo-disc svg{transition:transform 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-demo:hover{background:var(--color-gold);border-color:var(--color-gold);color:var(--color-ink-950);}.ds-demo:hover .ds-demo-disc{background:rgb(6 6 7 / 0.15);}.ds-demo:hover .ds-demo-disc svg{transform:translate(1px,-1px);}.ds-demo:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-demo:active{transform:scale(0.97);}"
     },
     {
       "name": "Navigation Bar",
@@ -355,7 +481,7 @@
       "refersTo": "nav-bar",
       "description": "Floating glass pill: wordmark with gold full stop, stage readout, links with a gold current dot, gold Contact pill.",
       "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-mark\">Christian Padilla<b>.</b></span><span class=\"ds-nav-stage\"><b>04</b>Funnel Demos</span><span class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-link is-current\">Portfolio</a><a href=\"#\" class=\"ds-nav-link\">Services</a><a href=\"#\" class=\"ds-nav-link\">About</a><a href=\"#\" class=\"ds-nav-cta\">Contact Me <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></a></span></nav>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-nav{display:flex;align-items:center;gap:8px;height:56px;padding:0 8px 0 16px;border-radius:9999px;background:rgb(16 16 19 / 0.68);-webkit-backdrop-filter:blur(20px) saturate(140%);backdrop-filter:blur(20px) saturate(140%);border:1px solid rgb(244 239 230 / 0.1);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.06),0 18px 40px -18px rgb(0 0 0 / 0.85);font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;color:var(--color-ivory);}.ds-nav-mark{font-family:'Bodoni Moda Variable', 'Bodoni 72', Didot, serif;font-size:1.0625rem;font-weight:500;letter-spacing:-0.01em;}.ds-nav-mark b{color:var(--color-gold);font-weight:500;}.ds-nav-stage{display:flex;gap:10px;margin-left:4px;padding-left:16px;border-left:1px solid var(--color-line);font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgb(244 239 230 / 0.6);}.ds-nav-stage b{color:var(--color-gold);font-weight:600;font-variant-numeric:tabular-nums;}.ds-nav-links{margin-left:auto;display:flex;align-items:center;gap:4px;}.ds-nav-link{position:relative;padding:8px 16px;border-radius:9999px;font-size:0.8125rem;font-weight:500;color:rgb(244 239 230 / 0.6);text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-nav-link:hover,.ds-nav-link.is-current{color:var(--color-ivory);}.ds-nav-link.is-current::after{content:'';position:absolute;bottom:3px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:9999px;background:var(--color-gold);}.ds-nav-cta{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:10px 16px 10px 20px;border-radius:9999px;background:var(--color-gold);color:var(--color-ink-950);font-size:0.8125rem;font-weight:600;text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-nav-cta:hover{background:var(--color-gold-bright);}.ds-nav-link:focus-visible,.ds-nav-cta:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-nav-cta:active,.ds-nav-link:active{transform:scale(0.97);}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-nav{display:flex;align-items:center;gap:8px;height:56px;padding:0 8px 0 16px;border-radius:9999px;background:rgb(16 16 19 / 0.68);-webkit-backdrop-filter:blur(20px) saturate(140%);backdrop-filter:blur(20px) saturate(140%);border:1px solid rgb(244 239 230 / 0.1);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.06),0 18px 40px -18px rgb(0 0 0 / 0.85);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;color:var(--color-ivory);}.ds-nav-mark{font-size:0.9375rem;font-weight:600;letter-spacing:-0.02em;}.ds-nav-mark b{color:var(--color-gold);font-weight:500;}.ds-nav-stage{display:flex;gap:10px;margin-left:4px;padding-left:16px;border-left:1px solid var(--color-line);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgb(244 239 230 / 0.6);}.ds-nav-stage b{color:var(--color-gold);font-weight:600;font-variant-numeric:tabular-nums;}.ds-nav-links{margin-left:auto;display:flex;align-items:center;gap:4px;}.ds-nav-link{position:relative;padding:8px 16px;border-radius:9999px;font-size:0.8125rem;font-weight:500;color:rgb(244 239 230 / 0.6);text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-nav-link:hover,.ds-nav-link.is-current{color:var(--color-ivory);}.ds-nav-link.is-current::after{content:'';position:absolute;bottom:3px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:9999px;background:var(--color-gold);}.ds-nav-cta{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:10px 16px 10px 20px;border-radius:9999px;background:var(--color-gold);color:var(--color-ink-950);font-size:0.8125rem;font-weight:600;text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-nav-cta:hover{background:var(--color-gold-bright);}.ds-nav-link:focus-visible,.ds-nav-cta:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-nav-cta:active,.ds-nav-link:active{transform:scale(0.97);}"
     },
     {
       "name": "Tag",
@@ -363,7 +489,7 @@
       "refersTo": "tag",
       "description": "Hairline pill naming a tool or skill; never gold-filled.",
       "html": "<span class=\"ds-tag\">GoHighLevel</span> <span class=\"ds-tag\">Zapier</span>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-tag{display:inline-block;padding:4px 12px;border:1px solid var(--color-line-strong);border-radius:9999px;font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;font-size:0.75rem;font-weight:500;color:rgb(244 239 230 / 0.75);transition:border-color 500ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-tag:hover{border-color:rgb(214 185 124 / 0.3);}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-tag{display:inline-block;padding:4px 12px;border:1px solid var(--color-line-strong);border-radius:9999px;font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.75rem;font-weight:500;color:rgb(244 239 230 / 0.75);transition:border-color 500ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-tag:hover{border-color:rgb(214 185 124 / 0.3);}"
     },
     {
       "name": "Record Card",
@@ -371,7 +497,7 @@
       "refersTo": "record-card",
       "description": "Content as a CRM record: graphite surface, hairline, label caps then value.",
       "html": "<article class=\"ds-record\"><h3 class=\"ds-record-title\">Lead Capture Funnel</h3><dl class=\"ds-record-fields\"><dt>Type :</dt><dd>Funnel</dd><dt>Industry :</dt><dd>Dental clinic</dd></dl></article>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-record{max-width:360px;padding:28px;border-radius:1.75rem;background:rgb(16 16 19 / 0.72);border:1px solid var(--color-line);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.03),0 24px 48px -32px rgb(0 0 0 / 0.9);color:var(--color-ivory);font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;transition:border-color 500ms cubic-bezier(0.23, 1, 0.32, 1),background-color 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-record:hover{border-color:rgb(214 185 124 / 0.3);background:var(--color-ink-850);}.ds-record-title{margin:0 0 20px;font-family:'Bodoni Moda Variable', 'Bodoni 72', Didot, serif;font-size:1.5rem;font-weight:500;line-height:1.1;letter-spacing:-0.025em;}.ds-record-fields{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0;align-items:baseline;}.ds-record-fields dt{font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgb(244 239 230 / 0.5);}.ds-record-fields dd{margin:0;font-size:0.9375rem;}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-record{max-width:360px;padding:28px;border-radius:1.75rem;background:rgb(16 16 19 / 0.72);border:1px solid var(--color-line);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.03),0 24px 48px -32px rgb(0 0 0 / 0.9);color:var(--color-ivory);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;transition:border-color 500ms cubic-bezier(0.23, 1, 0.32, 1),background-color 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-record:hover{border-color:rgb(214 185 124 / 0.3);background:var(--color-ink-850);}.ds-record-title{margin:0 0 20px;font-size:1.375rem;font-weight:600;line-height:1.25;letter-spacing:-0.022em;}.ds-record-fields{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0;align-items:baseline;}.ds-record-fields dt{font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgb(244 239 230 / 0.5);}.ds-record-fields dd{margin:0;font-size:0.9375rem;}"
     },
     {
       "name": "Contact Record",
@@ -379,15 +505,15 @@
       "refersTo": "record-card",
       "description": "A channel as a pressable record; the icon disc fills gold and the label warms to gold on hover.",
       "html": "<a class=\"ds-contact\" href=\"#\"><span class=\"ds-contact-icon\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\"/><path d=\"m22 7-10 6L2 7\"/></svg></span><span class=\"ds-contact-text\"><span class=\"ds-contact-label\">Email</span><span class=\"ds-contact-value\">hello@example.com</span></span><span class=\"ds-contact-arrow\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></span></a>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-contact{display:flex;align-items:center;gap:16px;max-width:380px;padding:16px 20px 16px 16px;border-radius:1.5rem;background:rgb(16 16 19 / 0.72);border:1px solid var(--color-line);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.03),0 24px 48px -32px rgb(0 0 0 / 0.9);color:var(--color-ivory);font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-contact:hover{border-color:rgb(214 185 124 / 0.4);background:var(--color-ink-850);}.ds-contact:active{transform:scale(0.97);}.ds-contact:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-contact-icon{display:grid;place-items:center;width:48px;height:48px;flex-shrink:0;border-radius:9999px;border:1px solid var(--color-line-strong);color:rgb(244 239 230 / 0.7);transition:background-color 300ms,border-color 300ms,color 300ms;}.ds-contact:hover .ds-contact-icon{background:var(--color-gold);border-color:var(--color-gold);color:var(--color-ink-950);}.ds-contact-text{flex:1;min-width:0;}.ds-contact-label{display:block;font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgb(244 239 230 / 0.5);transition:color 300ms;}.ds-contact:hover .ds-contact-label{color:var(--color-gold);}.ds-contact-value{display:block;margin-top:6px;font-size:0.9375rem;}.ds-contact-arrow{color:rgb(244 239 230 / 0.35);transition:color 300ms,transform 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-contact:hover .ds-contact-arrow{color:var(--color-gold);transform:translate(2px,-2px);}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-contact{display:flex;align-items:center;gap:16px;max-width:380px;padding:16px 20px 16px 16px;border-radius:1.5rem;background:rgb(16 16 19 / 0.72);border:1px solid var(--color-line);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.03),0 24px 48px -32px rgb(0 0 0 / 0.9);color:var(--color-ivory);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-contact:hover{border-color:rgb(214 185 124 / 0.4);background:var(--color-ink-850);}.ds-contact:active{transform:scale(0.97);}.ds-contact:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-contact-icon{display:grid;place-items:center;width:48px;height:48px;flex-shrink:0;border-radius:9999px;border:1px solid var(--color-line-strong);color:rgb(244 239 230 / 0.7);transition:background-color 300ms,border-color 300ms,color 300ms;}.ds-contact:hover .ds-contact-icon{background:var(--color-gold);border-color:var(--color-gold);color:var(--color-ink-950);}.ds-contact-text{flex:1;min-width:0;}.ds-contact-label{display:block;font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgb(244 239 230 / 0.5);transition:color 300ms;}.ds-contact:hover .ds-contact-label{color:var(--color-gold);}.ds-contact-value{display:block;margin-top:6px;font-size:0.9375rem;}.ds-contact-arrow{color:rgb(244 239 230 / 0.35);transition:color 300ms,transform 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-contact:hover .ds-contact-arrow{color:var(--color-gold);transform:translate(2px,-2px);}"
     },
     {
       "name": "Section Heading with Now-Gold Accent",
       "kind": "custom",
       "refersTo": "headline",
-      "description": "Bodoni section heading; the accent phrase is ivory at rest and gold while the section is the active stage.",
+      "description": "Section heading; the accent phrase is ivory at rest and gold while the section is the active stage.",
       "html": "<section class=\"ds-stage\" data-now><h2 class=\"ds-headline\">Ready to automate your <span class=\"ds-now-gold\">operations?</span></h2><p class=\"ds-lede\">Choose your preferred platform and start a conversation today.</p></section>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-stage{padding:24px 0;}.ds-headline{margin:0;font-family:'Bodoni Moda Variable', 'Bodoni 72', Didot, serif;font-size:clamp(2.1rem, 1.2rem + 3.2vw, 4.25rem);font-weight:500;line-height:1.02;letter-spacing:-0.025em;color:var(--color-ivory);text-wrap:balance;}.ds-now-gold{color:var(--color-ivory);transition:color 700ms cubic-bezier(0.23, 1, 0.32, 1);}[data-now] .ds-now-gold{color:var(--color-gold);}.ds-lede{margin:40px 0 0;max-width:28rem;font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;font-size:1.0625rem;line-height:1.625;color:rgb(244 239 230 / 0.64);}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-stage{padding:24px 0;}.ds-headline{margin:0;font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:clamp(2.1rem, 1.3rem + 2.6vw, 3.75rem);font-weight:600;line-height:1.06;letter-spacing:-0.04em;color:var(--color-ivory);text-wrap:balance;}.ds-now-gold{color:var(--color-ivory);transition:color 700ms cubic-bezier(0.23, 1, 0.32, 1);}[data-now] .ds-now-gold{color:var(--color-gold);}.ds-lede{margin:40px 0 0;max-width:28rem;font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:1.0625rem;line-height:1.625;color:rgb(244 239 230 / 0.64);}"
     },
     {
       "name": "Pipeline Rail",
@@ -395,23 +521,23 @@
       "refersTo": "",
       "description": "Signature: hairline rail, passed stages in spent gold, a growing gold stem, and the gold lead token with its signal ring.",
       "html": "<ol class=\"ds-rail\"><li class=\"is-passed\"></li><li class=\"is-passed\"></li><li class=\"is-current\"><span class=\"ds-rail-name\">Funnel Demos</span></li><li></li><li></li></ol>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-rail{position:relative;display:flex;flex-direction:column;justify-content:space-between;height:220px;width:20px;margin:0 0 0 8px;padding:0;list-style:none;}.ds-rail::before{content:'';position:absolute;top:10px;bottom:10px;left:50%;width:1px;background:var(--color-line-strong);}.ds-rail::after{content:'';position:absolute;top:10px;left:50%;width:1px;height:calc((100% - 20px) * 0.5);background:rgb(214 185 124 / 0.7);}.ds-rail li{position:relative;z-index:1;display:grid;place-items:center;height:20px;}.ds-rail li::before{content:'';width:7px;height:7px;border-radius:9999px;border:1px solid rgb(244 239 230 / 0.3);background:var(--color-ink-950);}.ds-rail li.is-passed::before{border-color:var(--color-gold-deep);background:var(--color-gold-deep);}.ds-rail li.is-current::before{width:14px;height:14px;border:1px solid rgb(6 6 7 / 0.4);background:var(--color-gold);}.ds-rail li.is-current::after{content:'';position:absolute;width:14px;height:14px;border-radius:9999px;background:var(--color-gold);animation:ds-signal 2.4s cubic-bezier(0.23, 1, 0.32, 1) infinite;}.ds-rail-name{position:absolute;left:28px;writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;font-family:'Mona Sans Variable', ui-sans-serif, system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgb(244 239 230 / 0.55);}@keyframes ds-signal{0%{transform:scale(1);opacity:0.55;}100%{transform:scale(3.2);opacity:0;}}@media (prefers-reduced-motion: reduce){.ds-rail li.is-current::after{animation:none;opacity:0;}}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-rail{position:relative;display:flex;flex-direction:column;justify-content:space-between;height:220px;width:20px;margin:0 0 0 8px;padding:0;list-style:none;}.ds-rail::before{content:'';position:absolute;top:10px;bottom:10px;left:50%;width:1px;background:var(--color-line-strong);}.ds-rail::after{content:'';position:absolute;top:10px;left:50%;width:1px;height:calc((100% - 20px) * 0.5);background:rgb(214 185 124 / 0.7);}.ds-rail li{position:relative;z-index:1;display:grid;place-items:center;height:20px;}.ds-rail li::before{content:'';width:7px;height:7px;border-radius:9999px;border:1px solid rgb(244 239 230 / 0.3);background:var(--color-ink-950);}.ds-rail li.is-passed::before{border-color:var(--color-gold-deep);background:var(--color-gold-deep);}.ds-rail li.is-current::before{width:14px;height:14px;border:1px solid rgb(6 6 7 / 0.4);background:var(--color-gold);}.ds-rail li.is-current::after{content:'';position:absolute;width:14px;height:14px;border-radius:9999px;background:var(--color-gold);animation:ds-signal 2.4s cubic-bezier(0.23, 1, 0.32, 1) infinite;}.ds-rail-name{position:absolute;left:28px;writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgb(244 239 230 / 0.55);}@keyframes ds-signal{0%{transform:scale(1);opacity:0.55;}100%{transform:scale(3.2);opacity:0;}}@media (prefers-reduced-motion: reduce){.ds-rail li.is-current::after{animation:none;opacity:0;}}"
     }
   ],
   "narrative": {
     "northStar": "The Pipeline",
-    "overview": "The page is Christian's own lead pipeline and the visitor is the lead moving through it. Ten stages sit on a hairline rail; one gold lead token advances as the visitor reads, the stages behind it fill in, and the journey lands on Get In Touch. The world is a keynote stage: near-black grounds stepping up to raised graphite, ivory type, two slow warm stage lights and a fine film grain so large dark fields never band. Everything that is not \"now\" rests in ivory and graphite.\n\nDensity is generous and editorial. Sections breathe on one shared vertical rhythm; content sits in a 12-column grid inside an 80rem container. Hierarchy comes from scale (a large, tight Bodoni display against quiet Mona Sans text) and from the single reserved colour, never from boxes, badges or labels stacked above headings. Content is presented as records: cards read like CRM entries, with wide-tracked caps field labels followed by their values.\n\nThe world refuses the dark-glass freelancer template: gradient headings, gold glows around buttons and cards, and interchangeable glass cards. Glass exists, but only on layers that float above the page.",
+    "overview": "The page is Christian's own lead pipeline and the visitor is the lead moving through it. Ten stages sit on a hairline rail; one gold lead token advances as the visitor reads, the stages behind it fill in, and the journey lands on Get In Touch. The world is a keynote stage: near-black grounds stepping up to raised graphite, ivory type, a faint drifting mesh of light behind everything and a fine film grain so large dark fields never band. Everything that is not \"now\" rests in ivory and graphite.\n\nDensity is generous and editorial. Sections breathe on one shared vertical rhythm; content sits in a 12-column grid inside an 80rem container. Hierarchy comes from scale (one family, Inter, set large, semibold and tight at headline sizes against quiet body text) and from the single reserved colour, never from boxes, badges or labels stacked above headings. Content is presented as records: cards read like CRM entries, with tracked caps field labels followed by their values.\n\nThe world refuses the dark-glass freelancer template: gradient headings, gold glows around buttons and cards, and interchangeable glass cards. Glass exists, but only on layers that float above the page.",
     "keyCharacteristics": [
       "One accent, champagne gold, spent only on what is current: the active stage, the lead token, primary actions, live signal pulses.",
       "Hairline rules (1px ivory at 9% and 16%) and black shadows define every surface.",
-      "Bodoni Moda display set large and tight; Mona Sans for everything readable; tracked caps for labels.",
+      "One family, Inter Variable with optical sizing: semibold headings whose tracking tightens as size grows; regular text for everything readable; tracked caps for labels.",
       "Pills for every action and chip; large soft-cornered records for content.",
       "Motion is custom ease-out, quick on press, slow and settling on reveal, and always yields to reduced motion."
     ],
     "rules": [
       {
         "name": "The Gold Is Now Rule",
-        "body": "Gold marks only what is current or what acts. Heading accent words rest in ivory and turn gold (700ms colour transition) only while their section is the active stage. Subtitles, tags, icons at rest, card borders at rest and body copy are never gold. Hover may borrow gold (borders at 30 to 50%, icon fills) because hover is the visitor's \"now\".",
+        "body": "Gold marks only what is current or what acts. Heading accent words rest in ivory and turn gold (700ms colour transition) only while their section is the active stage. Subtitles, tags, icons at rest, card borders at rest and body copy are never gold. Hover may borrow gold (borders at 30 to 50%, icon fills, the demo pill's fill) because hover is the visitor's \"now\".",
         "section": "colors"
       },
       {
@@ -420,8 +546,8 @@
         "section": "colors"
       },
       {
-        "name": "The Display Floor Rule",
-        "body": "Bodoni Moda is never set below 24px for content. The only smaller use is the \"Christian Padilla.\" wordmark (17px in the nav, 20px in the footer), which is an identity asset, not type.",
+        "name": "The One Family Rule",
+        "body": "Every word is Inter Variable. Headings (h1 to h6) are semibold (600) with balanced wrapping and tighten their tracking as they grow, from -0.022em at title size to -0.045em at display size; paragraphs wrap pretty. No second display face; the system fonts are fallbacks while Inter loads, never a choice.",
         "section": "typography"
       },
       {
@@ -430,8 +556,18 @@
         "section": "typography"
       },
       {
+        "name": "The Shared Header Row Rule",
+        "body": "A section header that pairs a heading with a paragraph uses the 7/5 split, bottom-aligned (items-end), with the paragraph in Body Large Quiet Ivory. When a section has two such rows (Systems Showcase), both use the identical split, alignment and paragraph style so they read as one system.",
+        "section": "layout"
+      },
+      {
+        "name": "The Quiet Stage Rule",
+        "body": "The background must never compete with content. Mesh fields stay below 9% opacity, drift on loops of 45 seconds or longer, sit behind a pointer-transparent layer, and stop under prefers-reduced-motion. If a field is noticeable while reading, it is too strong.",
+        "section": "elevation"
+      },
+      {
         "name": "The Black Shadow Rule",
-        "body": "Every shadow is black. No coloured box-shadow, text-shadow or glow on any element; gold light exists only as ambient stage light in the background layers.",
+        "body": "Every shadow is black. No coloured box-shadow, text-shadow or glow on any element (the Mermaid node drop-shadows are stripped for this reason); gold light exists only as ambient stage light in the background layers.",
         "section": "elevation"
       },
       {
@@ -443,12 +579,14 @@
     "dos": [
       "**Do** reserve gold for the current stage, the lead token, primary actions, live signals, focus and hover; keep heading accents in ivory until their section is active.",
       "**Do** separate surfaces with 1px hairlines (ivory at 9% or 16%) and pure black shadows with negative spread.",
-      "**Do** set headings in Bodoni Moda at 24px or larger with tight tracking, and everything readable in Mona Sans.",
-      "**Do** label record fields with 11px tracked caps (0.22em) followed by their value.",
+      "**Do** set every word in Inter Variable, headings semibold on the type-scale steps with tracking that tightens as size grows.",
+      "**Do** label record fields with 11px tracked caps (0.14em) followed by their value.",
       "**Do** use full pills for anything pressable or naming a thing, and 24 to 32px corners for content records.",
-      "**Do** give every pressable element the 0.97 press scale with a 180ms ease-out-quint transition, and a 2px gold focus outline at 3px offset.",
+      "**Do** give every pressable element the 0.97 press scale with a 180ms ease-out-quint transition, a 2px gold focus outline at 3px offset, and a 44px minimum touch target.",
       "**Do** reveal content from faint (opacity 0.2 plus blur), never from invisible, and honour prefers-reduced-motion.",
-      "**Do** keep every section on the shared stage padding (clamp 72px to 120px)."
+      "**Do** keep every section on the shared stage padding (clamp 72px to 120px).",
+      "**Do** keep the background quiet: mesh fields under 9% opacity, loops of 45s or longer, stopped under reduced motion.",
+      "**Do** show product mockups whole: square frames, contained, never cropped."
     ],
     "donts": [
       "**Don't** put an eyebrow or kicker above a heading; stage names live in the nav readout and on the pipeline rail.",
@@ -456,7 +594,8 @@
       "**Don't** make cards glass; glass is only for floating layers (nav, menus, dialog chrome, HUD, carousel arrows).",
       "**Don't** colour subtitles, tags, resting icons or resting card borders gold.",
       "**Don't** use built-in ease-in curves; state changes ease out.",
-      "**Don't** set Bodoni Moda below 24px for content."
+      "**Don't** add a second typeface or let a system font stand in as a design choice.",
+      "**Don't** let the background compete with content, and don't blur the stage behind a focused element; dim it."
     ]
   }
 }

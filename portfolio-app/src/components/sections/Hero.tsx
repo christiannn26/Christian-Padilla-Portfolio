@@ -75,7 +75,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
           <div className="text-center lg:col-span-7 lg:text-left">
             <h1
               ref={headlineRef}
-              className="font-display text-[clamp(2.5rem,1.4rem+4.2vw,4.75rem)] font-medium leading-[1.06] tracking-[-0.03em] text-ivory"
+              className="type-hero text-ivory"
               style={{ perspective: '1000px' }}
             >
               <span>Automating Success Through AI</span> <br />
@@ -151,7 +151,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (id: string) => void
                 </div>
                 {/* Record footer field */}
                 <div className="flex items-center gap-4 px-3.5 pb-1.5 pt-4">
-                  <span className="font-display text-[2.25rem] font-medium leading-none tabular-nums text-gold">10+</span>
+                  <span className="type-figure text-gold">10+</span>
                   <span className="h-9 w-px bg-line-strong" aria-hidden />
                   <span>
                     <span className="block text-sm font-semibold text-ivory">Systems Built</span>

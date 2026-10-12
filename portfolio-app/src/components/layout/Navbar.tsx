@@ -33,7 +33,7 @@ export default function Navbar() {
             className="pressable flex items-center gap-2.5 rounded-full py-1 pl-1 pr-3 text-ivory hover:text-gold-bright"
           >
             <img src="./img/CPlogo.webp" alt="CP Logo" className="h-7 w-auto object-contain" />
-            <span className="font-display text-[1.0625rem] font-medium tracking-[-0.01em]">
+            <span className="text-[0.9375rem] font-semibold tracking-[-0.02em]">
               Christian Padilla<span className="text-gold">.</span>
             </span>
           </a>
@@ -110,7 +110,7 @@ export default function Navbar() {
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
-          className="pressable ml-auto grid h-10 w-10 place-items-center rounded-full text-ivory hover:bg-white/6 md:hidden"
+          className="pressable ml-auto grid h-11 w-11 place-items-center rounded-full text-ivory hover:bg-white/6 md:hidden"
         >
           {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -150,7 +150,7 @@ export default function Navbar() {
                   id === 'contact' ? 'mt-1 bg-gold text-ink-950' : 'text-ivory hover:bg-white/5',
                 )}
               >
-                <span className="font-display text-[1.75rem] leading-none tracking-[-0.02em]">{label}</span>
+                <span className="text-[1.625rem] font-semibold leading-none tracking-[-0.03em]">{label}</span>
                 <ArrowUpRight className={cn('h-5 w-5', id === 'contact' ? 'text-ink-950' : 'text-gold')} />
               </motion.a>
             ))}

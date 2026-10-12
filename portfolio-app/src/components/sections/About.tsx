@@ -68,12 +68,12 @@ export default function About({ onNavigate }: AboutProps) {
           </div>
 
           <div ref={textRef} className="lg:col-span-7 lg:pt-2">
-            <h2 className="font-display text-[clamp(2rem,1.2rem+2.6vw,3.6rem)] leading-[1.08] tracking-tight text-ivory">
+            <h2 className="type-statement text-ivory">
               <span className="now-gold">Hi! I'm Christian</span> <br />{' '}
               <span>I design intelligent lead systems and streamline operations for businesses.</span>
             </h2>
 
-            <div className="mt-10 max-w-[62ch] space-y-5 text-[1.0625rem] font-light leading-[1.8] text-muted-foreground">
+            <div className="mt-10 max-w-[62ch] space-y-5 text-[1.0625rem] leading-[1.8] text-muted-foreground">
               <p className="text-ivory/85">
                 I partner with service businesses to transform their offers into high-converting funnels, landing pages, and backend
                 architectures that seamlessly transition leads from casual interest to booked calls and inquiries.
@@ -91,7 +91,7 @@ export default function About({ onNavigate }: AboutProps) {
             </div>
 
             <div className="mt-14">
-              <h3 className="mb-2 font-display text-[1.5rem] tracking-tight text-ivory">Core Value Proposition</h3>
+              <h3 className="mb-2 type-title text-ivory">Core Value Proposition</h3>
               <ul className="border-b border-line">
                 {VALUE_PROPS.map((prop, i) => (
                   <motion.li
@@ -115,10 +115,10 @@ export default function About({ onNavigate }: AboutProps) {
 
         {/* Unified Call to Action */}
         <Reveal className="mt-32 flex w-full flex-col items-center border-t border-line pt-24 text-center md:mt-40">
-          <h3 className="max-w-4xl font-display text-[clamp(2.2rem,1.2rem+3.4vw,4.5rem)] leading-[1.08] tracking-tight text-ivory">
+          <h3 className="max-w-4xl type-section text-ivory">
             Ready to Turn Your Leads Into <span className="now-gold">Booked Calls</span>?
           </h3>
-          <p className="mb-10 mt-10 max-w-2xl text-lg font-light text-muted-foreground md:mt-12 lg:text-xl">Let's map out your funnel system, Book a Free Discovery Call.</p>
+          <p className="mb-10 mt-10 max-w-2xl text-lg text-muted-foreground md:mt-12 lg:text-xl">Let's map out your funnel system, Book a Free Discovery Call.</p>
           <button
             type="button"
             onClick={() => onNavigate?.('contact')}

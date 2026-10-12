@@ -47,10 +47,10 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-line-strong text-ivory/75 transition-colors duration-500 group-hover:border-gold/60 group-hover:text-gold">
           <Icon className="h-5 w-5" strokeWidth={1.5} />
         </span>
-        {wide && <h4 className="hidden font-display text-[1.75rem] leading-tight tracking-tight text-ivory md:block">{service.title}</h4>}
+        {wide && <h4 className="hidden type-title text-ivory md:block">{service.title}</h4>}
       </div>
 
-      <h4 className={cn('mt-8 font-display text-[1.75rem] leading-tight tracking-tight text-ivory', wide && 'md:hidden')}>{service.title}</h4>
+      <h4 className={cn('mt-8 type-title text-ivory', wide && 'md:hidden')}>{service.title}</h4>
       <p className={cn('mt-3 max-w-[46ch] text-[0.9375rem] leading-relaxed text-muted-foreground', wide && 'md:mt-0 md:flex-1')}>
         {service.description}
       </p>
@@ -79,7 +79,7 @@ export default function Services() {
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="sticky top-20 z-50 -mx-6 bg-ink-950 px-6 pb-2 pt-3 md:static md:mx-0 md:bg-transparent md:px-0 md:py-0">
           <Reveal>
-            <h2 className="mb-8 font-display text-[clamp(2.1rem,1.2rem+3.2vw,4.25rem)] leading-[1.02] tracking-tight text-ivory md:mb-16">
+            <h2 className="mb-8 type-section text-ivory md:mb-16">
               How I can help you scale
             </h2>
           </Reveal>

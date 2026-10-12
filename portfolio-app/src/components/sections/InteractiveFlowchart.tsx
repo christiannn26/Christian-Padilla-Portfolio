@@ -1,8 +1,9 @@
-import { lazy, Suspense, useEffect, useRef, useState, type MouseEvent, type RefObject } from 'react';
+import { lazy, Suspense, useEffect, useEffectEvent, useRef, useState, type PointerEvent, type RefObject } from 'react';
+import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react';
 import { ZoomIn } from 'lucide-react';
 import { SearchIcon } from '../icons';
 import { Reveal } from '../ui/Reveal';
-import { FLOWCHART_ASPECT, flowchartMarkup } from '../flowchart/flowchartMarkup';
+import { FLOWCHART_ASPECT, flowchartImageSrc, flowchartImageSrcWithFont, flowchartMarkup } from '../flowchart/flowchartMarkup';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { FINE_POINTER, REDUCED_MOTION, matches } from '../../lib/media';
 import { cn } from '../../lib/utils';
@@ -11,11 +12,14 @@ import { useStageNow } from '../../hooks/useActiveStage';
 const FlowchartZoomDialog = lazy(() => import('../flowchart/FlowchartZoomDialog'));
 
 const STAGE_SVG = flowchartMarkup('stage');
-const LENS_SVG = flowchartMarkup('lens');
+const LENS_SRC = flowchartImageSrc('lens');
 
 // One wave of gold pulses sweeps the diagram left to right, then rests.
 const WAVE_MS = 5200;
 const SWEEP_MS = 2600;
+
+// Near-critically damped: the loupe glides onto the pointer without trailing or overshooting it.
+const TRACK_SPRING = { stiffness: 1000, damping: 38, mass: 0.3 };
 
 /**
  * Send a gold "lead" along every connector of the inline diagram, staggered by where
@@ -83,41 +87,129 @@ interface InteractiveFlowchartProps {
 export default function InteractiveFlowchart({ zoomLevel = 1.9, lensSize = 240 }: InteractiveFlowchartProps) {
   const now = useStageNow('architecture');
   const hasHover = useMediaQuery(FINE_POINTER);
-  const [isHovered, setIsHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
+  const reduce = useReducedMotion();
+  const [inspecting, setInspecting] = useState(false);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+  const [lensSrc, setLensSrc] = useState(LENS_SRC);
   const containerRef = useRef<HTMLDivElement>(null);
   const artRef = useRef<HTMLDivElement>(null);
+  const pointer = useRef({ x: 0, y: 0 });
   useFlowPulses(artRef);
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-    if (containerSize.w !== rect.width || containerSize.h !== rect.height) {
-      setContainerSize({ w: rect.width, h: rect.height });
-    }
-  };
+  // Pointer position inside the diagram. Motion values write straight to the DOM, so
+  // tracking never re-renders React; only entering and leaving change state.
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const springX = useSpring(rawX, TRACK_SPRING);
+  const springY = useSpring(rawY, TRACK_SPRING);
+  const lx = reduce ? rawX : springX;
+  const ly = reduce ? rawY : springY;
 
   const R = lensSize / 2;
-  const inspecting = isHovered && hasHover;
+  const lensX = useTransform(lx, (x) => x - R);
+  const lensY = useTransform(ly, (y) => y - R);
+  // The magnified copy is laid out at its final size, so moving it is pure compositing.
+  const imageX = useTransform(lx, (x) => R - x * zoomLevel);
+  const imageY = useTransform(ly, (y) => R - y * zoomLevel);
+  const lensTransform = useMotionTemplate`translate3d(${lensX}px, ${lensY}px, 0)`;
+  const imageTransform = useMotionTemplate`translate3d(${imageX}px, ${imageY}px, 0)`;
+
+  // Swap in the copy with the page's typeface once it has been read from cache.
+  useEffect(() => {
+    if (!hasHover) return;
+    let live = true;
+    flowchartImageSrcWithFont('lens')
+      .then((src) => live && setLensSrc(src))
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [hasHover]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || !hasHover) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setSize({ w: width, h: height });
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasHover]);
+
+  /** Moves the loupe to a viewport point. Returns false when the point is outside the diagram. */
+  const trackTo = (clientX: number, clientY: number, instant: boolean) => {
+    const el = containerRef.current;
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    if (x < 0 || y < 0 || x > rect.width || y > rect.height) return false;
+    pointer.current = { x: clientX, y: clientY };
+    rawX.set(x);
+    rawY.set(y);
+    if (instant) {
+      springX.jump(x);
+      springY.jump(y);
+    }
+    return true;
+  };
+
+  const onPointerEnter = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
+    // Appear exactly under the pointer rather than sliding in from the last exit point.
+    if (trackTo(e.clientX, e.clientY, true)) setInspecting(true);
+  };
+
+  const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
+    const inside = trackTo(e.clientX, e.clientY, false);
+    if (inside !== inspecting) setInspecting(inside);
+  };
+
+  // A still pointer over a scrolling page: keep the loupe under it, or close it once the
+  // diagram has scrolled out from beneath.
+  const onScroll = useEffectEvent(() => {
+    if (!trackTo(pointer.current.x, pointer.current.y, true)) setInspecting(false);
+  });
+
+  // Belt and braces for the exits `pointerleave` can miss: scrolling, the pointer leaving
+  // the window, or the tab losing focus.
+  useEffect(() => {
+    if (!inspecting) return;
+    const hide = () => setInspecting(false);
+    const followScroll = () => onScroll();
+    const onLeaveWindow = (e: MouseEvent) => {
+      if (!e.relatedTarget) hide();
+    };
+    window.addEventListener('scroll', followScroll, { passive: true });
+    window.addEventListener('blur', hide);
+    document.addEventListener('mouseout', onLeaveWindow);
+    return () => {
+      window.removeEventListener('scroll', followScroll);
+      window.removeEventListener('blur', hide);
+      document.removeEventListener('mouseout', onLeaveWindow);
+    };
+  }, [inspecting]);
+
+  const showLens = inspecting && hasHover;
 
   // Desktop: hover loupe. Touch: tap opens a pinch-zoom dialog (see below).
   const viewer = (
     <div
       ref={containerRef}
       className={cn('relative w-full rounded-2xl', hasHover ? 'cursor-crosshair' : 'cursor-pointer')}
-      onMouseEnter={() => hasHover && setIsHovered(true)}
-      onMouseLeave={() => hasHover && setIsHovered(false)}
-      onMouseMove={hasHover ? handleMouseMove : undefined}
+      onPointerEnter={hasHover ? onPointerEnter : undefined}
+      onPointerMove={hasHover ? onPointerMove : undefined}
+      onPointerLeave={hasHover ? () => setInspecting(false) : undefined}
     >
       <div
         ref={artRef}
         role="img"
         aria-label="System Flowchart"
         className={cn(
-          'flowchart-art transition-[filter,opacity,transform] duration-500 ease-out-quint',
-          inspecting && 'scale-[0.985] opacity-35 blur-[3px]',
+          'flowchart-art transition-opacity duration-300 ease-out-quint',
+          showLens && 'opacity-30',
         )}
         style={{ aspectRatio: FLOWCHART_ASPECT }}
         dangerouslySetInnerHTML={{ __html: STAGE_SVG }}
@@ -130,37 +222,39 @@ export default function InteractiveFlowchart({ zoomLevel = 1.9, lensSize = 240 }
         </span>
       )}
 
-      {/* The loupe (desktop only). Outer layer follows the cursor; inner layer owns the
-          pop-in so the enter animation's transform never fights the positioning transform. */}
-      {inspecting && containerSize.w > 0 && (
-        <div
-          className="pointer-events-none absolute left-0 top-0 z-20"
-          style={{
-            width: lensSize,
-            height: lensSize,
-            transform: `translate(${mousePos.x - R}px, ${mousePos.y - R}px)`,
-          }}
+      {/* The loupe (desktop only). It stays mounted so the magnified image is decoded
+          before the first hover; the outer layer follows the pointer and the inner layer
+          owns the enter and exit, so the two transforms never fight. */}
+      {hasHover && size.w > 0 && (
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute left-0 top-0 z-20 will-change-transform"
+          style={{ width: lensSize, height: lensSize, transform: lensTransform }}
         >
-          <div className="relative h-full w-full overflow-hidden rounded-full border border-gold/70 bg-ink-900 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.95)] animate-in fade-in zoom-in-85 duration-200 ease-out">
-            <div
-              className="absolute left-0 top-0"
-              style={{
-                width: containerSize.w,
-                height: containerSize.h,
-                transform: `translate(${-(mousePos.x - R)}px, ${-(mousePos.y - R)}px) scale(${zoomLevel})`,
-                transformOrigin: `${mousePos.x}px ${mousePos.y}px`,
-              }}
-            >
-              <div className="flowchart-art" aria-hidden dangerouslySetInnerHTML={{ __html: LENS_SVG }} />
-            </div>
+          <div
+            className={cn(
+              'relative h-full w-full overflow-hidden rounded-full border border-gold/70 bg-ink-900 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.95)]',
+              'transition-[opacity,transform] motion-reduce:transition-opacity',
+              showLens
+                ? 'scale-100 opacity-100 duration-200 ease-out-quint'
+                : 'scale-90 opacity-0 duration-150 ease-out-quint motion-reduce:scale-100',
+            )}
+          >
+            <motion.img
+              src={lensSrc}
+              alt=""
+              draggable={false}
+              className="absolute left-0 top-0 max-w-none select-none"
+              style={{ width: size.w * zoomLevel, height: size.h * zoomLevel, transform: imageTransform }}
+            />
             {/* Reticle ticks and a soft inner falloff, like a jeweller's loupe */}
-            <span aria-hidden className="absolute left-1/2 top-0 h-2.5 w-px -translate-x-1/2 bg-gold/70" />
-            <span aria-hidden className="absolute bottom-0 left-1/2 h-2.5 w-px -translate-x-1/2 bg-gold/70" />
-            <span aria-hidden className="absolute left-0 top-1/2 h-px w-2.5 -translate-y-1/2 bg-gold/70" />
-            <span aria-hidden className="absolute right-0 top-1/2 h-px w-2.5 -translate-y-1/2 bg-gold/70" />
-            <span aria-hidden className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgb(0_0_0/0.55)]" />
+            <span className="absolute left-1/2 top-0 h-2.5 w-px -translate-x-1/2 bg-gold/70" />
+            <span className="absolute bottom-0 left-1/2 h-2.5 w-px -translate-x-1/2 bg-gold/70" />
+            <span className="absolute left-0 top-1/2 h-px w-2.5 -translate-y-1/2 bg-gold/70" />
+            <span className="absolute right-0 top-1/2 h-px w-2.5 -translate-y-1/2 bg-gold/70" />
+            <span className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgb(0_0_0/0.55)]" />
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );
@@ -170,7 +264,7 @@ export default function InteractiveFlowchart({ zoomLevel = 1.9, lensSize = 240 }
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid items-end gap-8 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
-            <h2 className="font-display text-[clamp(2.1rem,1.2rem+3.2vw,4.25rem)] leading-[1.02] tracking-tight text-ivory">
+            <h2 className="type-section text-ivory">
               System <span className="now-gold">Flowchart</span>
             </h2>
           </Reveal>

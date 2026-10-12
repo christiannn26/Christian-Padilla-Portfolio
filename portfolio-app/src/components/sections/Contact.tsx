@@ -4,6 +4,19 @@ import { useScrollReveal } from '../../hooks/gsapEffects';
 import { cn } from '../../lib/utils';
 import { useStageNow } from '../../hooks/useActiveStage';
 
+// A long address wraps after its "@" rather than breaking inside the name or the domain.
+function breakAfterAt(value: string) {
+  const at = value.indexOf('@');
+  if (at < 0) return value;
+  return (
+    <>
+      {value.slice(0, at + 1)}
+      <wbr />
+      {value.slice(at + 1)}
+    </>
+  );
+}
+
 export default function Contact() {
   const now = useStageNow('contact');
   const containerRef = useScrollReveal<HTMLDivElement>();
@@ -14,10 +27,10 @@ export default function Contact() {
 
         <div ref={containerRef} className="grid items-start gap-14 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-6">
-            <h2 className="font-display text-[clamp(2.3rem,1.3rem+3vw,4rem)] leading-[1.08] tracking-tight text-ivory">
+            <h2 className="type-section text-ivory">
               Ready to automate <br className="hidden lg:block" /> your <span className="now-gold">operations?</span>
             </h2>
-            <p className="mt-10 max-w-md text-lg font-light leading-relaxed text-muted-foreground md:mt-12">
+            <p className="mt-10 max-w-md text-lg leading-relaxed text-muted-foreground md:mt-12">
               I'm always open to discussing new projects, creative ideas, or opportunities to scale your business. Choose your preferred
               platform and let's start a conversation today.
             </p>
@@ -45,8 +58,8 @@ export default function Contact() {
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="label-caps block text-ivory/50 transition-colors duration-300 group-hover:text-gold">{contact.title}</span>
-                  <span className={cn('mt-1.5 block text-ivory', idx === 0 ? 'font-display text-[clamp(1.125rem,0.8rem+1.2vw,1.6rem)] leading-tight [overflow-wrap:anywhere]' : 'truncate text-[0.9375rem]')}>
-                    {contact.value}
+                  <span className={cn('mt-1.5 block text-ivory', idx === 0 ? 'text-[clamp(1.0625rem,0.85rem+0.8vw,1.375rem)] font-semibold leading-tight tracking-[-0.02em] [overflow-wrap:anywhere]' : 'truncate text-[0.9375rem]')}>
+                    {idx === 0 ? breakAfterAt(contact.value) : contact.value}
                   </span>
                 </span>
                 <ArrowUpRight className="h-5 w-5 shrink-0 text-ivory/35 transition-[color,transform] duration-300 ease-out-quint group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold" />

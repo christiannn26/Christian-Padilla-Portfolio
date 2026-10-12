@@ -7,7 +7,9 @@ import { cn } from '../../lib/utils';
 import { Reveal } from '../ui/Reveal';
 import { useStageNow } from '../../hooks/useActiveStage';
 
-const FACE = 'absolute inset-0 flex h-full w-full flex-col backface-hidden';
+// Both faces centre their mark and copy on the card's axis, so the flip reads as one object turning.
+// The stack hangs from a fixed top inset, so icons and titles share one line across the row.
+const FACE = 'absolute inset-0 flex h-full w-full flex-col items-center text-center backface-hidden';
 
 // Front: the problem. Back: the system that replaces it, the stage's gold "now" state.
 // `card` (mobile sticky stack) gives each face its own surface; `strip` (desktop) is a column
@@ -17,12 +19,12 @@ function FlipCardFaces({ card, variant }: { card: FlipCard; variant: 'card' | 's
   const isCard = variant === 'card';
   return (
     <>
-      <div className={cn(FACE, isCard ? 'record rounded-[1.75rem] p-7' : 'px-8 py-9')}>
-        <span className="grid h-11 w-11 place-items-center rounded-full border border-line-strong text-ivory/55">
+      <div className={cn(FACE, isCard ? 'record rounded-[1.75rem] p-7 pt-14' : 'px-8 pb-9 pt-12')}>
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line-strong text-ivory/55">
           <FrontIcon className="h-5 w-5" strokeWidth={1.5} />
         </span>
-        <div className="mt-auto">
-          <h3 className="font-display text-[1.625rem] leading-[1.1] text-ivory">{card.frontTitle}</h3>
+        <div className="mt-6 max-w-68">
+          <h3 className="type-title text-ivory">{card.frontTitle}</h3>
           <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">{card.frontDesc}</p>
         </div>
         <Repeat2 aria-hidden className={cn('absolute h-4 w-4 text-ivory/25', isCard ? 'right-6 top-7' : 'right-8 top-9')} strokeWidth={1.5} />
@@ -32,14 +34,14 @@ function FlipCardFaces({ card, variant }: { card: FlipCard; variant: 'card' | 's
         className={cn(
           FACE,
           'transform-[rotateY(180deg)]',
-          isCard ? 'rounded-[1.75rem] border border-gold/35 bg-[#15130f] p-7 shadow-[0_24px_48px_-32px_rgb(0_0_0/0.9)]' : 'bg-gold/[0.05] px-8 py-9',
+          isCard ? 'rounded-[1.75rem] border border-gold/35 bg-[#15130f] p-7 pt-14 shadow-[0_24px_48px_-32px_rgb(0_0_0/0.9)]' : 'bg-gold/5 px-8 pb-9 pt-12',
         )}
       >
-        <span className="grid h-11 w-11 place-items-center rounded-full bg-gold text-ink-950">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold text-ink-950">
           <BackIcon className="h-5 w-5" strokeWidth={1.75} />
         </span>
-        <div className="mt-auto">
-          <h3 className="font-display text-[1.625rem] leading-[1.1] text-gold-bright">{card.backTitle}</h3>
+        <div className="mt-6 max-w-68">
+          <h3 className="type-title text-gold-bright">{card.backTitle}</h3>
           <p className="mt-3 text-[0.9375rem] leading-relaxed text-ivory/75">{card.backDesc}</p>
         </div>
       </div>
@@ -82,7 +84,7 @@ export default function ProblemSolution() {
         {/* Header - Mobile Sticky / Desktop Static */}
         <div className="sticky top-20 z-50 -mx-6 bg-ink-950/95 px-6 pb-4 pt-4 md:static md:mx-0 md:bg-transparent md:px-0 md:py-0">
           <Reveal>
-            <h2 className="max-w-4xl font-display text-[clamp(2.1rem,1.2rem+3.2vw,4.25rem)] leading-[1.02] tracking-tight text-ivory md:mb-16">
+            <h2 className="max-w-4xl type-section text-ivory md:mb-16">
               Transforming <span className="text-ivory/40 line-through decoration-gold-deep/80 decoration-2">Broken Funnels</span>
               <br className="hidden md:block" /> Into <span className="now-gold">Structured Systems</span>
             </h2>

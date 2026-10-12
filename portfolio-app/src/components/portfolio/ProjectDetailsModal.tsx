@@ -104,7 +104,7 @@ export default function ProjectDetailsModal({ slide: requestedSlide, onClose }: 
           <div className="flex h-[55%] min-h-0 w-full shrink-0 flex-col border-b border-line bg-ink-900 md:h-full md:w-[40%] md:border-b-0 md:border-r lg:w-[36%]">
             <div className="flex-1 overflow-y-auto p-7 md:p-10 lg:p-12">
               <div className="mb-8">
-                <DialogTitle className="mb-4 pr-12 font-display text-[clamp(2rem,1.4rem+1.6vw,3rem)] font-medium leading-[1.05] tracking-tight text-ivory">{slide?.title}</DialogTitle>
+                <DialogTitle className="mb-4 pr-12 type-subsection text-ivory">{slide?.title}</DialogTitle>
                 {slide?.subtitle && <p className="label-caps leading-relaxed text-ivory/60">{slide.subtitle}</p>}
               </div>
 

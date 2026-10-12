@@ -28,7 +28,7 @@ export function SlideGrid({ slides, onSelect }: { slides: CoverflowSlide[]; onSe
           />
           <div aria-hidden className="absolute inset-0 bg-linear-to-t from-ink-950 via-ink-950/55 to-transparent" />
           <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-7">
-            <h4 className="font-display text-[1.6rem] leading-[1.1] tracking-tight text-ivory">{slide.title}</h4>
+            <h4 className="type-title text-ivory">{slide.title}</h4>
             <p className="label-caps mb-5 mt-2.5 leading-[1.6] text-ivory/60">{slide.subtitle}</p>
             <div className="inline-flex w-fit items-center gap-2 rounded-full border border-line-strong bg-ink-950/50 px-4 py-2 text-xs font-semibold text-ivory backdrop-blur-md transition-colors duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-ink-950">
               <Maximize2 className="h-3.5 w-3.5" />

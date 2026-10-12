@@ -161,7 +161,7 @@ export default function WorkflowModal({ workflow: requested, onClose }: { workfl
       <DialogContent className="flex h-[94vh] min-h-0 max-w-[96vw] flex-col gap-0 overflow-hidden rounded-4xl border-line-strong bg-ink-900 p-0 text-ivory shadow-[0_60px_120px_-40px_rgb(0_0_0/0.95)] md:grid md:h-[88vh] md:max-w-[min(92vw,1400px)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         {/* Left Column: Details */}
         <div className="order-2 flex h-[40vh] min-h-0 shrink-0 flex-col justify-center overflow-y-auto border-b border-line bg-ink-900 p-8 md:order-1 md:h-full md:border-b-0 md:border-r md:p-12 lg:p-14">
-          <DialogTitle className="mb-6 font-display text-[clamp(2rem,1.4rem+1.6vw,3.25rem)] font-medium leading-[1.05] tracking-tight text-ivory">{workflow.title}</DialogTitle>
+          <DialogTitle className="mb-6 type-subsection text-ivory">{workflow.title}</DialogTitle>
           <p className="text-[1.0625rem] leading-relaxed text-ivory/70">{workflow.description}</p>
         </div>
 

@@ -377,7 +377,7 @@ export function CoverflowCarousel({
 
       {showCaption && active && (
         <div className="z-10 mt-8 flex w-full flex-col items-center px-4 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <h3 className="font-display text-[clamp(1.75rem,1.2rem+1.8vw,2.75rem)] leading-[1.08] tracking-tight text-ivory">{active.title}</h3>
+          <h3 className="type-subsection text-ivory">{active.title}</h3>
           <p className="label-caps mb-7 mt-5 max-w-xl leading-[1.6] text-ivory/60">{active.subtitle}</p>
           {active.content && (
             <button

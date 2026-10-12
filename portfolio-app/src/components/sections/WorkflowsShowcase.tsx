@@ -29,7 +29,7 @@ export default function WorkflowsShowcase() {
 
         <div className="grid items-end gap-8 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
-            <h2 className="font-display text-[clamp(2.1rem,1.2rem+3.2vw,4.25rem)] leading-[1.02] tracking-tight text-ivory">
+            <h2 className="type-section text-ivory">
               <span className="now-gold">Automation Workflows</span>
               <br className="hidden md:block" /> That Run Behind the Scenes
             </h2>
@@ -62,7 +62,7 @@ export default function WorkflowsShowcase() {
               <div aria-hidden className="absolute inset-0 bg-linear-to-t from-ink-950 via-ink-950/35 to-transparent" />
 
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 md:p-7">
-                <h4 className="font-display text-[1.5rem] leading-[1.1] tracking-tight text-ivory md:text-[1.75rem]">{wf.title}</h4>
+                <h4 className="type-title text-ivory">{wf.title}</h4>
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line-strong bg-ink-950/60 text-ivory/70 backdrop-blur-sm transition-colors duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-ink-950">
                   <Maximize2 className="h-4 w-4" />
                 </span>
@@ -74,7 +74,7 @@ export default function WorkflowsShowcase() {
         {/* The walkthrough, staged like a screening */}
         <div className="mt-28 md:mt-36">
           <Reveal className="mx-auto mb-10 max-w-2xl text-center">
-            <h3 className="font-display text-[clamp(1.75rem,1.2rem+1.8vw,2.75rem)] leading-[1.08] tracking-tight text-ivory">See The System In Action</h3>
+            <h3 className="type-subsection text-ivory">See The System In Action</h3>
             <div className="mx-auto my-5 h-px w-16 bg-gold/60" />
             <p className="text-base leading-relaxed text-muted-foreground">
               Watch a full walkthrough of how these precise automation workflows interconnect to build a seamless, conversion-driven machine.

@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <img src="./img/CPlogo.webp" alt="CP Logo" className="h-7 w-auto object-contain" />
-            <span className="font-display text-xl font-medium tracking-[-0.01em] text-ivory">
+            <span className="text-lg font-semibold tracking-[-0.02em] text-ivory">
               Christian Padilla<span className="text-gold">.</span>
             </span>
           </div>

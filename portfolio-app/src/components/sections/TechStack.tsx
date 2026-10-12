@@ -25,7 +25,7 @@ export default function TechStack() {
     <section id="tech-stack" {...now} className="stage-pad relative">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
-          <h2 className="mb-14 max-w-5xl font-display text-[clamp(1.9rem,1.2rem+2.4vw,3.25rem)] leading-[1.05] tracking-tight text-ivory">
+          <h2 className="mb-14 max-w-5xl type-statement text-ivory">
             Powered by industry-leading platforms.
           </h2>
         </Reveal>
