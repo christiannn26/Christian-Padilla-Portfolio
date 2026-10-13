@@ -276,8 +276,10 @@ export default function InteractiveFlowchart({ zoomLevel = 1.9, lensSize = 240 }
         </div>
       </div>
 
-      <div className="mx-auto mt-14 max-w-[1600px] px-3 md:px-6 lg:px-10">
-        <div className="record relative rounded-4xl p-3 md:p-8 lg:p-10">
+      {/* The page's wide measure, shared with the funnel track: up to 1600px, with side padding
+          that clears the pipeline rail from the `rail` breakpoint */}
+      <div className="mt-14 px-3 md:px-6 rail:px-22 2xl:px-24">
+        <div className="record relative mx-auto max-w-400 rounded-4xl p-3 md:p-8 lg:p-10">
           {/* A light table: the blueprint grid is brightest under the diagram and fades out toward the rim */}
           <div
             aria-hidden
