@@ -42,6 +42,10 @@
   --font-display: var(--font-sans);
   --font-heading: var(--font-sans);
 
+  /* The system breakpoint: from here the pipeline rail is shown on the left edge, so anything
+     that breaks out of the content column keeps clear of it */
+  --breakpoint-rail: 87.5rem;
+
   /* Motion: strong custom curves (no built-in ease-in anywhere) */
   --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);

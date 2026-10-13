@@ -6,10 +6,12 @@ import { cn } from '../../lib/utils';
 import { Reveal } from '../ui/Reveal';
 import { Spotlight } from '../ui/Spotlight';
 import { useMagnet } from '../../hooks/useMagnet';
+import { usePaperTone } from '../../hooks/usePaperTone';
 import { useStageNow } from '../../hooks/useActiveStage';
 
 function FunnelCard({ item }: { item: FunnelDemo }) {
   const demoRef = useMagnet<HTMLAnchorElement>({ strength: 0.22, reach: 32, max: 7 });
+  const paper = usePaperTone(item.image, 'rgb(236 235 232)');
 
   return (
     <article
@@ -20,10 +22,18 @@ function FunnelCard({ item }: { item: FunnelDemo }) {
         'lg:group-has-[article:hover]/track:[&:not(:hover)]:opacity-55',
       )}
     >
-      <Spotlight size={340} />
+      <Spotlight size={440} />
 
-      {/* Each demo is a composed square mockup, so every frame is square and shows it whole */}
-      <div className="edge-lit relative aspect-square overflow-hidden rounded-[1.25rem] bg-ink-800">
+      {/* Each demo is a composed square mockup, shown whole and never cropped. On the swipe track
+          the frame is square. On desktop it stands taller (4:5) like a print: the mockup sits at
+          the foot of the frame and the paper it is composed on continues above it, in the exact
+          tone of the mockup's own top margin (sampled from the image), deepening toward the top. */}
+      <div className="edge-lit relative aspect-square overflow-hidden rounded-[1.25rem] bg-ink-800 lg:aspect-[4/5]">
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 hidden h-[24%] opacity-90 transition-opacity duration-700 ease-out-quint group-hover:opacity-100 lg:block"
+          style={{ backgroundImage: `linear-gradient(to bottom, color-mix(in srgb, ${paper} 72%, #0b0b0d), ${paper} 85%)` }}
+        />
         <img
           src={item.image}
           alt={item.title}
@@ -31,16 +41,21 @@ function FunnelCard({ item }: { item: FunnelDemo }) {
           height={800}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-contain opacity-90 transition-[opacity,scale] duration-700 ease-out-quint group-hover:scale-[1.035] group-hover:opacity-100"
+          className={cn(
+            'relative h-full w-full object-contain opacity-90 transition-[opacity,scale] duration-700 ease-out-quint group-hover:scale-[1.035] group-hover:opacity-100',
+            // Desktop: anchored to the foot of the print, growing up into the paper on hover; its
+            // first rows fade in so the paper's grain starts softly
+            'lg:absolute lg:inset-x-0 lg:bottom-0 lg:h-auto lg:origin-bottom lg:mask-[linear-gradient(to_bottom,transparent,black_2.5%)]',
+          )}
         />
       </div>
 
-      <div className="relative z-2 flex flex-1 flex-col px-3 pb-3 pt-5">
+      <div className="relative z-2 flex flex-1 flex-col px-3 pb-3 pt-5 lg:px-4 lg:pb-4 lg:pt-6">
         <h4 className="text-[1.375rem] leading-[1.25] tracking-[-0.022em] text-ivory lg:min-h-[2lh] lg:text-[1.125rem] xl:text-[1.375rem]">
           {item.title}
         </h4>
 
-        <dl className="mb-6 mt-4 space-y-3 border-t border-line pt-4 text-[0.9375rem] leading-snug">
+        <dl className="mb-6 mt-4 space-y-3 border-t border-line pt-4 text-[0.9375rem] leading-snug lg:mb-7 lg:mt-5 lg:pt-5">
           <div>
             <dt className="label-caps text-ivory/50">Type :</dt>
             <dd className="mt-1.5 text-ivory/85">{item.type}</dd>
@@ -109,16 +124,20 @@ export default function SystemsShowcase() {
             </p>
           </Reveal>
         </div>
+      </div>
 
-        {/* The funnel track: always one row. Four columns from lg; below that a snap-scrolling
-            track that bleeds to the screen edges with the next funnel peeking in. */}
+      {/* The funnel track: always one row, and wider than the text column above it. Four columns
+          from lg, breaking out of the container up to 1600px; from the `rail` breakpoint its side
+          padding clears the pipeline rail. Below lg it is a snap-scrolling
+          track that bleeds to the screen edges with the next funnel peeking in. */}
+      <div className="mt-14 lg:mt-16 lg:px-6 rail:px-22 2xl:px-24">
         <ul
           ref={trackRef}
           aria-label="Live funnel demos"
           className={cn(
             // A scroller clips vertically too: the bottom padding is room for the cards' shadow to fade out
-            'group/track track-scroll -mx-6 mt-14 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-9 pt-2',
-            'lg:mx-0 lg:grid lg:snap-none lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:p-0',
+            'group/track track-scroll flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-9 pt-2',
+            'lg:mx-auto lg:grid lg:max-w-400 lg:snap-none lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:p-0 2xl:gap-6',
           )}
         >
           {FUNNEL_DEMOS.map((item, i) => (
