@@ -234,7 +234,7 @@ export default function InteractiveFlowchart({ zoomLevel = 1.9, lensSize = 240 }
           <div
             className={cn(
               'relative h-full w-full overflow-hidden rounded-full border border-gold/70 bg-ink-900 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.95)]',
-              'transition-[opacity,transform] motion-reduce:transition-opacity',
+              'transition-[opacity,scale] motion-reduce:transition-opacity',
               showLens
                 ? 'scale-100 opacity-100 duration-200 ease-out-quint'
                 : 'scale-90 opacity-0 duration-150 ease-out-quint motion-reduce:scale-100',
@@ -277,8 +277,17 @@ export default function InteractiveFlowchart({ zoomLevel = 1.9, lensSize = 240 }
       </div>
 
       <div className="mx-auto mt-14 max-w-[1600px] px-3 md:px-6 lg:px-10">
-        <div className="blueprint-grid relative rounded-4xl border border-line bg-ink-900/50 p-3 md:p-8 lg:p-10">
-          <p className="mb-5 flex items-center justify-center gap-2.5 text-[0.8125rem] tracking-wide text-ivory/60 md:mb-8">
+        <div className="record relative rounded-4xl p-3 md:p-8 lg:p-10">
+          {/* A light table: the blueprint grid is brightest under the diagram and fades out toward the rim */}
+          <div
+            aria-hidden
+            className="blueprint-grid pointer-events-none absolute inset-0 rounded-[inherit] mask-[radial-gradient(ellipse_80%_75%_at_50%_50%,black_30%,transparent_100%)]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(ellipse_60%_55%_at_50%_55%,rgb(244_239_230/0.03),transparent_70%)]"
+          />
+          <p className="relative mb-5 flex items-center justify-center gap-2.5 text-[0.8125rem] tracking-wide text-ivory/60 md:mb-8">
             {hasHover ? (
               <>
                 <SearchIcon className="text-gold" />

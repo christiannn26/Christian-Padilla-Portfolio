@@ -5,6 +5,7 @@ import { FLIP_CARDS, type FlipCard } from '../../data/flipCards';
 import { FOCUS_RING, pressable } from '../../lib/a11y';
 import { cn } from '../../lib/utils';
 import { Reveal } from '../ui/Reveal';
+import { Spotlight } from '../ui/Spotlight';
 import { useStageNow } from '../../hooks/useActiveStage';
 
 // Both faces centre their mark and copy on the card's axis, so the flip reads as one object turning.
@@ -13,13 +14,13 @@ const FACE = 'absolute inset-0 flex h-full w-full flex-col items-center text-cen
 
 // Front: the problem. Back: the system that replaces it, the stage's gold "now" state.
 // `card` (mobile sticky stack) gives each face its own surface; `strip` (desktop) is a column
-// in a hairline-ruled pipeline row, so only the flipped solution takes a warm wash.
+// of one glass slab ruled into a pipeline row, so only the flipped solution takes a warm light.
 function FlipCardFaces({ card, variant }: { card: FlipCard; variant: 'card' | 'strip' }) {
   const { frontIcon: FrontIcon, backIcon: BackIcon } = card;
   const isCard = variant === 'card';
   return (
     <>
-      <div className={cn(FACE, isCard ? 'record rounded-[1.75rem] p-7 pt-14' : 'px-8 pb-9 pt-12')}>
+      <div className={cn(FACE, isCard ? 'record rounded-[1.75rem] bg-ink-900! p-7 pt-14' : 'px-8 pb-9 pt-12')}>
         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line-strong text-ivory/55">
           <FrontIcon className="h-5 w-5" strokeWidth={1.5} />
         </span>
@@ -34,10 +35,13 @@ function FlipCardFaces({ card, variant }: { card: FlipCard; variant: 'card' | 's
         className={cn(
           FACE,
           'transform-[rotateY(180deg)]',
-          isCard ? 'rounded-[1.75rem] border border-gold/35 bg-[#15130f] p-7 pt-14 shadow-[0_24px_48px_-32px_rgb(0_0_0/0.9)]' : 'bg-gold/5 px-8 pb-9 pt-12',
+          // The solved face is "now": lit from above with a gold rim, never a halo
+          isCard
+            ? 'rounded-[1.75rem] border border-gold/40 bg-[#15130f] bg-[radial-gradient(120%_70%_at_50%_0%,rgb(214_185_124/0.16),transparent_70%)] p-7 pt-14 shadow-[inset_0_1px_0_rgb(239_220_174/0.4),0_24px_48px_-32px_rgb(0_0_0/0.9)]'
+            : 'bg-[radial-gradient(120%_75%_at_50%_0%,rgb(214_185_124/0.15),rgb(214_185_124/0.04)_60%,transparent)] px-8 pb-9 pt-12 shadow-[inset_0_1px_0_rgb(239_220_174/0.55),inset_0_0_0_1px_rgb(214_185_124/0.14)]',
         )}
       >
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold text-ink-950">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold text-ink-950 shadow-[0_0_0_5px_rgb(214_185_124/0.12),inset_0_1px_0_rgb(255_250_238/0.5)]">
           <BackIcon className="h-5 w-5" strokeWidth={1.75} />
         </span>
         <div className="mt-6 max-w-68">
@@ -82,7 +86,7 @@ export default function ProblemSolution() {
     <section id="impact" {...now} className="stage-pad relative">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {/* Header - Mobile Sticky / Desktop Static */}
-        <div className="sticky top-20 z-50 -mx-6 bg-ink-950/95 px-6 pb-4 pt-4 md:static md:mx-0 md:bg-transparent md:px-0 md:py-0">
+        <div className="sticky top-20 z-50 -mx-6 border-b border-line bg-ink-950/90 px-6 pb-4 pt-4 backdrop-blur-md md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:py-0 md:backdrop-filter-none">
           <Reveal>
             <h2 className="max-w-4xl type-section text-ivory md:mb-16">
               Transforming <span className="text-ivory/40 line-through decoration-gold-deep/80 decoration-2">Broken Funnels</span>
@@ -98,8 +102,9 @@ export default function ProblemSolution() {
           ))}
         </div>
 
-        {/* Desktop: one hairline-ruled pipeline row; hover (or click / Enter) flips a column to its solution */}
-        <div className="hidden border-y border-line md:grid md:grid-cols-2 lg:grid-cols-4">
+        {/* Desktop: one smoked-glass slab ruled into a pipeline row; hover (or click / Enter) flips a column to its solution */}
+        <div className="record relative hidden overflow-hidden rounded-4xl md:grid md:grid-cols-2 lg:grid-cols-4">
+          <Spotlight size={520} sheen={0.05} />
           {FLIP_CARDS.map((card, i) => {
             const isFlipped = flippedCardId === card.id;
             return (

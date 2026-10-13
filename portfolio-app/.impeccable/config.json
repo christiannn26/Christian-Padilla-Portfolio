@@ -18,6 +18,15 @@
         ],
         "createdAt": "2026-10-12T11:33:02.834Z",
         "reason": "Agent: the grid class is used only on the flowchart blueprint plate and the workflow zoom canvas, the blueprint/canvas surfaces this rule reserves grids for"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000",
+        "files": [
+          "src/index.css"
+        ],
+        "createdAt": "2026-10-13T06:57:52.081Z",
+        "reason": "Agent: #000 appears only as the opaque layer in the spotlight-edge mask-composite, a mask channel rather than a painted colour"
       }
     ]
   }

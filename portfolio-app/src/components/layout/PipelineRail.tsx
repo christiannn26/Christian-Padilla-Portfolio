@@ -59,7 +59,7 @@ export default function PipelineRail() {
                   {stage.label}
                 </motion.span>
               ) : (
-                <span className="glass label-caps pointer-events-none absolute left-8 top-1/2 -translate-x-1 -translate-y-1/2 whitespace-nowrap rounded-full px-3 py-1.5 text-ivory/80 opacity-0 transition-[opacity,transform] duration-200 ease-out-quint group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">
+                <span className="glass label-caps pointer-events-none absolute left-8 top-1/2 -translate-x-1 -translate-y-1/2 whitespace-nowrap rounded-full px-3 py-1.5 text-ivory/80 opacity-0 transition-[opacity,translate] duration-200 ease-out-quint group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">
                   <span className="mr-2 tabular-nums text-gold">{String(i).padStart(2, '0')}</span>
                   {stage.label}
                 </span>

@@ -1,10 +1,9 @@
 import { useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { FINE_POINTER, REDUCED_MOTION, matches } from '../lib/media';
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(useGSAP);
 
 interface PointerHandlers {
   move: (e: PointerEvent, rect: DOMRect) => void;
@@ -78,40 +77,3 @@ export const use3DTilt = <T extends HTMLElement>() =>
       },
     };
   });
-
-/** Fades and lifts the element in as it scrolls into view (reverses on the way back up). */
-export function useScrollReveal<T extends HTMLElement>(delay = 0, yOffset = 12) {
-  const ref = useRef<T>(null);
-
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-
-      if (matches(REDUCED_MOTION)) {
-        gsap.set(el, { opacity: 1, y: 0 });
-        return;
-      }
-
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: yOffset },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-        },
-      );
-    },
-    { dependencies: [delay, yOffset] },
-  );
-
-  return ref;
-}

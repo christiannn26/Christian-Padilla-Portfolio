@@ -34,7 +34,12 @@ function TabLabel({ value, active, children }: { value: PortfolioTab; active: Po
         'text-ivory/60 hover:text-ivory data-[state=active]:bg-transparent data-[state=active]:text-ink-950 data-[state=active]:shadow-none',
       )}
     >
-      {active === value && <Thumb id="portfolio-tab" className="bg-gold" />}
+      {active === value && (
+        <Thumb
+          id="portfolio-tab"
+          className="bg-gold shadow-[inset_0_1px_0_rgb(255_250_238/0.6),0_0_0_1px_rgb(239_220_174/0.35),0_10px_24px_-10px_rgb(214_185_124/0.6)]"
+        />
+      )}
       <span className="relative z-10">{children}</span>
     </TabsTrigger>
   );
@@ -86,7 +91,7 @@ export default function Portfolio() {
       onClick={() => setViewMode(mode)}
       className={cn(SEGMENT, 'px-4 py-2.5 text-[0.8125rem]', viewMode === mode ? 'text-ivory' : 'text-ivory/55 hover:text-ivory')}
     >
-      {viewMode === mode && <Thumb id="portfolio-view" className="bg-white/10" />}
+      {viewMode === mode && <Thumb id="portfolio-view" className="bg-white/10 shadow-[inset_0_1px_0_rgb(244_239_230/0.16)]" />}
       <span className="relative z-10 flex items-center gap-2">
         {icon}
         {label}
@@ -105,7 +110,7 @@ export default function Portfolio() {
             </Reveal>
 
             <div className="flex w-full flex-col items-start gap-3 sm:w-auto sm:flex-row sm:items-center">
-              <TabsList className="flex h-auto w-full rounded-full border border-line-strong bg-ink-900/70 p-1 backdrop-blur-md sm:inline-flex sm:w-auto">
+              <TabsList className="flex h-auto w-full rounded-full border border-line-strong bg-ink-900/70 p-1 shadow-[inset_0_1px_0_rgb(244_239_230/0.06)] backdrop-blur-md sm:inline-flex sm:w-auto">
                 <TabLabel value="projects" active={tab}>
                   Professional Background
                 </TabLabel>
@@ -114,7 +119,7 @@ export default function Portfolio() {
                 </TabLabel>
               </TabsList>
 
-              <div className="flex rounded-full border border-line bg-ink-900/50 p-1">
+              <div className="flex rounded-full border border-line bg-ink-900/50 p-1 shadow-[inset_0_1px_0_rgb(244_239_230/0.05)] backdrop-blur-md">
                 {viewOption('carousel', <MonitorPlay className="h-4 w-4" />, 'Cinematic')}
                 {viewOption('grid', <Grid className="h-4 w-4" />, 'Grid View')}
               </div>

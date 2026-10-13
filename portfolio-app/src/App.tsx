@@ -2,6 +2,7 @@ import CustomCursor from './components/layout/CustomCursor';
 import Atmosphere from './components/layout/Atmosphere';
 import Navbar from './components/layout/Navbar';
 import PipelineRail from './components/layout/PipelineRail';
+import ContentSheet from './components/layout/ContentSheet';
 import Footer from './components/layout/Footer';
 import Hero from './components/sections/Hero';
 import ProblemSolution from './components/sections/ProblemSolution';
@@ -29,7 +30,7 @@ export default function App() {
           <Hero onNavigate={scrollToSection} />
 
           {/* The content sheet rises over the hero stage */}
-          <div className="relative z-20 -mt-10 rounded-t-[2.5rem] border-t border-line-strong bg-[linear-gradient(to_bottom,#060607_0px,rgb(6_6_7/0.3)_260px,rgb(6_6_7/0.3)_100%)] shadow-[0_-30px_60px_-20px_rgba(0,0,0,0.9)]">
+          <ContentSheet>
             <ProblemSolution />
             <InteractiveFlowchart />
             <SystemsShowcase />
@@ -40,7 +41,7 @@ export default function App() {
             <About onNavigate={scrollToSection} />
             <Contact />
             <Footer />
-          </div>
+          </ContentSheet>
         </main>
       </PortfolioNavProvider>
     </div>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-12T00:00:00+00:00",
+  "generatedAt": "2026-10-13T00:00:00+00:00",
   "title": "Design System: Christian Padilla, The Pipeline",
   "extensions": {
     "colorMeta": {
@@ -244,19 +244,19 @@
           "#cdcdd3"
         ]
       },
-      "mesh-slate": {
+      "aurora-slate": {
         "role": "secondary",
-        "displayName": "Mesh Slate",
-        "canonical": "rgb(112 126 162 / 0.065)",
+        "displayName": "Aurora Slate",
+        "canonical": "rgb(122 138 212 / 0.26)",
         "tonalRamp": [
-          "#1c2029",
-          "#2c3241",
-          "#3f475c",
-          "#555f7a",
-          "#707ea2",
-          "#8e9ab9",
-          "#b0b9d0",
-          "#d3d9e6"
+          "#1b1e2f",
+          "#2e3451",
+          "#444d77",
+          "#5f6ca5",
+          "#7a8ad4",
+          "#9ba7df",
+          "#bcc4ea",
+          "#dee2f4"
         ]
       }
     },
@@ -325,9 +325,29 @@
         "purpose": "Floating layers: nav, menus, dialog chrome, HUD, carousel arrows, rail tooltips (with blur(20px) saturate(140%) over rgb(16 16 19 / 0.68))."
       },
       {
-        "name": "record-rest",
-        "value": "inset 0 1px 0 rgb(244 239 230 / 0.03), 0 24px 48px -32px rgb(0 0 0 / 0.9)",
-        "purpose": "Content records and tiles."
+        "name": "smoked-record",
+        "value": "inset 0 1px 0 rgb(244 239 230 / 0.09), inset 0 -1px 0 rgb(0 0 0 / 0.35), 0 1px 2px rgb(0 0 0 / 0.35), 0 32px 64px -34px rgb(0 0 0 / 0.95)",
+        "purpose": "The record utility: smoked glass (rgb(14 14 17 / 0.58) under an ivory wash from 4.5% to 0, 8% ivory border), lit top edge, grounded bottom edge; no backdrop blur."
+      },
+      {
+        "name": "inner-edge",
+        "value": "inset 0 1px 0 rgb(244 239 230 / 0.05 to 0.16)",
+        "purpose": "Lit top edge on raised non-record surfaces: workflow tiles and cover, slide cards, About portrait record, tech chips, portfolio tab track and view toggle, back-to-top disc, phone service cards."
+      },
+      {
+        "name": "edge-lit",
+        "value": "inset 0 1px 0 rgb(244 239 230 / 0.1), inset 0 0 0 1px rgb(244 239 230 / 0.05)",
+        "purpose": "The edge-lit utility: image wells nested inside a record."
+      },
+      {
+        "name": "gold-lit-edge",
+        "value": "inset 0 1px 0 rgb(255 250 238 / 0.5 to 0.6)",
+        "purpose": "Top edge of a gold fill that is now or hovered: About primary pill, play button, solved-face icon disc, hovered contact discs, active portfolio tab thumb."
+      },
+      {
+        "name": "now-ring",
+        "value": "0 0 0 5px to 10px rgb(214 185 124 / 0.07 to 0.14)",
+        "purpose": "Tight gold ring around a disc that is now or hovered: solved-face icon, play button (6px, 10px on hover), hovered service and contact icons. Never a blurred halo."
       },
       {
         "name": "action-lift",
@@ -372,6 +392,11 @@
         "purpose": "Scroll-cue chase light."
       },
       {
+        "name": "ease-in-out-glide",
+        "value": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "purpose": "Key light gliding to the active stage (2.6s)."
+      },
+      {
         "name": "ease-drawer",
         "value": "cubic-bezier(0.32, 0.72, 0, 1)",
         "purpose": "Declared for sheets; unused in the shipped page."
@@ -382,9 +407,14 @@
         "purpose": "Every pressable element."
       },
       {
+        "name": "tailwind-4-transitions",
+        "value": "transition-[scale] / transition-[translate], not transform",
+        "purpose": "Tailwind 4 scale and translate utilities set independent properties; a transform transition does not animate them."
+      },
+      {
         "name": "reveal",
-        "value": "from opacity 0.2, translateY(18px), blur(8px); 900ms ease-out-expo; once at -12% viewport margin",
-        "purpose": "Content settling into view; skipped under reduced motion."
+        "value": "opacity from 0.2 on 900ms ease-out-expo; y (22px default) and scale on a spring (visualDuration 0.85, bounce 0.16); blur 8px from 768px only, filter dropped after landing; once at -12% viewport margin. Records: y 26 to 36, scale 0.96 to 0.97, blur 8 to 10, stagger 60 to 70ms (Services from opacity 0.15).",
+        "purpose": "Content landing into view; skipped under reduced motion."
       },
       {
         "name": "signal",
@@ -399,7 +429,7 @@
       {
         "name": "marquee",
         "value": "marquee 40s linear infinite",
-        "purpose": "Tech-stack logo strip."
+        "purpose": "Tech-stack logo strip; pauses on hover, becomes a scrollable row under reduced motion."
       },
       {
         "name": "now-gold",
@@ -407,14 +437,44 @@
         "purpose": "Heading accent turns gold while its section is active."
       },
       {
-        "name": "mesh-drift",
-        "value": "meshDrift1 46s / meshDrift2 58s / meshDrift3 52s ease-in-out infinite",
-        "purpose": "Background mesh fields; stopped under reduced motion."
+        "name": "aurora-drift",
+        "value": "auroraA 64s / auroraB 78s / auroraC 70s ease-in-out infinite",
+        "purpose": "Aurora ribbons below the hero; paused on the top stage, still on phones and coarse pointers, stopped under reduced motion."
+      },
+      {
+        "name": "beam-sway",
+        "value": "beamSway 38s / 46s (delay -17s) ease-in-out infinite, rotate var(--beam-from) to var(--beam-to)",
+        "purpose": "Two keynote beams, desktop and tablet only; same pause and stop rules as the ribbons."
+      },
+      {
+        "name": "key-light",
+        "value": "transform and opacity 2.6s cubic-bezier(0.65, 0, 0.35, 1) to the per-stage RIG position",
+        "purpose": "Stage key light finds the section being read; instant under reduced motion."
+      },
+      {
+        "name": "cursor-pool",
+        "value": "spring stiffness 55, damping 20, mass 1",
+        "purpose": "Broad 6% light pool trailing a mouse pointer across the stage; removed under reduced motion."
       },
       {
         "name": "loupe-track",
         "value": "spring stiffness 1000, damping 38, mass 0.3 on motion values",
         "purpose": "Flowchart loupe follows the pointer without re-rendering."
+      },
+      {
+        "name": "spotlight",
+        "value": "spring stiffness 420, damping 40, mass 0.6 (fade: stiffness 200, damping 30)",
+        "purpose": "Pointer-following sheen and masked lit edge on records; mouse only, motion values."
+      },
+      {
+        "name": "magnet",
+        "value": "spring stiffness 240, damping 19, mass 0.6; smoothstep falloff; moves via CSS translate",
+        "purpose": "useMagnet field on controls (reach, strength, max, inner parallax); composes with the 0.97 press, releases on scroll, mouse only, off for reduced motion."
+      },
+      {
+        "name": "shine",
+        "value": "translateX(-120% to 120%) 900ms cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Light sweep across primary gold pills on fine-pointer hover; off under reduced motion."
       },
       {
         "name": "loupe-enter",
@@ -495,9 +555,9 @@
       "name": "Record Card",
       "kind": "card",
       "refersTo": "record-card",
-      "description": "Content as a CRM record: graphite surface, hairline, label caps then value.",
+      "description": "Content as a CRM record: smoked glass lit from above, label caps then value.",
       "html": "<article class=\"ds-record\"><h3 class=\"ds-record-title\">Lead Capture Funnel</h3><dl class=\"ds-record-fields\"><dt>Type :</dt><dd>Funnel</dd><dt>Industry :</dt><dd>Dental clinic</dd></dl></article>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-record{max-width:360px;padding:28px;border-radius:1.75rem;background:rgb(16 16 19 / 0.72);border:1px solid var(--color-line);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.03),0 24px 48px -32px rgb(0 0 0 / 0.9);color:var(--color-ivory);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;transition:border-color 500ms cubic-bezier(0.23, 1, 0.32, 1),background-color 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-record:hover{border-color:rgb(214 185 124 / 0.3);background:var(--color-ink-850);}.ds-record-title{margin:0 0 20px;font-size:1.375rem;font-weight:600;line-height:1.25;letter-spacing:-0.022em;}.ds-record-fields{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0;align-items:baseline;}.ds-record-fields dt{font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgb(244 239 230 / 0.5);}.ds-record-fields dd{margin:0;font-size:0.9375rem;}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-record{max-width:360px;padding:28px;border-radius:1.75rem;background-color:rgb(14 14 17 / 0.58);background-image:linear-gradient(180deg,rgb(244 239 230 / 0.045),rgb(244 239 230 / 0.012) 42%,rgb(244 239 230 / 0) 100%);border:1px solid rgb(244 239 230 / 0.08);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.09),inset 0 -1px 0 rgb(0 0 0 / 0.35),0 1px 2px rgb(0 0 0 / 0.35),0 32px 64px -34px rgb(0 0 0 / 0.95);color:var(--color-ivory);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;transition:border-color 500ms cubic-bezier(0.23, 1, 0.32, 1),background-color 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-record:hover{border-color:rgb(214 185 124 / 0.3);background:var(--color-ink-850);}.ds-record-title{margin:0 0 20px;font-size:1.375rem;font-weight:600;line-height:1.25;letter-spacing:-0.022em;}.ds-record-fields{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0;align-items:baseline;}.ds-record-fields dt{font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgb(244 239 230 / 0.5);}.ds-record-fields dd{margin:0;font-size:0.9375rem;}"
     },
     {
       "name": "Contact Record",
@@ -505,7 +565,7 @@
       "refersTo": "record-card",
       "description": "A channel as a pressable record; the icon disc fills gold and the label warms to gold on hover.",
       "html": "<a class=\"ds-contact\" href=\"#\"><span class=\"ds-contact-icon\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\"/><path d=\"m22 7-10 6L2 7\"/></svg></span><span class=\"ds-contact-text\"><span class=\"ds-contact-label\">Email</span><span class=\"ds-contact-value\">hello@example.com</span></span><span class=\"ds-contact-arrow\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></span></a>",
-      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-contact{display:flex;align-items:center;gap:16px;max-width:380px;padding:16px 20px 16px 16px;border-radius:1.5rem;background:rgb(16 16 19 / 0.72);border:1px solid var(--color-line);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.03),0 24px 48px -32px rgb(0 0 0 / 0.9);color:var(--color-ivory);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-contact:hover{border-color:rgb(214 185 124 / 0.4);background:var(--color-ink-850);}.ds-contact:active{transform:scale(0.97);}.ds-contact:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-contact-icon{display:grid;place-items:center;width:48px;height:48px;flex-shrink:0;border-radius:9999px;border:1px solid var(--color-line-strong);color:rgb(244 239 230 / 0.7);transition:background-color 300ms,border-color 300ms,color 300ms;}.ds-contact:hover .ds-contact-icon{background:var(--color-gold);border-color:var(--color-gold);color:var(--color-ink-950);}.ds-contact-text{flex:1;min-width:0;}.ds-contact-label{display:block;font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgb(244 239 230 / 0.5);transition:color 300ms;}.ds-contact:hover .ds-contact-label{color:var(--color-gold);}.ds-contact-value{display:block;margin-top:6px;font-size:0.9375rem;}.ds-contact-arrow{color:rgb(244 239 230 / 0.35);transition:color 300ms,transform 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-contact:hover .ds-contact-arrow{color:var(--color-gold);transform:translate(2px,-2px);}"
+      "css": ":host{--color-ink-950:#060607;--color-ink-900:#0b0b0d;--color-ink-850:#101013;--color-ivory:#f4efe6;--color-gold:#d6b97c;--color-gold-bright:#efdcae;--color-gold-deep:#a48748;--color-line:rgb(244 239 230 / 0.09);--color-line-strong:rgb(244 239 230 / 0.16);}.ds-contact{display:flex;align-items:center;gap:16px;max-width:380px;padding:16px 20px 16px 16px;border-radius:1.5rem;background-color:rgb(14 14 17 / 0.58);background-image:linear-gradient(180deg,rgb(244 239 230 / 0.045),rgb(244 239 230 / 0.012) 42%,rgb(244 239 230 / 0) 100%);border:1px solid rgb(244 239 230 / 0.08);box-shadow:inset 0 1px 0 rgb(244 239 230 / 0.09),inset 0 -1px 0 rgb(0 0 0 / 0.35),0 1px 2px rgb(0 0 0 / 0.35),0 32px 64px -34px rgb(0 0 0 / 0.95);color:var(--color-ivory);font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;text-decoration:none;transition:transform 180ms cubic-bezier(0.23, 1, 0.32, 1),background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),color 180ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-contact:hover{border-color:rgb(214 185 124 / 0.4);background:var(--color-ink-850);}.ds-contact:active{transform:scale(0.97);}.ds-contact:focus-visible{outline:2px solid var(--color-gold);outline-offset:3px;}.ds-contact-icon{display:grid;place-items:center;width:48px;height:48px;flex-shrink:0;border-radius:9999px;border:1px solid var(--color-line-strong);color:rgb(244 239 230 / 0.7);transition:background-color 300ms,border-color 300ms,color 300ms;}.ds-contact:hover .ds-contact-icon{background:var(--color-gold);border-color:var(--color-gold);color:var(--color-ink-950);}.ds-contact-text{flex:1;min-width:0;}.ds-contact-label{display:block;font-family:'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;font-size:0.6875rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgb(244 239 230 / 0.5);transition:color 300ms;}.ds-contact:hover .ds-contact-label{color:var(--color-gold);}.ds-contact-value{display:block;margin-top:6px;font-size:0.9375rem;}.ds-contact-arrow{color:rgb(244 239 230 / 0.35);transition:color 300ms,transform 300ms cubic-bezier(0.23, 1, 0.32, 1);}.ds-contact:hover .ds-contact-arrow{color:var(--color-gold);transform:translate(2px,-2px);}"
     },
     {
       "name": "Section Heading with Now-Gold Accent",
@@ -526,18 +586,18 @@
   ],
   "narrative": {
     "northStar": "The Pipeline",
-    "overview": "The page is Christian's own lead pipeline and the visitor is the lead moving through it. Ten stages sit on a hairline rail; one gold lead token advances as the visitor reads, the stages behind it fill in, and the journey lands on Get In Touch. The world is a keynote stage: near-black grounds stepping up to raised graphite, ivory type, a faint drifting mesh of light behind everything and a fine film grain so large dark fields never band. Everything that is not \"now\" rests in ivory and graphite.\n\nDensity is generous and editorial. Sections breathe on one shared vertical rhythm; content sits in a 12-column grid inside an 80rem container. Hierarchy comes from scale (one family, Inter, set large, semibold and tight at headline sizes against quiet body text) and from the single reserved colour, never from boxes, badges or labels stacked above headings. Content is presented as records: cards read like CRM entries, with tracked caps field labels followed by their values.\n\nThe world refuses the dark-glass freelancer template: gradient headings, gold glows around buttons and cards, and interchangeable glass cards. Glass exists, but only on layers that float above the page.",
+    "overview": "The page is Christian's own lead pipeline and the visitor is the lead moving through it. Ten stages sit on a hairline rail; one gold lead token advances as the visitor reads, the stages behind it fill in, and the journey lands on Get In Touch. The world is a keynote stage: near-black grounds stepping up to raised graphite, ivory type, stage lights below the hero (slow aurora ribbons, two swaying keynote beams, a key light that finds the section being read) and a fine film grain so large dark fields never band. Everything that is not \"now\" rests in ivory and graphite.\n\nDensity is generous and editorial. Sections breathe on one shared vertical rhythm; content sits in a 12-column grid inside an 80rem container. Hierarchy comes from scale (one family, Inter, set large, semibold and tight at headline sizes against quiet body text) and from the single reserved colour, never from boxes, badges or labels stacked above headings. Content is presented as records: cards read like CRM entries, with tracked caps field labels followed by their values.\n\nThe world refuses the dark-glass freelancer template: gradient headings, gold halos around buttons and cards, and interchangeable frosted cards. Glass exists as two disciplined materials: blurred chrome for layers that float above the page, and unblurred smoked glass, lit from above, for the records that hold content.",
     "keyCharacteristics": [
       "One accent, champagne gold, spent only on what is current: the active stage, the lead token, primary actions, live signal pulses.",
-      "Hairline rules (1px ivory at 9% and 16%) and black shadows define every surface.",
+      "Hairline rules (1px ivory at 9% and 16%), lit inner top edges and black drop shadows define every surface; gold light on an element is only an inner edge or a tight ring on what is now.",
       "One family, Inter Variable with optical sizing: semibold headings whose tracking tightens as size grows; regular text for everything readable; tracked caps for labels.",
       "Pills for every action and chip; large soft-cornered records for content.",
-      "Motion is custom ease-out, quick on press, slow and settling on reveal, and always yields to reduced motion."
+      "Motion is custom ease-out and spring physics: quick on press, landing with a whisper of overshoot on reveal and hover, and always yields to reduced motion."
     ],
     "rules": [
       {
         "name": "The Gold Is Now Rule",
-        "body": "Gold marks only what is current or what acts. Heading accent words rest in ivory and turn gold (700ms colour transition) only while their section is the active stage. Subtitles, tags, icons at rest, card borders at rest and body copy are never gold. Hover may borrow gold (borders at 30 to 50%, icon fills, the demo pill's fill) because hover is the visitor's \"now\".",
+        "body": "Gold marks only what is current or what acts. Heading accent words rest in ivory and turn gold (700ms colour transition) only while their section is the active stage. Subtitles, tags, icons at rest, card borders at rest and body copy are never gold. Hover may borrow gold (borders at 30 to 50%, icon fills, the demo pill's fill, the Spotlight's lit edge) because hover is the visitor's \"now\". Gold light on an element follows the same law: inner edges and tight rings only (see The Black Shadow Rule).",
         "section": "colors"
       },
       {
@@ -562,40 +622,41 @@
       },
       {
         "name": "The Quiet Stage Rule",
-        "body": "The background must never compete with content. Mesh fields stay below 9% opacity, drift on loops of 45 seconds or longer, sit behind a pointer-transparent layer, and stop under prefers-reduced-motion. If a field is noticeable while reading, it is too strong.",
+        "body": "The background must never compete with content. It sits behind a pointer-transparent layer and shows only below the hero. Ribbon cores stay at or under 26% and fall below 10% by mid-radius; beams stay under 20% at their source and are blurred; the key light holds at 10% and the pointer pool at 6%; all of it reads through the content sheet's 22% Stage Black. Drift loops run 38 seconds or longer (ribbons 64 to 78s) and beams sway no more than 9 degrees. Ribbons and beams pause while the hero covers them, hold still on phones and coarse pointers, and stop under prefers-reduced-motion (the key light then jumps instead of gliding). If a light is noticeable while reading, it is too strong.",
         "section": "elevation"
       },
       {
         "name": "The Black Shadow Rule",
-        "body": "Every shadow is black. No coloured box-shadow, text-shadow or glow on any element (the Mermaid node drop-shadows are stripped for this reason); gold light exists only as ambient stage light in the background layers.",
+        "body": "Every drop shadow is black. Gold light appears on an element only as an inner edge or a tight ring (5 to 10px, at most 14%), and only on what is now or hovered: the active portfolio tab thumb, the flipped solution face lit from above with a gold inset rim, the play button ring, hovered icon discs, and the Spotlight's lit edge under the cursor. One sanctioned bloom: the active portfolio tab thumb pools a soft gold light beneath itself (0 10px 24px -10px, gold at 60%), the single \"switched on\" control on the page. No gradient text, no text-shadow, no other gold halo or blurred gold glow, and no gold on a card at rest (the Mermaid node drop-shadows are stripped for this reason). Broad gold light otherwise exists only as ambient stage light: the background layers and the content sheet's rim.",
         "section": "elevation"
       },
       {
-        "name": "The Floating Glass Rule",
-        "body": "Glass (graphite at 68%, 20px blur, 140% saturation, 10% ivory border) is used only on layers that float: nav, menus, dialog chrome, HUD, carousel arrows, rail tooltips. Cards on the page are records, never glass.",
+        "name": "The Two Glasses Rule",
+        "body": "Glass comes in two materials, never mixed. Chrome glass (`glass`: graphite at 68%, 20px blur, 140% saturation, 10% ivory border, glass-float shadow) is only for layers that float: nav, menus, dialog chrome, HUD, carousel arrows, rail tooltips; the phone sticky section headers are its frosted cousin (Stage Black at 90%, 12px blur, hairline bottom edge). Smoked glass (`record`: graphite rgb(14 14 17) at 58% under an ivory wash falling from 4.5% to nothing, an 8% ivory border, a lit top inset edge at 9% and a grounded black bottom inset edge) is for content records; it takes no backdrop blur, so the stage lights read through the tint. Image wells nested in a record take `edge-lit` (a 10% top highlight and a 5% inner keyline).",
         "section": "elevation"
       }
     ],
     "dos": [
       "**Do** reserve gold for the current stage, the lead token, primary actions, live signals, focus and hover; keep heading accents in ivory until their section is active.",
-      "**Do** separate surfaces with 1px hairlines (ivory at 9% or 16%) and pure black shadows with negative spread.",
+      "**Do** separate surfaces with 1px hairlines (ivory at 9% or 16%) and pure black drop shadows with negative spread, and let raised surfaces catch light on a thin inset top edge.",
       "**Do** set every word in Inter Variable, headings semibold on the type-scale steps with tracking that tightens as size grows.",
       "**Do** label record fields with 11px tracked caps (0.14em) followed by their value.",
       "**Do** use full pills for anything pressable or naming a thing, and 24 to 32px corners for content records.",
       "**Do** give every pressable element the 0.97 press scale with a 180ms ease-out-quint transition, a 2px gold focus outline at 3px offset, and a 44px minimum touch target.",
-      "**Do** reveal content from faint (opacity 0.2 plus blur), never from invisible, and honour prefers-reduced-motion.",
+      "**Do** reveal content from faint (opacity 0.15 to 0.2, blur from 768px), never from invisible, landing on a spring, and honour prefers-reduced-motion.",
       "**Do** keep every section on the shared stage padding (clamp 72px to 120px).",
-      "**Do** keep the background quiet: mesh fields under 9% opacity, loops of 45s or longer, stopped under reduced motion.",
-      "**Do** show product mockups whole: square frames, contained, never cropped."
+      "**Do** keep the background quiet: faint ribbons and blurred beams below the hero only, loops of 38s or longer, paused under the hero, still on phones, stopped under reduced motion.",
+      "**Do** show product mockups whole: square frames, contained, never cropped.",
+      "**Do** light what is now from within: gold inner edges and tight rings on active or hovered elements only."
     ],
     "donts": [
       "**Don't** put an eyebrow or kicker above a heading; stage names live in the nav readout and on the pipeline rail.",
-      "**Don't** use gradient text or coloured glows (gold box-shadow, text-shadow or halo) on any element.",
-      "**Don't** make cards glass; glass is only for floating layers (nav, menus, dialog chrome, HUD, carousel arrows).",
+      "**Don't** use gradient text, text-shadow, coloured drop shadows or gold halos; gold on an element is an inner edge or a tight ring, never on a card at rest.",
+      "**Don't** give content records backdrop blur or chrome glass; chrome glass is only for floating layers (nav, menus, dialog chrome, HUD, carousel arrows), and records are unblurred smoked glass.",
       "**Don't** colour subtitles, tags, resting icons or resting card borders gold.",
       "**Don't** use built-in ease-in curves; state changes ease out.",
       "**Don't** add a second typeface or let a system font stand in as a design choice.",
-      "**Don't** let the background compete with content, and don't blur the stage behind a focused element; dim it."
+      "**Don't** let the background compete with content, and don't blur the stage behind a focused element; dim it (the flowchart to 30%, the funnel track's other records to 55%)."
     ]
   }
 }

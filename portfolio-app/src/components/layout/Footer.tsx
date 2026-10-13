@@ -1,7 +1,9 @@
 import { ArrowUp } from 'lucide-react';
 import { REDUCED_MOTION, matches } from '../../lib/media';
+import { useMagnet } from '../../hooks/useMagnet';
 
 export default function Footer() {
+  const topRef = useMagnet<HTMLButtonElement>({ strength: 0.28, reach: 36, max: 8, inner: 0.6 });
   const scrollToTop = () => {
     // Elegant smooth scroll to top matching the native/custom behavior of the app
     window.scrollTo({ top: 0, behavior: matches(REDUCED_MOTION) ? 'instant' : 'smooth' });
@@ -22,12 +24,13 @@ export default function Footer() {
 
         <div className="flex flex-col items-start gap-5 md:items-end">
           <button
+            ref={topRef}
             type="button"
             onClick={scrollToTop}
             className="pressable group inline-flex items-center gap-3 rounded-full text-ivory/70 hover:text-gold"
           >
             <span className="label-caps">Back to top</span>
-            <span className="grid h-10 w-10 place-items-center rounded-full border border-line-strong transition-colors duration-300 group-hover:border-gold/50">
+            <span data-magnet-inner className="grid h-10 w-10 place-items-center rounded-full border border-line-strong shadow-[inset_0_1px_0_rgb(244_239_230/0.07)] transition-colors duration-300 group-hover:border-gold/50">
               <ArrowUp className="h-4 w-4 transition-transform duration-300 ease-out-quint group-hover:-translate-y-0.5" />
             </span>
           </button>
