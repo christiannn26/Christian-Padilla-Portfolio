@@ -335,6 +335,8 @@ export function CoverflowCarousel({
                 <img
                   src={slide.thumbSrc ?? slide.src}
                   alt={slide.alt}
+                  loading="lazy"
+                  decoding="async"
                   draggable={false}
                   className={cn("h-full w-full select-none object-cover", slide.imagePosition || "object-top")}
                 />

@@ -51,9 +51,11 @@ export function useActiveStage() {
 
 /**
  * Spread onto a section: marks it `data-now` while it is the stage being read, which is
- * what lets its `.now-gold` words light up (gold is reserved for "now").
+ * what lets its `.now-gold` words light up (gold is reserved for "now"). It subscribes to
+ * "is this section now?" rather than to the index, so a stage change re-renders only the
+ * two sections whose answer flips, not every section on the page.
  */
 export function useStageNow(id: StageId) {
-  const index = useActiveStage();
-  return { 'data-now': STAGES[index].id === id ? '' : undefined };
+  const isNow = useSyncExternalStore(subscribe, () => STAGES[active].id === id);
+  return { 'data-now': isNow ? '' : undefined };
 }

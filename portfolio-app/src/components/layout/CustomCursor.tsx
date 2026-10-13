@@ -39,6 +39,7 @@ export default function CustomCursor() {
 
     let target: HTMLElement | null = null;
     let kind: Mode = 'free';
+    let cornerRadius = 8;
     let px = -100;
     let py = -100;
 
@@ -48,7 +49,6 @@ export default function CustomCursor() {
         const cx = r.left + r.width / 2;
         const cy = r.top + r.height / 2;
         const h = r.height + PAD * 2;
-        const cornerRadius = parseFloat(getComputedStyle(target).borderTopLeftRadius) || 8;
         // A slight pull toward the pointer keeps the outline feeling attached, not pinned.
         ringX.set(cx + (px - cx) * 0.06);
         ringY.set(cy + (py - cy) * 0.06);
@@ -80,6 +80,8 @@ export default function CustomCursor() {
         const r = el.getBoundingClientRect();
         next = r.width <= 360 && r.height <= 96 ? 'morph' : 'card';
       }
+      // Read once per hover: getComputedStyle on every move would force a style recalc each time
+      if (el && el !== target) cornerRadius = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 8;
       target = el;
       kind = next;
       setMode(next);

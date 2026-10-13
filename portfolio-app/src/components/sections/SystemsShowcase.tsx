@@ -11,7 +11,7 @@ import { useStageNow } from '../../hooks/useActiveStage';
 
 function FunnelCard({ item }: { item: FunnelDemo }) {
   const demoRef = useMagnet<HTMLAnchorElement>({ strength: 0.22, reach: 32, max: 7 });
-  const paper = usePaperTone(item.image, 'rgb(236 235 232)');
+  const paper = usePaperTone('rgb(236 235 232)');
 
   return (
     <article
@@ -32,9 +32,11 @@ function FunnelCard({ item }: { item: FunnelDemo }) {
         <div
           aria-hidden
           className="absolute inset-x-0 top-0 hidden h-[24%] opacity-90 transition-opacity duration-700 ease-out-quint group-hover:opacity-100 lg:block"
-          style={{ backgroundImage: `linear-gradient(to bottom, color-mix(in srgb, ${paper} 72%, #0b0b0d), ${paper} 85%)` }}
+          style={{ backgroundImage: `linear-gradient(to bottom, color-mix(in srgb, ${paper.tone} 72%, #0b0b0d), ${paper.tone} 85%)` }}
         />
         <img
+          ref={paper.ref}
+          onLoad={paper.onLoad}
           src={item.image}
           alt={item.title}
           width={800}
